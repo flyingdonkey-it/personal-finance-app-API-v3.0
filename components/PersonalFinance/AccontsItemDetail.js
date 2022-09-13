@@ -5,18 +5,23 @@ export function AccontsItemDetail({ detail, onClose }) {
     onClose();
   }
   return (
-    <div>
+    <div className="bg-[white]">
       <div className="flex justify-between mt-24 ml-5 mr-5 sm:mt-12 sm:ml-96 sm:mr-96">
         <div className="flex items-start">
-          <img className="w-12 h-12" src="/back-button.svg" alt="Back" onClick={onBackButtonClick} />
-          <div className="flex flex-col ml-6 items-start font-semibold text-center">
-            <div className="text-2xl2 text-primary-bold">{detail.institution}</div>
-            <div className="text-green-link text-[20px]">{'Saving Accounts'}</div>
+          <img className="sm:w-12 sm:h-12 w-10 h-10" src="/back-button.svg" alt="Back" onClick={onBackButtonClick} />
+          <div className="flex flex-col items-center">
+            <div>
+              <img className="w-16 h-16" src={detail.img} alt="image" />
+            </div>
+            <div className="flex flex-col ml-6 sm:items-start font-semibold text-center">
+              <div className="text-2xl2 sm:text-primary-bold">{detail.institution}</div>
+              <div className="text-green-link text-[20px]">{'Saving Accounts'}</div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col items-center"></div>
         <div>
-          <img className="w-8 h-8" src="/share-button.svg" alt="Share" />
+          <img className="sm:w-12 sm:h-12 w-8 h-8" src="/share-button.svg" alt="Share" />
         </div>
       </div>
       <div className="ml-6 mr-6 sm:ml-96 sm:mr-96">
