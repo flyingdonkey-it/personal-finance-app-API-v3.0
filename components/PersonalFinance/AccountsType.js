@@ -2,7 +2,7 @@ import React from 'react';
 
 export function AccountsType({ accounts, accountsType }) {
   return (
-    <div className="flex-col mb-3 ">
+    <div className="flex-col mb-3">
       <div className="flex justify-start mb-2 bg-primary sm:pl-7 pr-7">
         <div className="font-semibold text-center mt-3 sm:mt-6 ml-7 mr-6 text-[12px] sm:text-2xl2 text-primary-bold">
           {accountsType}
