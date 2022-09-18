@@ -6,6 +6,7 @@ const { getBasiqAuthorizationHeader } = require('../../serverAuthentication');
  *
  * https://api.basiq.io/reference/postexpenses
  */
+
 export default async function createExpense(req, res) {
   if (req.method === 'POST') {
     const { userId } = req.query;

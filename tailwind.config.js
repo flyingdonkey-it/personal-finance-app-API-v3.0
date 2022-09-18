@@ -52,6 +52,7 @@ module.exports = {
       overlay: 'rgba(80, 80, 80, 0.2)',
       'green-link': '#24CCA7',
       'mobile-border-color': '#E0EAFF',
+      'list-item-color': 'rgba(231, 239, 255, 0.61)',
 
       // Neutral UI colours
       neutral: {
