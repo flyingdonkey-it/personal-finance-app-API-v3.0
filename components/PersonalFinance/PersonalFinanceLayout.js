@@ -10,6 +10,7 @@ export function PersonalFinanceLayout() {
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [selectedPageIndex, setSelectedPageIndex] = useState(1);
+  const [accountItemDetail, setAccountItemDetail] = useState(true);
 
   function manageMenus(isMainMenu) {
     if (isMainMenu) {
@@ -34,7 +35,7 @@ export function PersonalFinanceLayout() {
         <div>
           <PersonalFinanceHeader
             isMenuOpen={mainMenuOpen}
-            showProfileLine={(selectedPageIndex && selectedPageIndex === 1) || selectedPageIndex === 2}
+            showProfileLine={selectedPageIndex && selectedPageIndex === 1}
             menuIconClick={() => manageMenus(true)}
             profileMenuOpenClick={() => manageMenus(false)}
             selectedPageIndex={selectedPageIndex}

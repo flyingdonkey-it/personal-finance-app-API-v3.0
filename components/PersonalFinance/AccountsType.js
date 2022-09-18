@@ -1,7 +1,7 @@
 import React from 'react';
 import { AccountsItem } from './AccountsItem';
 
-export function AccountsType({ accounts, accountsType, onAccountItemClick }) {
+export function AccountsType({ loading, accounts, accountsType, onAccountItemClick, showDetail }) {
   return (
     <div className="flex-col mb-3">
       <div className="flex justify-start mb-2 bg-primary sm:pl-7 pr-7">
@@ -9,9 +9,13 @@ export function AccountsType({ accounts, accountsType, onAccountItemClick }) {
           {accountsType}
         </div>
       </div>
-      {accounts.map((item, index) => (
-        <AccountsItem item={item} index={index} onAccountItemClick={onAccountItemClick} />
-      ))}
+      {accounts.length > 0
+        ? accounts.map((item, index) => (
+            <AccountsItem item={item} index={index} onAccountItemClick={onAccountItemClick} showDetail={showDetail} />
+          ))
+        : !loading && (
+            <div className="flex items-center justify-start font-semibold text-sm2 sm:text-2xl2">{`You do not have any ${accountsType}.`}</div>
+          )}
     </div>
   );
 }

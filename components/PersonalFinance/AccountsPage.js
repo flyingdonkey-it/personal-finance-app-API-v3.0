@@ -1,75 +1,49 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { AccontsItemDetail } from './AccontsItemDetail';
 import { AccountsType } from './AccountsType';
 
-const savingAccounts = [
-  {
-    id: '1',
-    institution: 'ANZ',
-    fund: '100,000,00',
-    img: 'product-logo-square.svg',
-  },
-  {
-    id: '2',
-    institution: 'Bank of Melbourne',
-    fund: '200,000,00',
-    accountNumber: '123457890786543',
-    accountHolder: 'lorem ipsum',
-    accountExpirationDate: '04.04.2023',
-    phoneNumber: '(03) 94******',
-    img: 'product-logo-square.svg',
-  },
-];
-
-const loans = [
-  {
-    id: '1',
-    institution: 'Bankwest',
-    fund: '100,000,00',
-    img: 'product-logo-square.svg',
-  },
-  {
-    id: '2',
-    institution: 'ING',
-    fund: '100,000,00',
-    img: 'product-logo-square.svg',
-  },
-];
-
-const creditCards = [
-  {
-    id: '1',
-    institution: 'ANZ',
-    fund: '100,000,00',
-    img: 'product-logo-square.svg',
-  },
-  {
-    id: '2',
-    institution: 'ING',
-    fund: '100,000,00',
-    img: 'product-logo-square.svg',
-  },
-  {
-    id: '3',
-    institution: 'Westpac',
-    fund: '100,000,00',
-    img: 'product-logo-square.svg',
-  },
-  {
-    id: '4',
-    institution: 'ANZ',
-    fund: '100,000,00',
-    img: 'product-logo-square.svg',
-  },
-];
-
-export function AccountsPage() {
+export function AccountsPage({ manageAccountItemDetail }) {
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
+  const [savingAccounts, setSavingAccounts] = useState([]);
+  const [creditCards, setCreditCards] = useState([]);
+  const [loans, setLoans] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState({});
+
+  const getData = () => {
+    setLoading(true);
+    const userId = sessionStorage.getItem('userId');
+    axios
+      .get(`/api/accounts`, { params: { userId } })
+      .then(function (response) {
+        setLoading(false);
+        response.data.forEach(item => {
+          if (item.class.type === 'savings') {
+            setSavingAccounts([...savingAccounts, item]);
+          } else if (item.class.type === 'loans') {
+            setLoans([...loans, item]);
+          } else if (item.class.type === 'credit-card') {
+            setCreditCards([...creditCards, item]);
+          } else {
+            return false;
+          }
+        });
+      })
+      .catch(function (error) {
+        console.warn(error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const onAccountItemClick = e => {
     setShowDetail(true);
+    setSelectedAccount({ accountDetail: e.accountDetail, accountItem: e.item });
   };
 
   const onCloseAccountDetailClick = () => {
@@ -80,21 +54,53 @@ export function AccountsPage() {
   return (
     <>
       {!showDetail && (
-        <div className=" sm:flex sm:flex-col sm:w-3/4 sm:m-auto sm:pt-[60px] mt-36 mb-36 ">
-          <div className="hidden sm:flex items-center pb-8 text-2xl2">
-            <img className="w-7 h-7  hidden sm:block mr-3" src="/wallet.svg" alt="My accounts" />
-            <div className="text-primary-bold font-semibold sm:text-2xl2">My accounts</div>
+        <>
+          <div className="flex justify-between mt-24 ml-6 mr-6 sm:mt-16 sm:ml-80 sm:mr-80">
+            <div className="flex">
+              <div className="hidden mr-4 sm:block">
+                <img className="w-7 h-7  hidden sm:block mr-3" src="/wallet.svg" alt="My accounts" />
+              </div>
+              <div className="font-semibold text-2xl2 text-blue">My Accounts</div>
+            </div>
+            <div className="sm:hidden flex items-center justify-center pr-4">
+              <img className="w-12 h-12" src="/add-account.svg" alt="Add Account" />
+            </div>
           </div>
-          <AccountsType
-            accounts={savingAccounts}
-            accountsType="Savings accounts"
-            onAccountItemClick={onAccountItemClick}
-          />
-          <AccountsType accounts={loans} accountsType="Loans" onAccountItemClick={onAccountItemClick} />
-          <AccountsType accounts={creditCards} accountsType="Credit cards" onAccountItemClick={onAccountItemClick} />
-        </div>
+          <div className="mt-6 sm:ml-80 sm:mr-80 bg-[#FCFCFC]">
+            <AccountsType
+              accounts={savingAccounts}
+              accountsType="Savings accounts"
+              onAccountItemClick={onAccountItemClick}
+              onCloseAccountDetailClick={onCloseAccountDetailClick}
+              loading={loading}
+              showDetail={showDetail}
+            />
+            <AccountsType
+              accounts={loans}
+              accountsType="Loans"
+              onAccountItemClick={onAccountItemClick}
+              onCloseAccountDetailClick={onCloseAccountDetailClick}
+              loading={loading}
+              showDetail={showDetail}
+            />
+            <AccountsType
+              accounts={creditCards}
+              accountsType="Credit cards"
+              onAccountItemClick={onAccountItemClick}
+              onCloseAccountDetailClick={onCloseAccountDetailClick}
+              loading={loading}
+              showDetail={showDetail}
+            />
+          </div>
+        </>
       )}
-      {showDetail && <AccontsItemDetail detail={savingAccounts[1]} onClose={onCloseAccountDetailClick} />}
+      {showDetail && (
+        <AccontsItemDetail
+          onClose={onCloseAccountDetailClick}
+          selectedAccount={selectedAccount}
+          manageAccountItemDetail={manageAccountItemDetail}
+        />
+      )}
     </>
   );
 }

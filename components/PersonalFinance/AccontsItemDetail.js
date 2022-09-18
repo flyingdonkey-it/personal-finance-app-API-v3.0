@@ -1,55 +1,62 @@
 import React from 'react';
+import { useEffect } from 'react';
 
-export function AccontsItemDetail({ detail, onClose }) {
+export function AccontsItemDetail({ onClose, selectedAccount }) {
   function onBackButtonClick() {
     onClose();
   }
+
+  function getPostDateAsFormatted(postDate) {
+    return `${postDate.slice(8, 10)}/${postDate.slice(5, 7)}/${postDate.slice(0, 4)} ${postDate.slice(11, 16)}`;
+  }
+
   return (
-    <div className="bg-[white]">
+    <div>
       <div className="flex justify-between mt-24 ml-5 mr-5 sm:mt-12 sm:ml-96 sm:mr-96">
-        <div className="flex items-start">
-          <img className="sm:w-12 sm:h-12 w-10 h-10" src="/back-button.svg" alt="Back" onClick={onBackButtonClick} />
-          <div className="flex flex-col items-center">
-            <div>
-              <img className="w-16 h-16" src={detail.img} alt="image" />
-            </div>
-            <div className="flex flex-col ml-6 sm:items-start font-semibold text-center">
-              <div className="text-2xl2 sm:text-primary-bold">{detail.institution}</div>
-              <div className="text-green-link text-[20px]">{'Saving Accounts'}</div>
-            </div>
+        <div>
+          <img className="w-8 h-8" src="/back-button.svg" alt="Back" onClick={onBackButtonClick} />
+        </div>
+        <div className="flex flex-col items-center">
+          <div>
+            <img className="w-16 h-16 rounded-full" src={selectedAccount.accountDetail.logo.links.square} alt="logo" />
+          </div>
+          <div className="flex flex-col items-center mt-8 font-semibold text-center">
+            <div className="text-2xl2 text-primary-bold">{selectedAccount.accountItem.institution}</div>
+            <div className="text-green-link">{'Savings Accounts'}</div>
           </div>
         </div>
-        <div className="flex flex-col items-center"></div>
         <div>
-          <img className="sm:w-12 sm:h-12 w-8 h-8" src="/share-button.svg" alt="Share" />
+          <img className="w-8 h-8" src="/share-button.svg" alt="Share" />
         </div>
       </div>
       <div className="ml-6 mr-6 sm:ml-96 sm:mr-96">
-        <div className="flex justify-between mt-8 sm:pl-6 font-semibold sm:hidden text-2xl2 text-primary-bold">
+        <div className="flex justify-between mt-8 font-semibold sm:hidden text-2xl2 text-primary-bold">
           <div>Total:</div>
-          <div>{detail.fund} $</div>
+          <div>{selectedAccount.accountItem.availableFunds} $</div>
         </div>
-        <div className="justify-between hidden p-8 pl-16 pr-16 mt-8 font-semibold sm:flex text-2xl2 text-primary-bold bg-[#F5F7F8]">
+        <div className="justify-between hidden p-6 mt-8 font-semibold sm:flex text-2xl2 text-primary-bold bg-[#F5F7F8]">
           <div>Total:</div>
-          <div>{detail.fund} $</div>
+          <div>{selectedAccount.accountItem.availableFunds} $</div>
         </div>
         <div className=" sm:flex sm:mt-8 ">
           <div className="sm:ml-16">
             <div className="mt-7 text-base2">
               <div>Account number</div>
-              <div className="mt-1 font-semibold">{detail.accountNumber}</div>
+              <div className="mt-1 font-semibold">{selectedAccount.accountItem.accountNo}</div>
             </div>
             <div className="mt-7 text-base2">
               <div>Account holder</div>
-              <div className="mt-1 font-semibold">{detail.accountHolder}</div>
+              <div className="mt-1 font-semibold">{selectedAccount.accountItem.accountHolder}</div>
             </div>
             <div className="mt-7 text-base2">
               <div>Date and time</div>
-              <div className="mt-1 font-semibold">{detail.accountExpirationDate}</div>
+              <div className="mt-1 font-semibold">
+                {getPostDateAsFormatted(selectedAccount.accountItem.lastUpdated)}
+              </div>
             </div>
             <div className="mt-7 text-base2">
               <div>Phone number</div>
-              <div className="mt-1 font-semibold">{detail.phoneNumber}</div>
+              <div className="mt-1 font-semibold">(03) 94******</div>
             </div>
           </div>
         </div>
