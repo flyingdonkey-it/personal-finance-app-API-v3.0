@@ -1,11 +1,6 @@
-import { useState } from "react";
-
-export function Menu({ open, setMenuOpen, desktopMainMenuItems, mobileMainMenuItems, onMenuItemClick }) { 
-  const [selectedMenuItem, setSelectedMenuItem] = useState("Home");
-
+export function Menu({ open, setMenuOpen, desktopMainMenuItems, mobileMainMenuItems, onMenuItemClick, selectedMenuTitle }) {
   function onItemClick(e) {
-    setSelectedMenuItem(e.menuItemTitle);
-    onMenuItemClick(e.selectedPageIndex);
+    onMenuItemClick(e.selectedPageIndex, e.menuItemTitle);
   }
 
   return (
@@ -47,8 +42,8 @@ export function Menu({ open, setMenuOpen, desktopMainMenuItems, mobileMainMenuIt
             return (
               <div key={`menu-item-${i}`} className="flex justify-center w-1/4">
                 <img className="fixed w-5 h-5 mt-3" onClick={e => onItemClick({ menuItemTitle: m.title, selectedPageIndex: m.pageIndex, ...e })}
-                  src={`${selectedMenuItem === m.title ? m.selectedImage : m.image}`} alt={`${m.title}`} />
-                {selectedMenuItem === m.title &&
+                  src={`${selectedMenuTitle === m.title ? m.selectedImage : m.image}`} alt={`${m.title}`} />
+                {selectedMenuTitle === m.title &&
                   <img className="w-12 h-12" src="/selected-menu-item.svg" alt="Selected" />
                 }
               </div>

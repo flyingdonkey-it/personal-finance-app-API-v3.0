@@ -10,17 +10,17 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
   }
 
   return (
-    <div>
-      <div className="flex justify-between mt-24 ml-5 mr-5 sm:mt-12 sm:ml-96 sm:mr-96">
+    <div className="ml-6 mr-6 sm:ml-96 sm:mr-96">
+      <div className="flex justify-between mt-24 sm:mt-12">
         <div>
           <img className="w-8 h-8" src="/back-button.svg" alt="Back" onClick={onBackButtonClick} />
         </div>
         <div className="flex flex-col items-center">
           <div>
-            <img className="w-16 h-16" src={`/merchant-${parseInt(Math.random() * 100 % 4)}.svg`} alt="Merchant" />
+            <img className="w-12 h-12 sm:w-16 sm:h-16" src={`/merchant-${parseInt(Math.random() * 100 % 4)}.svg`} alt="Merchant" />
           </div>
-          <div className="flex flex-col items-center mt-8 font-semibold text-center">
-            <div className="text-2xl2 text-primary-bold">
+          <div className="flex flex-col items-center mt-4 font-semibold text-center sm:mt-8">
+            <div className="text-base sm:text-2xl2 text-primary-bold">
               {detail.enrich.merchant?.businessName || detail.description.slice(0, 28)}
             </div>
             <div className="text-green-link">
@@ -32,8 +32,8 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
           <img className="w-8 h-8" src="/share-button.svg" alt="Share" />
         </div>
       </div>
-      <div className="ml-6 mr-6 sm:ml-96 sm:mr-96">
-        <div className="flex justify-between mt-8 font-semibold sm:hidden text-2xl2 text-primary-bold">
+      <div className="sm:ml-44 sm:mr-44">
+        <div className="flex justify-between mt-8 text-base font-semibold sm:hidden text-primary-bold">
           <div>
             Amount:
           </div>
@@ -41,7 +41,7 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
             {detail.amount} $
           </div>
         </div>
-        <div className="justify-between hidden p-6 mt-8 font-semibold sm:flex text-2xl2 text-primary-bold bg-[#F5F7F8]">
+        <div className="justify-between hidden p-6 mt-8 font-semibold sm:flex sm:text-2xl2 text-primary-bold bg-[#F5F7F8]">
           <div>
             Amount:
           </div>
@@ -91,12 +91,12 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
         <div className="mt-4 sm:hidden">
           <img className="h-40 w-96" src="/location.svg" alt="Share" />
         </div>
-        <div className='flex flex-col mt-10 sm:hidden'>
+        <div className='flex flex-col mt-4 sm:mt-10 sm:hidden'>
           <div>
             <Button style={{ width: "100%" }}>All transactions with this merchant</Button>
           </div>
           <div className='mt-1'>
-            <Button style={{ width: "100%" }} >More from this category</Button>
+            <Button style={{ width: "100%" }}>More from this category</Button>
           </div>
         </div>
         <div className='items-baseline hidden mt-10 mb-32 sm:flex'>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Menu } from '../Menu';
+import { HomeChart } from './HomeChart';
 import { PersonalFinanceFooter } from "./PersonalFinanceFooter";
 import { PersonalFinanceHeader } from './PersonalFinanceHeader';
 import { ProfileLayout } from './ProfileLayout';
@@ -9,6 +10,8 @@ export function PersonalFinanceLayout() {
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [selectedPageIndex, setSelectedPageIndex] = useState(1);
+  const [selectedMenuTitle, setSelectedMenuTitle] = useState("Home");
+  const [hideHomePageItems, setHideHomePageItems] = useState(false);
 
   function manageMenus(isMainMenu) {
     if (isMainMenu) {
@@ -21,9 +24,9 @@ export function PersonalFinanceLayout() {
     setProfileMenuOpen(!profileMenuOpen);
   }
 
-  function managePages(selectedPageIndex) {
+  function managePages(selectedPageIndex, selectedMenuTitle) {
+    setSelectedMenuTitle(selectedMenuTitle);
     setMainMenuOpen(false);
-
     setSelectedPageIndex(selectedPageIndex);
   }
 
@@ -34,11 +37,22 @@ export function PersonalFinanceLayout() {
           <PersonalFinanceHeader isMenuOpen={mainMenuOpen} showProfileLine={selectedPageIndex && selectedPageIndex === 1} menuIconClick={() => manageMenus(true)} profileMenuOpenClick={() => manageMenus(false)}
             selectedPageIndex={selectedPageIndex}></PersonalFinanceHeader>
         </div>
-        <div className={`${selectedPageIndex && selectedPageIndex === 1 ? "mt-36" : ""} sm:mt-36 bg-mobile-main sm:hidden h-full`}>
+        <div className={`${selectedPageIndex && selectedPageIndex === 1 ? "mt-36 mb-24" : ""} bg-mobile-main sm:hidden h-full`}>
           {selectedPageIndex &&
             selectedPageIndex === 1 &&
-            <>
-            </>
+            <div className="flex flex-col">
+              {!hideHomePageItems &&
+                <>
+                  <div className="ml-6 mr-6 sm:ml-80 sm:mr-80">
+                    <div>Slider</div>
+                  </div>
+                  <HomeChart barChartWidth={"100%"} />
+                </>
+              }
+              <div className="mt-12">
+                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} hideHomePageItems={setHideHomePageItems} />
+              </div>
+            </div>
           }
           {selectedPageIndex &&
             selectedPageIndex === 2 &&
@@ -52,20 +66,30 @@ export function PersonalFinanceLayout() {
           }
           {selectedPageIndex &&
             selectedPageIndex === 4 &&
-            <>
-              <TransactionPage />
-            </>
+            <div className="mt-20 mb-20">
+              <TransactionPage limit={20} inTransactionsPage={true} />
+            </div>
           }
         </div>
-        <Menu desktopMainMenuItems={DESKTOP_MENU_ITEMS} mobileMainMenuItems={MOBILE_MENU_ITEMS} open={mainMenuOpen} setMenuOpen={() => manageMenus(true)} onMenuItemClick={managePages}></Menu>
+        <Menu desktopMainMenuItems={DESKTOP_MENU_ITEMS} mobileMainMenuItems={MOBILE_MENU_ITEMS} open={mainMenuOpen} setMenuOpen={() => manageMenus(true)}
+          onMenuItemClick={managePages} selectedMenuTitle={selectedMenuTitle}></Menu>
         <div className="hidden sm:block">
           <ProfileLayout open={profileMenuOpen} setMenuOpen={() => manageMenus(false)}></ProfileLayout>
         </div>
-        <div className="z-0 flex-col hidden w-full overflow-y-scroll bg-menu mt-[9.5rem] sm:flex min-h-[60rem] max-h-[60rem] mb-12">
+        <div className="z-0 flex-col hidden w-full mb-12 overflow-y-scroll bg-menu mt-[9.5rem] sm:flex min-h-[60rem] max-h-[60rem]">
           <div className="hidden sm:block">
             {selectedPageIndex &&
               selectedPageIndex === 1 &&
               <>
+                {!hideHomePageItems &&
+                  <div>
+                    <div className="flex">
+                      <div>Slider</div>
+                    </div>
+                    <HomeChart chartWidth={"40%"} />
+                  </div>
+                }
+                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} hideHomePageItems={setHideHomePageItems} />
               </>
             }
             {selectedPageIndex &&
@@ -81,7 +105,7 @@ export function PersonalFinanceLayout() {
             {selectedPageIndex &&
               selectedPageIndex === 4 &&
               <>
-                <TransactionPage />
+                <TransactionPage limit={20} inTransactionsPage={true} />
               </>
             }
           </div>
