@@ -2,16 +2,16 @@ const axios = require('axios');
 const { getBasiqAuthorizationHeader } = require('../../serverAuthentication');
 
 /**
- * This API endpoint retrieves user transactions.
+ * This API endpoint retrieves user expenses.
  *
- * https://api.basiq.io/reference/gettransactions
+ * https://api.basiq.io/reference/getexpenses
  */
 
-export default async function transactions(req, res) {
-  const { userId, limit } = req.query;
+export default async function retrieveExpense(req, res) {
+  const { userId, snapshotId } = req.query;
   try {
     const { data } = await axios.get(
-      `https://au-api.basiq.io/users/${userId}/transactions?limit=${limit}`,
+      `https://au-api.basiq.io/users/${userId}/expenses/${snapshotId}`,
       {
         headers: {
           Authorization: await getBasiqAuthorizationHeader(),
@@ -26,6 +26,3 @@ export default async function transactions(req, res) {
     res.status(400).json({ message: error.message });
   }
 }
-
-
-  
