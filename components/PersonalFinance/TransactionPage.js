@@ -18,6 +18,8 @@ export function TransactionPage() {
       .then(function (response) {
         setLoading(false);
 
+        console.log('response', response.data);
+
         const dateGroupedTransactions = response.data.reduce(function (r, a) {
           if (a.postDate) {
             r[a.postDate.slice(0, 10)] = r[a.postDate.slice(0, 10)] || [];

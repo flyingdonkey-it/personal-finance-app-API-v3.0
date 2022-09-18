@@ -1,16 +1,15 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { LoadingSpinner } from '../LoadingSpinner';
 import { AccontsItemDetail } from './AccontsItemDetail';
 import { AccountsType } from './AccountsType';
 
-export function AccountsPage({ manageAccountItemDetail }) {
+export function AccountsPage() {
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
-  const [savingAccounts, setSavingAccounts] = useState([]);
-  const [creditCards, setCreditCards] = useState([]);
-  const [loans, setLoans] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState({});
+  const [accountsData, setAccountsData] = useState(new Map());
 
   const getData = () => {
     setLoading(true);
@@ -19,17 +18,21 @@ export function AccountsPage({ manageAccountItemDetail }) {
       .get(`/api/accounts`, { params: { userId } })
       .then(function (response) {
         setLoading(false);
-        response.data.forEach(item => {
-          if (item.class.type === 'savings') {
-            setSavingAccounts([...savingAccounts, item]);
-          } else if (item.class.type === 'loans') {
-            setLoans([...loans, item]);
-          } else if (item.class.type === 'credit-card') {
-            setCreditCards([...creditCards, item]);
-          } else {
-            return false;
-          }
-        });
+        function groupBy(list, keyGetter) {
+          const map = new Map();
+          list.forEach(item => {
+            const key = keyGetter(item);
+            const collection = map.get(key);
+            if (!collection) {
+              map.set(key, [item]);
+            } else {
+              collection.push(item);
+            }
+          });
+          return map;
+        }
+
+        setAccountsData(groupBy(response.data, item => item.class.type));
       })
       .catch(function (error) {
         console.warn(error);
@@ -43,7 +46,7 @@ export function AccountsPage({ manageAccountItemDetail }) {
 
   const onAccountItemClick = e => {
     setShowDetail(true);
-    setSelectedAccount({ accountDetail: e.accountDetail, accountItem: e.item });
+    setSelectedAccount({ accountDetail: e.accountDetail, accountItem: e.item, accountsType: e.accountsType });
   };
 
   const onCloseAccountDetailClick = () => {
@@ -66,41 +69,45 @@ export function AccountsPage({ manageAccountItemDetail }) {
               <img className="w-12 h-12" src="/add-account.svg" alt="Add Account" />
             </div>
           </div>
-          <div className="mt-6 sm:ml-80 sm:mr-80 bg-[#FCFCFC]">
-            <AccountsType
-              accounts={savingAccounts}
-              accountsType="Savings accounts"
-              onAccountItemClick={onAccountItemClick}
-              onCloseAccountDetailClick={onCloseAccountDetailClick}
-              loading={loading}
-              showDetail={showDetail}
-            />
-            <AccountsType
-              accounts={loans}
-              accountsType="Loans"
-              onAccountItemClick={onAccountItemClick}
-              onCloseAccountDetailClick={onCloseAccountDetailClick}
-              loading={loading}
-              showDetail={showDetail}
-            />
-            <AccountsType
-              accounts={creditCards}
-              accountsType="Credit cards"
-              onAccountItemClick={onAccountItemClick}
-              onCloseAccountDetailClick={onCloseAccountDetailClick}
-              loading={loading}
-              showDetail={showDetail}
-            />
+          <div className="mt-6 sm:ml-80 sm:mr-80 bg-[#FCFCFC] min-h-screen">
+            {loading ? (
+              <div className="flex justify-center">
+                <div className="mt-16">
+                  {loading} {loading && <LoadingSpinner />}
+                </div>
+              </div>
+            ) : (
+              <>
+                <AccountsType
+                  accounts={accountsData.get('savings')}
+                  accountsType="Savings accounts"
+                  onAccountItemClick={onAccountItemClick}
+                  onCloseAccountDetailClick={onCloseAccountDetailClick}
+                  loading={loading}
+                  showDetail={showDetail}
+                />
+                <AccountsType
+                  accounts={accountsData.get('loans')}
+                  accountsType="Loans"
+                  onAccountItemClick={onAccountItemClick}
+                  onCloseAccountDetailClick={onCloseAccountDetailClick}
+                  loading={loading}
+                  showDetail={showDetail}
+                />
+                <AccountsType
+                  accounts={accountsData.get('credit-card')}
+                  accountsType="Credit cards"
+                  onAccountItemClick={onAccountItemClick}
+                  onCloseAccountDetailClick={onCloseAccountDetailClick}
+                  loading={loading}
+                  showDetail={showDetail}
+                />
+              </>
+            )}
           </div>
         </>
       )}
-      {showDetail && (
-        <AccontsItemDetail
-          onClose={onCloseAccountDetailClick}
-          selectedAccount={selectedAccount}
-          manageAccountItemDetail={manageAccountItemDetail}
-        />
-      )}
+      {showDetail && <AccontsItemDetail onClose={onCloseAccountDetailClick} selectedAccount={selectedAccount} />}
     </>
   );
 }

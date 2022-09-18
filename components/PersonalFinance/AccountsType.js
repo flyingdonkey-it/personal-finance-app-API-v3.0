@@ -9,12 +9,18 @@ export function AccountsType({ loading, accounts, accountsType, onAccountItemCli
           {accountsType}
         </div>
       </div>
-      {accounts.length > 0
+      {!loading && accounts && accounts.length > 0
         ? accounts.map((item, index) => (
-            <AccountsItem item={item} index={index} onAccountItemClick={onAccountItemClick} showDetail={showDetail} />
+            <AccountsItem
+              item={item}
+              key={index}
+              onAccountItemClick={onAccountItemClick}
+              showDetail={showDetail}
+              accountsType={accountsType}
+            />
           ))
         : !loading && (
-            <div className="flex items-center justify-start font-semibold text-sm2 sm:text-2xl2">{`You do not have any ${accountsType}.`}</div>
+            <div className="flex items-center justify-start font-semibold text-sm2 sm:text-2xl2 ml-7">{`You do not have any ${accountsType}.`}</div>
           )}
     </div>
   );

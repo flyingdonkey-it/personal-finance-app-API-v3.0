@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { LoadingSpinner } from '../LoadingSpinner';
 
-export function AccountsItem({ item, onAccountItemClick, showDetail, onCloseAccountDetailClick }) {
+export function AccountsItem({ item, onAccountItemClick, showDetail, accountsType }) {
   const [loading, setLoading] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState([]);
 
@@ -15,7 +15,9 @@ export function AccountsItem({ item, onAccountItemClick, showDetail, onCloseAcco
         setSelectedAccount(res.data);
       })
       .catch(error => {
-        console.log('error', error);
+        console.warn('error', error);
+        setLoading(false);
+        setSelectedAccount([]);
       });
   };
 
@@ -38,7 +40,7 @@ export function AccountsItem({ item, onAccountItemClick, showDetail, onCloseAcco
               <div
                 className="flex  mb-2 pt-1 pb-1 sm:pt-3 sm:pb-3 sm:bg-neutral-dim bg-white"
                 key={index}
-                onClick={e => onAccountItemClick({ accountDetail: account, item, ...e })}
+                onClick={e => onAccountItemClick({ accountDetail: account, item, accountsType, ...e })}
               >
                 <div key={index} className="flex justify-between items-center w-full px-7">
                   <div className="flex justify-center items-center rounded-full sm:pl-6 sm:pr-6 ">

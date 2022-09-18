@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
 
 export function AccontsItemDetail({ onClose, selectedAccount }) {
   function onBackButtonClick() {
@@ -22,7 +21,7 @@ export function AccontsItemDetail({ onClose, selectedAccount }) {
           </div>
           <div className="flex flex-col items-center mt-8 font-semibold text-center">
             <div className="text-2xl2 text-primary-bold">{selectedAccount.accountItem.institution}</div>
-            <div className="text-green-link">{'Savings Accounts'}</div>
+            <div className="text-green-link">{selectedAccount.accountsType}</div>
           </div>
         </div>
         <div>
@@ -34,7 +33,7 @@ export function AccontsItemDetail({ onClose, selectedAccount }) {
           <div>Total:</div>
           <div>{selectedAccount.accountItem.availableFunds} $</div>
         </div>
-        <div className="justify-between hidden p-6 mt-8 font-semibold sm:flex text-2xl2 text-primary-bold bg-[#F5F7F8]">
+        <div className="justify-between hidden p-6 mt-8 font-semibold sm:flex text-2xl2 text-primary-bold ">
           <div>Total:</div>
           <div>{selectedAccount.accountItem.availableFunds} $</div>
         </div>

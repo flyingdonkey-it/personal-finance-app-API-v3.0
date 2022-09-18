@@ -10,7 +10,6 @@ export function PersonalFinanceLayout() {
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [selectedPageIndex, setSelectedPageIndex] = useState(1);
-  const [accountItemDetail, setAccountItemDetail] = useState(true);
 
   function manageMenus(isMainMenu) {
     if (isMainMenu) {
@@ -25,7 +24,6 @@ export function PersonalFinanceLayout() {
 
   function managePages(selectedPageIndex) {
     setMainMenuOpen(false);
-
     setSelectedPageIndex(selectedPageIndex);
   }
 
@@ -41,11 +39,7 @@ export function PersonalFinanceLayout() {
             selectedPageIndex={selectedPageIndex}
           ></PersonalFinanceHeader>
         </div>
-        <div
-          className={`${
-            selectedPageIndex && selectedPageIndex === 1 ? 'mt-36' : ''
-          } sm:mt-36 bg-mobile-main sm:hidden h-full`}
-        >
+        <div className={`${selectedPageIndex && selectedPageIndex === 1 ? 'mt-36' : ''} sm:mt-36  sm:hidden h-full`}>
           {selectedPageIndex && selectedPageIndex === 1 && <></>}
           {selectedPageIndex && selectedPageIndex === 2 && (
             <>
