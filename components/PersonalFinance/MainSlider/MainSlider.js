@@ -61,17 +61,14 @@ export function MainSlider() {
   }, []);
 
   return (
-    <div className='relative'>
-      <div className='relative left-0 hidden sm:block'>
-        <div className='flex items-center justify-between hidden h-[11.5rem] sm:flex '>
-          <div className='flex flex-wrap justify-start w-full h-full'>
-            <div className='mt-8 basis-full sm:ml-20 lg:ml-28 xl:ml-36 2xl:ml-40'>
-              <span className='font-bold text-[26px] leading-[31px] text-[#4A56E2]'>Your finances at a glance</span>
-            </div>
-            <div className='mt-5 basis-1/2 sm:ml-20 lg:ml-28 xl:ml-36 2xl:ml-40'>
+    <div className="sm:flex sm:w-1/2 sm:ml-80 sm:mt-12">
+      <div className="hidden sm:block">
+        <div className='flex flex-wrap h-full'>
+          <div>
+            <div>
               {components[currentIndex].component}
             </div>
-            <div className="hidden mt-5 basis-1/2 sm:block md:ml-16 sm:ml-16 lg:ml-24 xl:ml-32 2xl:ml-14">
+            <div className="hidden mt-5 sm:block">
               <div className="flex justify-end">
                 <div className="space-x-3">
                   {components.map((item) => (
@@ -88,7 +85,7 @@ export function MainSlider() {
         </div>
       </div>
       <div className="relative mt-6 overflow-hidden h-44 rounded-2xl sm:hidden ml-9 mr-9">
-        <div className="h-44" key={components[currentIndex].index}>
+        <div className="h-72" key={components[currentIndex].index}>
           {components[currentIndex].component}
         </div>
       </div>

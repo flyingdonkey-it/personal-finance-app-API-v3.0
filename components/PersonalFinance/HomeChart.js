@@ -69,7 +69,7 @@ export function HomeChart({ chartWidth }) {
             .post(`/api/create-income?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2020-12' })
             .then(function (response) {
               setIncomeData(response.data.regular[0].changeHistory.map((x) => {
-                return { key: new Date(x.date).toLocaleString('en-us', { month:'short'}), value: x.amount, normalizedValue: x.amount * 1.25 }
+                return { key: new Date(x.date).toLocaleString('en-us', { month: 'short' }), value: x.amount, normalizedValue: x.amount * 1.25 }
               }));
               setIncomeLoading(false);
             })
@@ -92,6 +92,11 @@ export function HomeChart({ chartWidth }) {
     setSelectedChartItem(itemIndex);
   }
 
+  const handleClickIndicator = (e, index) => {
+    e.preventDefault();
+    setSelectedChartItem(index);
+  };
+
   useEffect(() => {
     if (expenseData.length === 0 && !refreshConnectionError) {
       getExpenseData();
@@ -99,7 +104,7 @@ export function HomeChart({ chartWidth }) {
   }, [expenseData]);
 
   return (
-    <div className="flex flex-col mt-12 h-80 sm:ml-80 sm:mr-80">
+    <div className="flex flex-col mt-12 sm:mt-1 sm:mr-80 sm:w-1/2">
       <div className="flex items-center ml-12 mr-12 border-2 rounded-3xl border-[#4A56E2] sm:hidden">
         {
           items &&
@@ -115,7 +120,7 @@ export function HomeChart({ chartWidth }) {
           })
         }
       </div>
-      <div className="flex flex-col mt-4 h-72">
+      <div className="flex flex-col mt-4 sm:mt-0">
         {
           selectedChartItem &&
           selectedChartItem === expensesIndex &&
@@ -123,6 +128,14 @@ export function HomeChart({ chartWidth }) {
             {
               expenseData.length > 0 ?
                 <>
+                  <div className="justify-center hidden sm:flex">
+                    <div>
+                      <img className="w-6 h-6" src="/upload.svg" alt="Upload" />
+                    </div>
+                    <div className="ml-2 font-semibold text-blue text-2xl2">
+                      Expenses
+                    </div>
+                  </div>
                   <div>
                     <CustomPieChart data={expenseData} width={chartWidth} />
                   </div>
@@ -142,7 +155,15 @@ export function HomeChart({ chartWidth }) {
         {
           selectedChartItem &&
           selectedChartItem === upcomingPaymentsIndex &&
-          <div className="flex flex-col justify-between h-72">
+          <div className="flex flex-col justify-between">
+            <div className="justify-center hidden sm:flex">
+              <div>
+                <img className="w-6 h-6" src="/calendar.svg" alt="Calendar" />
+              </div>
+              <div className="ml-2 font-semibold text-blue text-2xl2">
+                Upcoming payments
+              </div>
+            </div>
             <div className="ml-11 mr-11">
               {
                 upcomingPayments &&
@@ -161,7 +182,15 @@ export function HomeChart({ chartWidth }) {
         {
           selectedChartItem &&
           selectedChartItem === incomeIndex &&
-          <div className="flex flex-col justify-between ml-8 mr-8 h-72">
+          <div className="flex flex-col justify-between ml-8 mr-8">
+            <div className="justify-center hidden sm:flex">
+              <div>
+                <img className="w-6 h-6" src="/download.svg" alt="Income" />
+              </div>
+              <div className="ml-2 font-semibold text-blue text-2xl2">
+                Income
+              </div>
+            </div>
             {
               incomeData.length > 0 ?
                 <>
@@ -181,6 +210,19 @@ export function HomeChart({ chartWidth }) {
             }
           </div>
         }
+      </div>
+      <div className="hidden mt-5 basis-1/2 sm:block md:ml-16 sm:ml-16 lg:ml-24 xl:ml-32 2xl:ml-14">
+        <div className="flex justify-end">
+          <div className="space-x-3">
+            {items.map((item) => (
+              <button id={'carousel-indicator-' + item.index} key={item.index} type='button'
+                className={'w-4 h-2 rounded ' + (item.index === selectedChartItem ? 'bg-[#4A56E2]' : 'bg-[rgba(74,86,226,0.3)]')}
+                aria-current={selectedChartItem === item.index}
+                onClick={(e) => handleClickIndicator(e, item.index)}
+                aria-label={'Slide ' + item.index}></button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

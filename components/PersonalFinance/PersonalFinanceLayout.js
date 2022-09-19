@@ -6,6 +6,7 @@ import { PersonalFinanceHeader } from './PersonalFinanceHeader';
 import { ProfileLayout } from './ProfileLayout';
 import { TransactionPage } from './TransactionPage';
 import { MainSlider } from './MainSlider';
+import { AccountsPage } from './AccountsPage'
 
 export function PersonalFinanceLayout() {
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
@@ -56,6 +57,7 @@ export function PersonalFinanceLayout() {
           {selectedPageIndex &&
             selectedPageIndex === 2 &&
             <>
+              <AccountsPage />
             </>
           }
           {selectedPageIndex &&
@@ -81,12 +83,19 @@ export function PersonalFinanceLayout() {
               selectedPageIndex === 1 &&
               <>
                 {!hideHomePageItems &&
-                  <div>
-                    <div className="flex">
-                      <div>Slider</div>
+                  <div className="flex flex-col">
+                    <div className="flex mt-8 ml-52">
+                      <div className="mr-4">
+                        <img className="w-7 h-7" src="/wallet.svg" alt="Wallet" />
+                      </div>
+                      <span className="font-bold text-2xl2 text-blue">Your finances at a glance</span>
                     </div>
-                    <HomeChart chartWidth={"40%"} />
+                    <div className="flex mt-6">
+                      <MainSlider />
+                      <HomeChart chartWidth={"70%"} />
+                    </div>
                   </div>
+
                 }
                 <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} hideHomePageItems={setHideHomePageItems} />
               </>
@@ -94,6 +103,7 @@ export function PersonalFinanceLayout() {
             {selectedPageIndex &&
               selectedPageIndex === 2 &&
               <>
+                <AccountsPage />
               </>
             }
             {selectedPageIndex &&

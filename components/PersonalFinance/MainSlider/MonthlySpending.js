@@ -17,14 +17,14 @@ const parts =[
 export function MonthlySpending() {
 
   return (
-    <div className="ml-4 mr-4 sm:ml-0 md:ml-0 lg:ml-0 h-44">
-      <div className="block h-40 max-w-sm p-3 border-2 shadow-md sm:max-w-2xl bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:py-20 sm:px-10 sm:bg-[#F5F7F8]">
+    <div className="ml-4 mr-4 sm:ml-0">
+      <div className="p-3 border-2 shadow-md sm:max-w-2xl bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:py-20 sm:px-10 sm:bg-[#F5F7F8]">
         <div className="flex flex-row">
-          <div className="font-bold text-sm2 leading-[17px] sm:-mt-14 sm:text-[26px] sm:leading-[31px]">
+          <div className="font-bold text-sm2 leading-[17px] sm:-mt-14 sm:text-[26px] sm:leading-[31px] text-blue">
             <span>Monthly spendings</span>
           </div>
         </div>
-        <div className="flex justify-between mt-2 sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:p-8 sm:bg-[#FEFEFE]">
+        <div className="flex justify-between mt-2 sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:p-8 sm:bg-[#FEFEFE] sm:pl-24 sm:pr-24">
           <div className="flex flex-col w-full">
             <div className="mb-1 -mt-1">
               <span className="text-[10px] sm:text-[12px] text-[#4A56E2] font-medium leading-[12px]">This year</span>
