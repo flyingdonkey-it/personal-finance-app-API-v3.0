@@ -6,12 +6,13 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+import { formatCurrency } from '../utils/formatCurrency';
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">
-        <p className="font-semibold label bg-[#24CCA7]">{`${payload[0].value} $`}</p>
+        <p className="font-semibold label bg-[#24CCA7]">{`${formatCurrency(payload[0].value)}`}</p>
       </div>
     );
   }

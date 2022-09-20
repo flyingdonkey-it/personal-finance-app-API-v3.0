@@ -1,4 +1,5 @@
-import { Button } from '../Button';
+import { Button } from '../../Button';
+import { formatCurrency } from '../../../utils/formatCurrency';
 
 export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
   function onBackButtonClick() {
@@ -38,7 +39,7 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
             Amount:
           </div>
           <div>
-            {detail.amount} $
+            {formatCurrency(detail.amount)}
           </div>
         </div>
         <div className="justify-between hidden p-6 mt-8 font-semibold sm:flex sm:text-2xl2 text-primary-bold bg-[#F5F7F8]">
@@ -46,7 +47,7 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
             Amount:
           </div>
           <div>
-            {detail.amount} $
+            {formatCurrency(detail.amount)}
           </div>
         </div>
         <div className='justify-around sm:flex sm:mt-8'>
