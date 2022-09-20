@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { ListItem } from "../ListItem";
-import { CustomPieChart } from "../CustomPieChart";
-import { LoadingSpinner } from '../LoadingSpinner';
-import { CustomBarChart } from "../CustomBarChart";
+import { ListItem } from "../../ListItem";
+import { CustomPieChart } from "../../CustomPieChart";
+import { LoadingSpinner } from '../../LoadingSpinner';
+import { CustomBarChart } from "../../CustomBarChart";
 
 const expensesIndex = 1;
 const upcomingPaymentsIndex = 2;
@@ -24,9 +24,6 @@ const upcomingPayments = [
   },
   {
     description: 'Amazon', dateDescription: '10th of May, every year', amount: '-20.00'
-  },
-  {
-    description: 'Disney+', dateDescription: '5th of every month', amount: '-20.00'
   },
 ]
 
@@ -120,23 +117,23 @@ export function HomeChart({ chartWidth }) {
           })
         }
       </div>
-      <div className="flex flex-col mt-4 sm:mt-0">
+      <div className="flex flex-col mt-4 sm:mt-0 h-80">
         {
           selectedChartItem &&
           selectedChartItem === expensesIndex &&
-          <div>
+          <div className="flex flex-col justify-between h-80">
+            <div className="justify-center hidden mb-4 sm:flex">
+              <div>
+                <img className="w-6 h-6" src="/upload.svg" alt="Upload" />
+              </div>
+              <div className="ml-2 font-semibold text-blue text-2xl2">
+                Expenses
+              </div>
+            </div>
             {
               expenseData.length > 0 ?
                 <>
-                  <div className="justify-center hidden sm:flex">
-                    <div>
-                      <img className="w-6 h-6" src="/upload.svg" alt="Upload" />
-                    </div>
-                    <div className="ml-2 font-semibold text-blue text-2xl2">
-                      Expenses
-                    </div>
-                  </div>
-                  <div>
+                  <div className="sm:ml-48">
                     <CustomPieChart data={expenseData} width={chartWidth} />
                   </div>
                   <div className="flex justify-center">
@@ -144,8 +141,8 @@ export function HomeChart({ chartWidth }) {
                   </div>
                 </>
                 :
-                <div className="flex justify-center">
-                  <div className='mt-16'>
+                <div className="flex justify-center h-80">
+                  <div className="mt-16">
                     {expenseLoading} {expenseLoading ? <LoadingSpinner /> : "Expense data not found"}
                   </div>
                 </div>
@@ -155,8 +152,8 @@ export function HomeChart({ chartWidth }) {
         {
           selectedChartItem &&
           selectedChartItem === upcomingPaymentsIndex &&
-          <div className="flex flex-col justify-between">
-            <div className="justify-center hidden sm:flex">
+          <div className="flex flex-col justify-between h-80">
+            <div className="justify-center hidden mb-4 sm:flex">
               <div>
                 <img className="w-6 h-6" src="/calendar.svg" alt="Calendar" />
               </div>
@@ -164,7 +161,7 @@ export function HomeChart({ chartWidth }) {
                 Upcoming payments
               </div>
             </div>
-            <div className="ml-11 mr-11">
+            <div className="ml-12 mr-12 sm:ml-36 sm:mr-36">
               {
                 upcomingPayments &&
                 upcomingPayments.map((item, i) => {
@@ -182,7 +179,7 @@ export function HomeChart({ chartWidth }) {
         {
           selectedChartItem &&
           selectedChartItem === incomeIndex &&
-          <div className="flex flex-col justify-between ml-8 mr-8">
+          <div className="flex flex-col justify-between ml-8 mr-8 h-80">
             <div className="justify-center hidden sm:flex">
               <div>
                 <img className="w-6 h-6" src="/download.svg" alt="Income" />
@@ -194,7 +191,7 @@ export function HomeChart({ chartWidth }) {
             {
               incomeData.length > 0 ?
                 <>
-                  <div>
+                  <div className="sm:ml-48">
                     <CustomBarChart data={incomeData} width={chartWidth} />
                   </div>
                   <div className="flex justify-center">
@@ -202,8 +199,8 @@ export function HomeChart({ chartWidth }) {
                   </div>
                 </>
                 :
-                <div className="flex justify-center">
-                  <div className='mt-16'>
+                <div className="flex justify-center h-80">
+                  <div className="mt-16">
                     {incomeLoading} {incomeLoading ? <LoadingSpinner /> : "Income data not found"}
                   </div>
                 </div>
@@ -211,7 +208,7 @@ export function HomeChart({ chartWidth }) {
           </div>
         }
       </div>
-      <div className="hidden mt-5 basis-1/2 sm:block md:ml-16 sm:ml-16 lg:ml-24 xl:ml-32 2xl:ml-14">
+      <div className="hidden basis-1/2 sm:block sm:ml-16">
         <div className="flex justify-end">
           <div className="space-x-3">
             {items.map((item) => (

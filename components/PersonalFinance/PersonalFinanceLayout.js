@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Menu } from '../Menu';
-import { HomeChart } from './HomeChart';
+import { HomeChart } from './Chart/HomeChart';
 import { PersonalFinanceFooter } from "./PersonalFinanceFooter";
 import { PersonalFinanceHeader } from './PersonalFinanceHeader';
 import { ProfileLayout } from './ProfileLayout';
-import { TransactionPage } from './TransactionPage';
-import { MainSlider } from './MainSlider';
-import { AccountsPage } from './AccountsPage'
+import { TransactionPage } from './Transaction';
+import { HomeSlider} from './Slider';
+import { AccountPage } from './Account'
 
 export function PersonalFinanceLayout() {
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
@@ -39,13 +39,13 @@ export function PersonalFinanceLayout() {
           <PersonalFinanceHeader isMenuOpen={mainMenuOpen} showProfileLine={selectedPageIndex && selectedPageIndex === 1} menuIconClick={() => manageMenus(true)} profileMenuOpenClick={() => manageMenus(false)}
             selectedPageIndex={selectedPageIndex}></PersonalFinanceHeader>
         </div>
-        <div className={`${selectedPageIndex && selectedPageIndex === 1 ? "mt-36 mb-24" : ""} bg-mobile-main sm:hidden h-full`}>
+        <div className={`${selectedPageIndex && selectedPageIndex === 1 ? "mt-36 mb-24" : ""} sm:hidden h-full`}>
           {selectedPageIndex &&
             selectedPageIndex === 1 &&
             <div className="flex flex-col">
               {!hideHomePageItems &&
                 <>
-                  <MainSlider />
+                  <HomeSlider />
                   <HomeChart barChartWidth={"100%"} />
                 </>
               }
@@ -57,7 +57,7 @@ export function PersonalFinanceLayout() {
           {selectedPageIndex &&
             selectedPageIndex === 2 &&
             <>
-              <AccountsPage />
+              <AccountPage />
             </>
           }
           {selectedPageIndex &&
@@ -91,8 +91,8 @@ export function PersonalFinanceLayout() {
                       <span className="font-bold text-2xl2 text-blue">Your finances at a glance</span>
                     </div>
                     <div className="flex w-full mt-6">
-                      <MainSlider />
-                      <HomeChart chartWidth={"70%"} />
+                      <HomeSlider />
+                      <HomeChart chartWidth={"65%"} />
                     </div>
                   </div>
 
@@ -103,7 +103,7 @@ export function PersonalFinanceLayout() {
             {selectedPageIndex &&
               selectedPageIndex === 2 &&
               <>
-                <AccountsPage />
+                <AccountPage />
               </>
             }
             {selectedPageIndex &&

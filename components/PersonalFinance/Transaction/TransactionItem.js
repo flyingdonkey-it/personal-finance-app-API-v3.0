@@ -1,3 +1,5 @@
+import { formatCurrency } from '../../../utils/formatCurrency';
+
 export function TransactionItem({ item }) {
   return (
     <div className="sm:bg-[#F5F7F8] bg-[#FEFEFE] sm:p-4">
@@ -16,7 +18,7 @@ export function TransactionItem({ item }) {
           </div>
         </div>
         <div className="font-semibold text-blue">
-          {item.amount} $
+          {formatCurrency(item.amount)}
         </div>
       </div>
     </div>

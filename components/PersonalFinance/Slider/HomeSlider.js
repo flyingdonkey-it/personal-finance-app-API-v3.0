@@ -6,7 +6,7 @@ import { CreditCard } from './CreditCard';
 import { IncomeExpense } from './IncomeExpense';
 import { MonthlySpending } from './MonthlySpending';
 
-export function MainSlider() {
+export function HomeSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [savingsBalance, setSavingsBalance] = useState(0);
   const [loansBalance, setLoansBalance] = useState(0);
