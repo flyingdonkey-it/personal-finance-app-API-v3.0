@@ -11,8 +11,8 @@ export function HomeSlider() {
   const [savingsBalance, setSavingsBalance] = useState(0);
   const [loansBalance, setLoansBalance] = useState(0);
   const [creditCardBalance, setCreditCardBalance] = useState(0);
-  const [incomeMonthlyTotal, setIncomeMonthlyTotal] = useState(16250);
-  const [expenseMonthlyTotal, setExpenseMonthlyTotal] = useState(12350);
+  const [incomeMonthlyTotal] = useState(16250);
+  const [expenseMonthlyTotal] = useState(12350);
 
   const components = [
     // eslint-disable-next-line react/jsx-key
