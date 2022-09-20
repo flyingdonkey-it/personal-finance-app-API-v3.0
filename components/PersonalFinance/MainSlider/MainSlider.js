@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Savings } from './Savings';
 import { Loans } from './Loans';
 import { CreditCard } from './CreditCard';
-import { IncomeAndExpense } from './IncomeAndExpense';
+import { IncomeExpense } from './IncomeExpense';
 import { MonthlySpending } from './MonthlySpending';
 
 export function MainSlider() {
@@ -20,7 +20,7 @@ export function MainSlider() {
     { index: 1, hidden: true, component: <Loans balance={loansBalance} /> },
     { index: 2, hidden: true, component: <CreditCard balance={creditCardBalance} /> },
     { index: 3, hidden: true, component: <MonthlySpending /> },
-    { index: 4, hidden: true, component: <IncomeAndExpense income={incomeMonthlyTotal} expense={expenseMonthlyTotal} /> }
+    { index: 4, hidden: true, component: <IncomeExpense income={incomeMonthlyTotal} expense={expenseMonthlyTotal} /> }
   ];
 
   const handleClickIndicator = (e, index) => {
@@ -61,31 +61,25 @@ export function MainSlider() {
   }, []);
 
   return (
-    <div className="sm:flex sm:w-1/2 sm:ml-80 sm:mt-12">
-      <div className="hidden sm:block">
-        <div className='flex flex-wrap h-full'>
-          <div>
-            <div>
-              {components[currentIndex].component}
-            </div>
-            <div className="hidden mt-5 sm:block">
-              <div className="flex justify-end">
-                <div className="space-x-3">
-                  {components.map((item) => (
-                    <button id={'carousel-indicator-' + item.index} key={item.index} type='button'
-                      className={'w-4 h-2 rounded ' + (item.index === currentIndex ? 'bg-[#4A56E2]' : 'bg-[rgba(74,86,226,0.3)]')}
-                      aria-current={currentIndex === item.index}
-                      onClick={(e) => handleClickIndicator(e, item.index)}
-                      aria-label={'Slide ' + item.index}></button>
-                  ))}
-                </div>
-              </div>
+    <div className="sm:w-2/5 sm:flex sm:ml-64 sm:mt-12">
+      <div className="hidden w-full sm:block">
+        {components[currentIndex].component}
+        <div className="hidden mt-5 sm:block">
+          <div className="flex justify-end">
+            <div className="space-x-3">
+              {components.map((item) => (
+                <button id={'carousel-indicator-' + item.index} key={item.index} type='button'
+                  className={'w-4 h-2 rounded ' + (item.index === currentIndex ? 'bg-[#4A56E2]' : 'bg-[rgba(74,86,226,0.3)]')}
+                  aria-current={currentIndex === item.index}
+                  onClick={(e) => handleClickIndicator(e, item.index)}
+                  aria-label={'Slide ' + item.index}></button>
+              ))}
             </div>
           </div>
         </div>
       </div>
-      <div className="relative mt-6 overflow-hidden h-44 rounded-2xl sm:hidden ml-9 mr-9">
-        <div className="h-72" key={components[currentIndex].index}>
+      <div className="relative mt-6 overflow-hidden rounded-2xl sm:hidden ml-9 mr-9">
+        <div className="h-48 sm:h-72" key={components[currentIndex].index}>
           {components[currentIndex].component}
         </div>
       </div>

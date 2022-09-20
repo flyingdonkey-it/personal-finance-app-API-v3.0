@@ -90,7 +90,7 @@ export function PersonalFinanceLayout() {
                       </div>
                       <span className="font-bold text-2xl2 text-blue">Your finances at a glance</span>
                     </div>
-                    <div className="flex mt-6">
+                    <div className="flex w-full mt-6">
                       <MainSlider />
                       <HomeChart chartWidth={"70%"} />
                     </div>

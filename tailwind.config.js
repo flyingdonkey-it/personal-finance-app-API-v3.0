@@ -99,7 +99,11 @@ module.exports = {
       'sm2': ['14px', '17px'],
       'sm3': ['15px', '18.15px'],
       'base2': ['16px', '19px'],
-      'xs': ['12px', '15px']
+      'xs': ['12px', '15px'],
+      'xs2': ['10px', '12px'],
+      'xl': ['20px', '28px'],
+      '2xl': ['24px', '32px'],
+      '3xl': ['30px', '36px']
     },
 
     extend: {

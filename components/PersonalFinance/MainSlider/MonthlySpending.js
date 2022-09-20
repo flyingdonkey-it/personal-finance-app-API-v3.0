@@ -1,41 +1,47 @@
 
-const parts =[
-  {src:'/slider/Rectangle%20173.svg',name:'JAN'},
-  {src:'/slider/Rectangle%20172.svg',name:'FEB'},
-  {src:'/slider/Rectangle%20171.svg',name:'MAR'},
-  {src:'/slider/Rectangle%20170.svg',name:'APR'},
-  {src:'/slider/Rectangle%20169.svg',name:'MAY'},
-  {src:'/slider/Rectangle%20166.svg',name:'JUN'},
-  {src:'/slider/Rectangle%20164.svg',name:'JUL'},
-  {src:'/slider/Rectangle%20165.svg',name:'AUG'},
-  {src:'/slider/Rectangle%20166.svg',name:'SEP'},
-  {src:'/slider/Rectangle%20168.svg',name:'OCT'},
-  {src:'/slider/Rectangle%20167.svg',name:'NOV'},
-  {src:'/slider/Rectangle%20167.svg',name:'DEC'},
+const parts = [
+  { src: '/slider/Rectangle%20173.svg', name: 'JAN' },
+  { src: '/slider/Rectangle%20172.svg', name: 'FEB' },
+  { src: '/slider/Rectangle%20171.svg', name: 'MAR' },
+  { src: '/slider/Rectangle%20170.svg', name: 'APR' },
+  { src: '/slider/Rectangle%20169.svg', name: 'MAY' },
+  { src: '/slider/Rectangle%20166.svg', name: 'JUN' },
+  { src: '/slider/Rectangle%20164.svg', name: 'JUL' },
+  { src: '/slider/Rectangle%20165.svg', name: 'AUG' },
+  { src: '/slider/Rectangle%20166.svg', name: 'SEP' },
+  { src: '/slider/Rectangle%20168.svg', name: 'OCT' },
+  { src: '/slider/Rectangle%20167.svg', name: 'NOV' },
+  { src: '/slider/Rectangle%20167.svg', name: 'DEC' },
 ];
 
 export function MonthlySpending() {
 
   return (
-    <div className="ml-4 mr-4 sm:ml-0">
-      <div className="p-3 border-2 shadow-md sm:max-w-2xl bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:py-20 sm:px-10 sm:bg-[#F5F7F8]">
-        <div className="flex flex-row">
-          <div className="font-bold text-sm2 leading-[17px] sm:-mt-14 sm:text-[26px] sm:leading-[31px] text-blue">
-            <span>Monthly spendings</span>
+    <div className="border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8]">
+      <div className="mt-2 ml-3 mr-10 sm:ml-8 sm:mb-5 sm:mt-5">
+        <div className="flex items-center">
+          <div className="ml-2">
+            <p className="text-sm font-bold sm:text-2xl2 text-blue">Monthly spendings</p>
           </div>
         </div>
-        <div className="flex justify-between mt-2 sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:p-8 sm:bg-[#FEFEFE] sm:pl-24 sm:pr-24">
-          <div className="flex flex-col w-full">
-            <div className="mb-1 -mt-1">
-              <span className="text-[10px] sm:text-[12px] text-[#4A56E2] font-medium leading-[12px]">This year</span>
-            </div>
-            <div className="flex justify-between items-end w-full">
-              {parts.map((item)=>(
-                <div key={item.name}>
-                  <img src={item.src}/>
-                  <span className="text-[9px] sm:text-[11px] text-[#4A56E2] font-bold leading-[11px] mr-1">{item.name}</span>
-                </div>
-              ))}
+        <div className="flex flex-col m-3 sm:m-6">
+          <div className="sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
+            <div className="flex flex-col items-center w-full sm:mt-3 sm:mb-3">
+              <div className="flex w-full mb-4 text-xs font-medium sm:ml-4 align-left text-blue">
+                This year
+              </div>
+              <div className="flex items-end ml-8 sm:ml-0">
+                {parts.map((item) => (
+                  <div className="flex flex-col items-center mr-0.5" key={item.name}>
+                    <div>
+                      <img src={item.src} alt="Rectangle" />
+                    </div>
+                    <div className="font-bold text-xs2 sm:text-xs mr-0.5 sm:mr-1 text-blue">
+                      {item.name}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
