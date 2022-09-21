@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { LoadingSpinner } from '../LoadingSpinner';
+import { LoadingSpinner } from '../../LoadingSpinner';
 import { TransactionItem } from './TransactionItem';
 import { TransactionItemDetail } from './TransactionItemDetail';
 import { Calendar } from './Calendar';
@@ -67,12 +67,12 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
     <>
       {!showDetail &&
         <>
-          <div className="flex justify-between ml-6 mr-6 sm:mt-44 sm:ml-80 sm:mr-80">
+          <div className="flex justify-between ml-6 mr-6 sm:mt-12 sm:ml-52 sm:mr-80">
             <div className="flex">
               <div className="hidden mr-4 sm:block">
                 <img className="w-6 h-6" src="/swap.svg" alt="Swap" />
               </div>
-              <div className={`font-semibold text-blue ${inTransactionsPage ? 'text-2xl2' : 'text-base2'}`}>
+              <div className={`font-semibold text-blue sm:text-2xl2 ${inTransactionsPage ? 'text-2xl2' : 'text-base2'}`}>
                 Transactions
               </div>
             </div>
@@ -87,7 +87,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
                 : <p className='font-semibold underline text-sm2 text-blue bg-[#FEFEFE]'onClick={onSeeAllClick}>See all</p>}
             </div>
           </div>
-          <div className="sm:ml-80 sm:mr-80 bg-[#FCFCFC]">
+          <div className="sm:ml-52 sm:mr-80 bg-[#FCFCFC]">
             {dateGroupedTransactions.length > 0 ? (
               dateGroupedTransactions.map((groupedItem, gIndex) => {
                 return (
@@ -125,4 +125,3 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
     </>
   );
 }
-

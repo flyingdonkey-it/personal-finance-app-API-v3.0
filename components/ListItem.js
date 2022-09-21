@@ -1,3 +1,5 @@
+import { formatCurrency } from '../utils/formatCurrency';
+
 export function ListItem({ item, imagePrefix, randomDivider }) {
   return (
     <div className="p-2 mb-2 sm:bg-[#F5F7F8] bg-list-item-color sm:p-4 rounded-[20px]">
@@ -16,7 +18,7 @@ export function ListItem({ item, imagePrefix, randomDivider }) {
           </div>
         </div>
         <div className="self-center font-semibold text-blue">
-          {item.amount} $
+          {formatCurrency(item.amount)}
         </div>
       </div>
     </div>

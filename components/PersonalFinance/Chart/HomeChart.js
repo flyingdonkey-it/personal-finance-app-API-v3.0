@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { ListItem } from "../ListItem";
-import { CustomPieChart } from "../CustomPieChart";
-import { LoadingSpinner } from '../LoadingSpinner';
-import { CustomBarChart } from "../CustomBarChart";
+import { ListItem } from "../../ListItem";
+import { CustomPieChart } from "../../CustomPieChart";
+import { LoadingSpinner } from '../../LoadingSpinner';
+import { CustomBarChart } from "../../CustomBarChart";
 
 const expensesIndex = 1;
 const upcomingPaymentsIndex = 2;
@@ -25,9 +25,6 @@ const upcomingPayments = [
   {
     description: 'Amazon', dateDescription: '10th of May, every year', amount: '-20.00'
   },
-  {
-    description: 'Disney+', dateDescription: '5th of every month', amount: '-20.00'
-  },
 ]
 
 const colorPallette = [
@@ -40,6 +37,7 @@ export function HomeChart({ chartWidth }) {
   const [incomeLoading, setIncomeLoading] = useState(false);
   const [expenseData, setExpenseData] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
+  const [refreshConnectionError, setRefreshConnectionError] = useState(false);
 
   function getExpenseData() {
     setExpenseLoading(true);
@@ -67,11 +65,8 @@ export function HomeChart({ chartWidth }) {
           axios
             .post(`/api/create-income?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2020-12' })
             .then(function (response) {
-
-              console.log(response.data.regular[0].changeHistory);
-
               setIncomeData(response.data.regular[0].changeHistory.map((x) => {
-                return { key: new Date(x.date).toLocaleString('en-us', { month:'short'}), value: x.amount, normalizedValue: x.amount * 1.25 }
+                return { key: new Date(x.date).toLocaleString('en-us', { month: 'short' }), value: x.amount, normalizedValue: x.amount * 1.25 }
               }));
               setIncomeLoading(false);
             })
@@ -84,6 +79,7 @@ export function HomeChart({ chartWidth }) {
       })
       .catch(function (error) {
         console.warn(error);
+        setRefreshConnectionError(true);
         setExpenseLoading(false);
         setIncomeLoading(false);
       });
@@ -93,14 +89,19 @@ export function HomeChart({ chartWidth }) {
     setSelectedChartItem(itemIndex);
   }
 
+  const handleClickIndicator = (e, index) => {
+    e.preventDefault();
+    setSelectedChartItem(index);
+  };
+
   useEffect(() => {
-    if (expenseData.length === 0) {
+    if (expenseData.length === 0 && !refreshConnectionError) {
       getExpenseData();
     }
   }, [expenseData]);
 
   return (
-    <div className="flex flex-col mt-6 h-80 sm:ml-80 sm:mr-80">
+    <div className="flex flex-col mt-12 sm:w-3/5 sm:mt-1 sm:mr-80">
       <div className="flex items-center ml-12 mr-12 border-2 rounded-3xl border-[#4A56E2] sm:hidden">
         {
           items &&
@@ -116,15 +117,23 @@ export function HomeChart({ chartWidth }) {
           })
         }
       </div>
-      <div className="flex flex-col mt-4 h-72">
+      <div className="flex flex-col mt-4 sm:mt-0 h-80">
         {
           selectedChartItem &&
           selectedChartItem === expensesIndex &&
-          <div>
+          <div className="flex flex-col justify-between h-80">
+            <div className="justify-center hidden mb-4 sm:flex">
+              <div>
+                <img className="w-6 h-6" src="/upload.svg" alt="Upload" />
+              </div>
+              <div className="ml-2 font-semibold text-blue text-2xl2">
+                Expenses
+              </div>
+            </div>
             {
               expenseData.length > 0 ?
                 <>
-                  <div>
+                  <div className="sm:ml-48">
                     <CustomPieChart data={expenseData} width={chartWidth} />
                   </div>
                   <div className="flex justify-center">
@@ -132,8 +141,8 @@ export function HomeChart({ chartWidth }) {
                   </div>
                 </>
                 :
-                <div className="flex justify-center">
-                  <div className='mt-16'>
+                <div className="flex justify-center h-80">
+                  <div className="mt-16">
                     {expenseLoading} {expenseLoading ? <LoadingSpinner /> : "Expense data not found"}
                   </div>
                 </div>
@@ -143,8 +152,16 @@ export function HomeChart({ chartWidth }) {
         {
           selectedChartItem &&
           selectedChartItem === upcomingPaymentsIndex &&
-          <div className="flex flex-col justify-between h-72">
-            <div className="ml-11 mr-11">
+          <div className="flex flex-col justify-between h-80">
+            <div className="justify-center hidden mb-4 sm:flex">
+              <div>
+                <img className="w-6 h-6" src="/calendar.svg" alt="Calendar" />
+              </div>
+              <div className="ml-2 font-semibold text-blue text-2xl2">
+                Upcoming payments
+              </div>
+            </div>
+            <div className="ml-12 mr-12 sm:ml-36 sm:mr-36">
               {
                 upcomingPayments &&
                 upcomingPayments.map((item, i) => {
@@ -162,11 +179,19 @@ export function HomeChart({ chartWidth }) {
         {
           selectedChartItem &&
           selectedChartItem === incomeIndex &&
-          <div className="flex flex-col justify-between ml-8 mr-8 h-72">
+          <div className="flex flex-col justify-between ml-8 mr-8 h-80">
+            <div className="justify-center hidden sm:flex">
+              <div>
+                <img className="w-6 h-6" src="/download.svg" alt="Income" />
+              </div>
+              <div className="ml-2 font-semibold text-blue text-2xl2">
+                Income
+              </div>
+            </div>
             {
               incomeData.length > 0 ?
                 <>
-                  <div>
+                  <div className="sm:ml-48">
                     <CustomBarChart data={incomeData} width={chartWidth} />
                   </div>
                   <div className="flex justify-center">
@@ -174,14 +199,27 @@ export function HomeChart({ chartWidth }) {
                   </div>
                 </>
                 :
-                <div className="flex justify-center">
-                  <div className='mt-16'>
+                <div className="flex justify-center h-80">
+                  <div className="mt-16">
                     {incomeLoading} {incomeLoading ? <LoadingSpinner /> : "Income data not found"}
                   </div>
                 </div>
             }
           </div>
         }
+      </div>
+      <div className="hidden basis-1/2 sm:block sm:ml-16">
+        <div className="flex justify-end">
+          <div className="space-x-3">
+            {items.map((item) => (
+              <button id={'carousel-indicator-' + item.index} key={item.index} type='button'
+                className={'w-4 h-2 rounded ' + (item.index === selectedChartItem ? 'bg-[#4A56E2]' : 'bg-[rgba(74,86,226,0.3)]')}
+                aria-current={selectedChartItem === item.index}
+                onClick={(e) => handleClickIndicator(e, item.index)}
+                aria-label={'Slide ' + item.index}></button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
