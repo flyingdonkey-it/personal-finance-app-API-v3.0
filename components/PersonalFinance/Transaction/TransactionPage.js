@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { LoadingSpinner } from '../../LoadingSpinner';
+import { useToggleState } from '../../../utils/useToggleState';
+import { Calendar } from '../../Calendar';
 import { TransactionItem } from './TransactionItem';
 import { TransactionItemDetail } from './TransactionItemDetail';
 
@@ -9,6 +11,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState({});
+  const [showCalendar, setShowCalendar] = useToggleState(false);
 
   const getData = () => {
     setLoading(true)
@@ -74,10 +77,16 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
                 Transactions
               </div>
             </div>
-            <div className="flex items-center justify-center pr-4" onClick={onSeeAllClick}>
+            <div className="flex items-center justify-center pr-4" >
               {inTransactionsPage
-                ? <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" />
-                : <p className='font-semibold underline text-sm2 text-blue bg-[#FEFEFE]'>See all</p>}
+                ? (
+                  <div className="h-14">
+                    <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={setShowCalendar} />
+                    {showCalendar &&
+                      <Calendar data={dateGroupedTransactions || []} open={showCalendar} />}
+                  </div>
+                )
+                : <p className='font-semibold underline text-sm2 text-blue bg-[#FEFEFE]' onClick={onSeeAllClick}>See all</p>}
             </div>
           </div>
           <div className="sm:ml-52 sm:mr-80 bg-[#FCFCFC]">
