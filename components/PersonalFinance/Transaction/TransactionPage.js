@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { LoadingSpinner } from '../../LoadingSpinner';
+import { useToggleState } from '../../../utils/useToggleState';
+import { Calendar } from '../../Calendar';
 import { TransactionItem } from './TransactionItem';
 import { TransactionItemDetail } from './TransactionItemDetail';
-import { Calendar } from './Calendar';
 
 export function TransactionPage({ limit, inTransactionsPage, managePages, hideHomePageItems }) {
   const [dateGroupedTransactions, setDateGroupedTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState({});
-  const [open, setOpen] = useState(false);
+  const [showCalendar, setShowCalendar] = useToggleState(false);
 
   const getData = () => {
     setLoading(true)
@@ -79,12 +80,13 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
             <div className="flex items-center justify-center pr-4" >
               {inTransactionsPage
                 ? (
-                  <div>
-                <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={()=> setOpen(!open)}/>
-                <Calendar data={dateGroupedTransactions || []} open={open} />
-                </div>
+                  <div className="h-14">
+                    <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={setShowCalendar} />
+                    {showCalendar &&
+                      <Calendar data={dateGroupedTransactions || []} open={showCalendar} />}
+                  </div>
                 )
-                : <p className='font-semibold underline text-sm2 text-blue bg-[#FEFEFE]'onClick={onSeeAllClick}>See all</p>}
+                : <p className='font-semibold underline text-sm2 text-blue bg-[#FEFEFE]' onClick={onSeeAllClick}>See all</p>}
             </div>
           </div>
           <div className="sm:ml-52 sm:mr-80 bg-[#FCFCFC]">
