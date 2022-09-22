@@ -1,4 +1,3 @@
-import React from 'react';
 import { DatePicker } from 'antd';
 
 export function Calendar({ data, open }) {
