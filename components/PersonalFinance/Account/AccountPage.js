@@ -5,12 +5,13 @@ import { LoadingSpinner } from '../../LoadingSpinner';
 import { useAccountVerificationForm } from '../../AccountVerificationForm/AccountVerificationFormProvider';
 import { AccountItemDetail } from './AccountItemDetail';
 import { AccountType } from './AccountType';
+import { IncomeAndExpensesItemDetail } from '../IncomeAndExpensesItemDetail';
 
 const accountTypes = [
-  { type: "savings", title: "Savings accounts" },
-  { type: "mortgage", title: "Loans" },
-  { type: "credit-card", title: "Credit cards" }
-]
+  { type: 'savings', title: 'Savings accounts' },
+  { type: 'mortgage', title: 'Loans' },
+  { type: 'credit-card', title: 'Credit cards' },
+];
 
 export function AccountPage() {
   const [loading, setLoading] = useState(false);
@@ -64,7 +65,7 @@ export function AccountPage() {
         console.warn(error);
         setLoading(false);
       });
-  };
+  }
 
   useEffect(() => {
     getData();
@@ -73,12 +74,12 @@ export function AccountPage() {
   function onAccountItemClick(e) {
     setShowDetail(true);
     setSelectedAccount({ accountDetail: e.accountDetail, accountItem: e.item, accountsType: e.accountsType });
-  };
+  }
 
   function onCloseAccountDetailClick() {
     setSelectedAccount({});
     setShowDetail(false);
-  };
+  }
 
   return (
     <>
@@ -104,27 +105,27 @@ export function AccountPage() {
               </div>
             ) : (
               <>
-                {
-                  accountTypes.map((accountType, i) => {
-                    return (
-                      <AccountType key={"account-type-" + i}
-                        accounts={accountsData.get(accountType.type)}
-                        institutions={institutionData}
-                        accountsType={accountType.title}
-                        onAccountItemClick={onAccountItemClick}
-                        onCloseAccountDetailClick={onCloseAccountDetailClick}
-                        loading={loading}
-                        showDetail={showDetail}
-                      />
-                    );
-                  })
-                }
+                {accountTypes.map((accountType, i) => {
+                  return (
+                    <AccountType
+                      key={'account-type-' + i}
+                      accounts={accountsData.get(accountType.type)}
+                      institutions={institutionData}
+                      accountsType={accountType.title}
+                      onAccountItemClick={onAccountItemClick}
+                      onCloseAccountDetailClick={onCloseAccountDetailClick}
+                      loading={loading}
+                      showDetail={showDetail}
+                    />
+                  );
+                })}
               </>
             )}
           </div>
         </>
       )}
-      {showDetail && <AccountItemDetail onClose={onCloseAccountDetailClick} selectedAccount={selectedAccount} />}
+      {/* {showDetail && <AccountItemDetail onClose={onCloseAccountDetailClick} selectedAccount={selectedAccount} />} */}
+      {showDetail && <IncomeAndExpensesItemDetail />}
     </>
   );
 }
