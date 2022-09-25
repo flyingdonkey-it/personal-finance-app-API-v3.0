@@ -5,7 +5,6 @@ import { LoadingSpinner } from '../../LoadingSpinner';
 import { useAccountVerificationForm } from '../../AccountVerificationForm/AccountVerificationFormProvider';
 import { AccountItemDetail } from './AccountItemDetail';
 import { AccountType } from './AccountType';
-import { IncomeAndExpensesItemDetail } from '../IncomeAndExpensesItemDetail';
 
 const accountTypes = [
   { type: 'savings', title: 'Savings accounts' },
@@ -124,8 +123,7 @@ export function AccountPage() {
           </div>
         </>
       )}
-      {/* {showDetail && <AccountItemDetail onClose={onCloseAccountDetailClick} selectedAccount={selectedAccount} />} */}
-      {showDetail && <IncomeAndExpensesItemDetail />}
+      {showDetail && <AccountItemDetail onClose={onCloseAccountDetailClick} selectedAccount={selectedAccount} />}
     </>
   );
 }
