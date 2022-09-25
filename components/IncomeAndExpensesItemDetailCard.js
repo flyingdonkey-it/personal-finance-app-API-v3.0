@@ -15,7 +15,7 @@ export function IncomeAndExpensesItemDetailCard({ item, path }) {
             </div>
             <div className="text-primary-bold sm:text-xl text-base2">{item.source}</div>
           </div>
-          <img className="w-10 h-10 rounded-full sm:w-12 sm:h-12" src={'/dots-menu.svg'} alt={'avatar'} />
+          <img src={'/dots-menu.svg'} alt={'avatar'} />
         </div>
       </div>
       <hr className="text-primary-bold w-100" />
