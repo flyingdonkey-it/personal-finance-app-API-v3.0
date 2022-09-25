@@ -7,6 +7,7 @@ import { ProfileLayout } from './ProfileLayout';
 import { TransactionPage } from './Transaction';
 import { HomeSlider} from './Slider';
 import { AccountPage } from './Account'
+import { IncomeExpense } from './IncomeExpense'
 
 export function PersonalFinanceLayout() {
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
@@ -63,6 +64,7 @@ export function PersonalFinanceLayout() {
           {selectedPageIndex &&
             selectedPageIndex === 3 &&
             <>
+              <IncomeExpense/>
             </>
           }
           {selectedPageIndex &&
@@ -109,6 +111,7 @@ export function PersonalFinanceLayout() {
             {selectedPageIndex &&
               selectedPageIndex === 3 &&
               <>
+                <IncomeExpense/>
               </>
             }
             {selectedPageIndex &&
