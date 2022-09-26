@@ -39,7 +39,7 @@ export function IncomeExpenseChart({ expenseData, incomeData, incomeMonthlyAvg, 
         }
         {
           currentIndex === 4 &&
-          <MonthlyIncomeChart incomeData={incomeData} incomeLoading={incomeLoading} chartWidth={chartWidth} chartAspect={1} hideSeeMore={true} showInChartSlider={true} />
+          <MonthlyIncomeChart incomeData={incomeData} incomeLoading={incomeLoading} chartWidth={chartWidth} chartAspect={1.25} hideSeeMore={true} showInChartSlider={true} />
         }
         <div className="hidden mt-16 mr-6 sm:block">
           <div className="flex justify-end">
