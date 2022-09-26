@@ -7,7 +7,7 @@ import { PersonalFinanceFooter } from "./PersonalFinanceFooter";
 import { PersonalFinanceHeader } from './PersonalFinanceHeader';
 import { ProfileLayout } from './ProfileLayout';
 import { TransactionPage } from './Transaction';
-import { HomeSlider } from './Slider';
+import { HomeSlider, Expenditures } from './Slider';
 import { AccountPage } from './Account'
 import { IncomeExpensePage } from './IncomeExpense';
 
@@ -27,6 +27,7 @@ export function PersonalFinanceLayout() {
   const [expenseMonthlyAvgData, setExpenseMonthlyAvgData] = useState(0);
   const [incomeMonthlyAvgData, setIncomeMonthlyAvgData] = useState(0);
   const [expenseMonthlyData, setExpenseMonthlyData] = useState([]);
+  const [paymentsData, setPaymentsData] = useState([]);
   const [refreshConnectionError, setRefreshConnectionError] = useState(false);
   const [expenseLoading, setExpenseLoading] = useState(true);
   const [incomeLoading, setIncomeLoading] = useState(true);
@@ -55,6 +56,7 @@ export function PersonalFinanceLayout() {
                 return { name: x.division, value: x.percentageTotal, fill: colorPallette[parseInt(i % 12)] }
               }));
               setExpenseMonthlyData(prepareExpenseMonthlyData(data.payments));
+              setPaymentsData(data.payments);
               setExpenseLoading(false);
             })
             .catch(function (error) {
@@ -62,6 +64,7 @@ export function PersonalFinanceLayout() {
               setExpenseMonthlyAvgData(0);
               setExpenseData([]);
               setExpenseMonthlyData([]);
+              setPaymentsData([]);
               setExpenseLoading(false);
             });
 
@@ -174,7 +177,7 @@ export function PersonalFinanceLayout() {
                   <IncomeExpenseChart expenseData={expenseData} incomeData={incomeData} incomeMonthlyAvg={incomeMonthlyAvgData}
                     expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading}
                     incomeLoading={incomeLoading} chartWidth={"100%"} />
-                  <div>Card Slider</div>
+                  <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
                 </>
               }
               <div className="mt-12">
@@ -232,7 +235,7 @@ export function PersonalFinanceLayout() {
                       <IncomeExpenseChart expenseData={expenseData} incomeData={incomeData} incomeMonthlyAvg={incomeMonthlyAvgData}
                         expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading}
                         incomeLoading={incomeLoading} chartWidth={"75%"} />
-                      <div>Card Slider</div>
+                      <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
                     </div>
                   </>
                 }
