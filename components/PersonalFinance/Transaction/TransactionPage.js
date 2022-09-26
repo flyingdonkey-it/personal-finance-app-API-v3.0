@@ -116,14 +116,16 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
                         {groupedItem[0]}
                       </div>
                     </div>
-                    {groupedItem[1].map((transaction, tIndex) => {
-                      return (
-                        <div key={'transaction-item-' + gIndex + '-' + tIndex} className="pt-2 pb-2"
-                          onClick={e => onTransactionItemClick({ transactionDetail: transaction, ...e })}>
-                          <TransactionItem item={transaction} />
-                        </div>
-                      );
-                    })}
+                    {
+                      groupedItem[1].map((transaction, tIndex) => {
+                        return (
+                          <div key={'transaction-item-' + gIndex + '-' + tIndex} className="pt-2 pb-2"
+                            onClick={e => onTransactionItemClick({ transactionDetail: transaction, ...e })}>
+                              <TransactionItem item={transaction} />
+                          </div>
+                        );
+                      })
+                    }
                   </div>
                 );
               })
