@@ -1,1 +1,1 @@
-export { IncomeExpense } from './IncomeExpense';
+export { IncomeExpensePage } from './IncomeExpensePage';
