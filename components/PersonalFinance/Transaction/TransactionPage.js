@@ -81,9 +81,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
               <div className="hidden mr-4 sm:block">
                 <img className="w-6 h-6" src="/swap.svg" alt="Swap" />
               </div>
-              <div
-                className={`font-semibold text-blue sm:text-2xl2 ${inTransactionsPage ? 'text-2xl2' : 'text-base2'}`}
-              >
+              <div className={`font-semibold text-blue sm:text-2xl2 ${inTransactionsPage ? 'text-2xl2' : 'text-base2'}`}>
                 Transactions
               </div>
             </div>
