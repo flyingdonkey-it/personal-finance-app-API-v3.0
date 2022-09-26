@@ -20,9 +20,9 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-export function CustomBarChart({ data, width }) {
+export function CustomBarChart({ data, width, aspect }) {
   return (
-    <ResponsiveContainer width={width} height="100%" aspect={1.25}>
+    <ResponsiveContainer width={width} height="100%" aspect={aspect}>
       <ComposedChart
         width={700}
         height={400}

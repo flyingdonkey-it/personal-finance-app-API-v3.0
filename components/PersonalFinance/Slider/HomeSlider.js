@@ -4,44 +4,25 @@ import { Savings } from './Savings';
 import { Loans } from './Loans';
 import { CreditCard } from './CreditCard';
 import { IncomeExpense } from './IncomeExpense';
-import { MonthlySpending } from './MonthlySpending';
+import { MonthlySpendingBarChart } from './MonthlySpendingBarChart';
 
-export function HomeSlider() {
+export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly, expenseLoading, chartWidth, chartAspect }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [savingsBalance, setSavingsBalance] = useState(0);
   const [loansBalance, setLoansBalance] = useState(0);
   const [creditCardBalance, setCreditCardBalance] = useState(0);
-  const [incomeMonthlyTotal] = useState(16250);
-  const [expenseMonthlyTotal] = useState(12350);
 
   const components = [
-    // eslint-disable-next-line react/jsx-key
     { index: 0, hidden: false, component: <Savings balance={savingsBalance} /> },
     { index: 1, hidden: true, component: <Loans balance={loansBalance} /> },
     { index: 2, hidden: true, component: <CreditCard balance={creditCardBalance} /> },
-    { index: 3, hidden: true, component: <MonthlySpending /> },
-    { index: 4, hidden: true, component: <IncomeExpense income={incomeMonthlyTotal} expense={expenseMonthlyTotal} /> }
+    { index: 3, hidden: true, component: <MonthlySpendingBarChart expenseMonthly={expenseMonthly} expenseLoading={expenseLoading} chartWidth={chartWidth} chartAspect={chartAspect} /> },
+    { index: 4, hidden: true, component: <IncomeExpense incomeMonthlyAvg={incomeMonthlyAvg} expenseMonthlyAvg={expenseMonthlyAvg} /> }
   ];
 
   const handleClickIndicator = (e, index) => {
     e.preventDefault();
     setCurrentIndex(index);
-  };
-
-  const createExpense = () => {
-    //const userId = sessionStorage.getItem('userId');
-    // axios
-    //   .post(`/api/create-expense?userId=${userId}`, { fromMonth: '2019-05', toMonth: '2019-09' })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => console.error(error));
-
-    // axios.post(`/api/create-income?userId=${userId}`, { fromMonth: '2019-05', toMonth: '2019-09' })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => console.error(error));
   };
 
   const fetchAccounts = () => {
@@ -57,7 +38,6 @@ export function HomeSlider() {
 
   useEffect(() => {
     fetchAccounts();
-    createExpense();
   }, []);
 
   return (

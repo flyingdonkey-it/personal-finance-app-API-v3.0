@@ -13,9 +13,9 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
   const [selectedTransaction, setSelectedTransaction] = useState({});
   const [showCalendar, setShowCalendar] = useToggleState(false);
 
-  const getData = () => {
-    setLoading(true)
-    const userId = sessionStorage.getItem("userId")
+  function getData() {
+    setLoading(true);
+    const userId = sessionStorage.getItem('userId');
     axios
       .get(`/api/transactions`, { params: { userId, limit } })
       .then(function (response) {
@@ -36,37 +36,45 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
         setDateGroupedTransactions([]);
         setLoading(false);
       });
-  }
+  };
 
-  const onTransactionItemClick = (e) => {
+  function onTransactionItemClick(e) {
     if (!inTransactionsPage) {
       hideHomePageItems(true);
     }
 
     setShowDetail(true);
     setSelectedTransaction(e.transactionDetail);
-  }
+  };
 
-  const onCloseTransactionDetailClick = () => {
+  function onCloseTransactionDetailClick() {
     if (!inTransactionsPage) {
       hideHomePageItems(false);
     }
 
     setSelectedTransaction({});
     setShowDetail(false);
-  }
+  };
 
-  const onSeeAllClick = () => {
+  function onSeeAllClick() {
     managePages(4, 'Upload');
-  }
+  };
+
+  function onCalendarItemClick(date) {
+    setShowDetail(true);
+    const selectedDate = dateGroupedTransactions.find(item => item[0] === date);
+    selectedDate.map(item => {
+      setSelectedTransaction(item[0]);
+    });
+  };
 
   useEffect(() => {
-    getData()
+    getData();
   }, []);
 
   return (
     <>
-      {!showDetail &&
+      {!showDetail && (
         <>
           <div className="flex justify-between ml-6 mr-6 sm:mt-12 sm:ml-52 sm:mr-80">
             <div className="flex">
@@ -77,16 +85,23 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
                 Transactions
               </div>
             </div>
-            <div className="flex items-center justify-center pr-4" >
-              {inTransactionsPage
-                ? (
-                  <div className="h-14">
-                    <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={setShowCalendar} />
-                    {showCalendar &&
-                      <Calendar data={dateGroupedTransactions || []} open={showCalendar} />}
-                  </div>
-                )
-                : <p className='font-semibold underline text-sm2 text-blue bg-[#FEFEFE]' onClick={onSeeAllClick}>See all</p>}
+            <div className="flex items-center justify-center pr-4">
+              {inTransactionsPage ? (
+                <div className="h-14">
+                  <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={setShowCalendar} />
+                  {showCalendar && (
+                    <Calendar
+                      data={dateGroupedTransactions || []}
+                      open={showCalendar}
+                      onCalendarItemClick={onCalendarItemClick}
+                    />
+                  )}
+                </div>
+              ) : (
+                <p className="font-semibold underline text-sm2 text-blue bg-[#FEFEFE]" onClick={onSeeAllClick}>
+                  See all
+                </p>
+              )}
             </div>
           </div>
           <div className="sm:ml-52 sm:mr-80 bg-[#FCFCFC]">
@@ -94,36 +109,40 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
               dateGroupedTransactions.map((groupedItem, gIndex) => {
                 return (
                   <div key={'grouped-transaction-' + gIndex}>
-                    <div className='pt-5 pb-4 font-semibold text-sm2 text-blue bg-[#FEFEFE]'>
-                      <div className='ml-8'>
+                    <div className="pt-5 pb-4 font-semibold text-sm2 text-blue bg-[#FEFEFE]">
+                      <div className="ml-8">
                         {groupedItem[0]}
                       </div>
                     </div>
                     {
                       groupedItem[1].map((transaction, tIndex) => {
                         return (
-                          <div key={'transaction-item-' + gIndex + '-' + tIndex} className="pt-2 pb-2" onClick={(e) => onTransactionItemClick({ transactionDetail: transaction, ...e })}>
-                            <TransactionItem item={transaction} />
+                          <div key={'transaction-item-' + gIndex + '-' + tIndex} className="pt-2 pb-2"
+                            onClick={e => onTransactionItemClick({ transactionDetail: transaction, ...e })}>
+                              <TransactionItem item={transaction} />
                           </div>
-                        )
+                        );
                       })
                     }
                   </div>
                 );
               })
-            ) :
+            ) : (
               <div className="flex justify-center">
-                <div className='mt-16'>
-                  {loading} {loading ? <LoadingSpinner /> : "Transactions not Found"}
+                <div className="mt-16">
+                  {loading} {loading ? <LoadingSpinner /> : 'Transactions not Found'}
                 </div>
               </div>
-            }
+            )}
           </div>
         </>
-      }
-      {showDetail &&
-        <TransactionItemDetail detail={selectedTransaction} closeTransactionDetailClick={onCloseTransactionDetailClick} />
-      }
+      )}
+      {showDetail && (
+        <TransactionItemDetail
+          detail={selectedTransaction}
+          closeTransactionDetailClick={onCloseTransactionDetailClick}
+        />
+      )}
     </>
   );
 }

@@ -29,7 +29,7 @@ const renderActiveShape = (props) => {
   );
 };
 
-export function CustomPieChart({ data, width }) {
+export function ActiveShapePieChart({ data, width }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   function onPieEnter(_, index) {
