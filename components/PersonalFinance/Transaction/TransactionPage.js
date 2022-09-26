@@ -118,11 +118,8 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
                     </div>
                     {groupedItem[1].map((transaction, tIndex) => {
                       return (
-                        <div
-                          key={'transaction-item-' + gIndex + '-' + tIndex}
-                          className="pt-2 pb-2"
-                          onClick={e => onTransactionItemClick({ transactionDetail: transaction, ...e })}
-                        >
+                        <div key={'transaction-item-' + gIndex + '-' + tIndex} className="pt-2 pb-2"
+                          onClick={e => onTransactionItemClick({ transactionDetail: transaction, ...e })}>
                           <TransactionItem item={transaction} />
                         </div>
                       );

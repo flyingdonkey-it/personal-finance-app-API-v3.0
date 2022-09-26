@@ -37,8 +37,7 @@ export function Calendar({ data, open, onCalendarItemClick }) {
       dateRender={current => {
         const date = current.toISOString().split('T')[0];
         return data.find(element => element[0] === date) ? (
-          <div
-            className="rounded-lg ant-picker-cell ant-picker-cell-in-view ant-picker-cell-inner w-[2.1rem]"
+          <div className="rounded-lg ant-picker-cell ant-picker-cell-in-view ant-picker-cell-inner w-[2.1rem]"
             onClick={() => onCalendarItemClick(date)}
           >
             <div className="h-4 text-xs selected-date">
