@@ -1,6 +1,7 @@
 import { DatePicker } from 'antd';
+import { formatCurrency } from '../utils/formatCurrency'
 
-export function Calendar({ data, open, calendarItemDetail }) {
+export function Calendar({ data, open, onCalendarItemClick }) {
   function sumAmount(date, isPositive) {
     return data.map(item => {
       if (date === item[0]) {
@@ -12,7 +13,7 @@ export function Calendar({ data, open, calendarItemDetail }) {
               : previousValue + (Number(currentValue.amount) < 0 ? Number(currentValue.amount) : 0),
           initalValue
         );
-        return sum.toFixed(0);
+        return formatCurrency(sum.toFixed(0), true);
       }
     });
   }
@@ -38,11 +39,17 @@ export function Calendar({ data, open, calendarItemDetail }) {
         return data.find(element => element[0] === date) ? (
           <div
             className="rounded-lg ant-picker-cell ant-picker-cell-in-view ant-picker-cell-inner w-[2.1rem]"
-            onClick={() => calendarItemDetail(date)}
+            onClick={() => onCalendarItemClick(date)}
           >
-            <div className="h-4 text-xs selected-date">{current.date()}</div>
-            <div className="h-4 selected-amount text-[9px] text-blue">{sumAmount(date, true)}$</div>
-            <div className="h-4 selected-amount text-[9px] text-[#8CA6DE]">{sumAmount(date, false)}$</div>
+            <div className="h-4 text-xs selected-date">
+              {current.date()}
+            </div>
+            <div className="h-4 selected-amount text-[9px] text-blue">
+              {sumAmount(date, true)}
+            </div>
+            <div className="h-4 selected-amount text-[9px] text-[#8CA6DE]">
+              {sumAmount(date, false)}
+            </div>
           </div>
         ) : (
           <div className="rounded-lg ant-picker-cell-inner ant-picker-cell-in-view selected-date text-blue w-[2.1rem] h-[3.3rem]">

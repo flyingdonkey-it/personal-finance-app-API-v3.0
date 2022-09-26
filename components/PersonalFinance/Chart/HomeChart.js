@@ -25,7 +25,7 @@ const upcomingPayments = [
   },
 ]
 
-export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoading, chartWidth }) {
+export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoading, chartWidth, chartAspect }) {
   const [selectedChartItem, setSelectedChartItem] = useState(1);
 
   function onItemClick(itemIndex) {
@@ -109,7 +109,7 @@ export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoadi
                 Income
               </div>
             </div>
-            <MonthlyIncomeChart incomeData={incomeData} incomeLoading={incomeLoading} chartWidth={chartWidth} chartAspect={1.25} />
+            <MonthlyIncomeChart incomeData={incomeData} incomeLoading={incomeLoading} chartWidth={chartWidth} chartAspect={chartAspect} />
           </div>
         }
       </div>

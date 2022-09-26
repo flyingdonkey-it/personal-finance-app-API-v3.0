@@ -13,7 +13,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
   const [selectedTransaction, setSelectedTransaction] = useState({});
   const [showCalendar, setShowCalendar] = useToggleState(false);
 
-  const getData = () => {
+  function getData() {
     setLoading(true);
     const userId = sessionStorage.getItem('userId');
     axios
@@ -38,7 +38,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
       });
   };
 
-  const onTransactionItemClick = e => {
+  function onTransactionItemClick(e) {
     if (!inTransactionsPage) {
       hideHomePageItems(true);
     }
@@ -47,7 +47,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
     setSelectedTransaction(e.transactionDetail);
   };
 
-  const onCloseTransactionDetailClick = () => {
+  function onCloseTransactionDetailClick() {
     if (!inTransactionsPage) {
       hideHomePageItems(false);
     }
@@ -56,14 +56,14 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
     setShowDetail(false);
   };
 
-  const onSeeAllClick = () => {
+  function onSeeAllClick() {
     managePages(4, 'Upload');
   };
 
-  const calendarItemDetail = date => {
+  function onCalendarItemClick(date) {
     setShowDetail(true);
-    const selectedCalendar = dateGroupedTransactions.find(item => item[0] === date);
-    selectedCalendar.map(item => {
+    const selectedDate = dateGroupedTransactions.find(item => item[0] === date);
+    selectedDate.map(item => {
       setSelectedTransaction(item[0]);
     });
   };
@@ -95,7 +95,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
                     <Calendar
                       data={dateGroupedTransactions || []}
                       open={showCalendar}
-                      calendarItemDetail={calendarItemDetail}
+                      onCalendarItemClick={onCalendarItemClick}
                     />
                   )}
                 </div>
@@ -112,7 +112,9 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
                 return (
                   <div key={'grouped-transaction-' + gIndex}>
                     <div className="pt-5 pb-4 font-semibold text-sm2 text-blue bg-[#FEFEFE]">
-                      <div className="ml-8">{groupedItem[0]}</div>
+                      <div className="ml-8">
+                        {groupedItem[0]}
+                      </div>
                     </div>
                     {groupedItem[1].map((transaction, tIndex) => {
                       return (
