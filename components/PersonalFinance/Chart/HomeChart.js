@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-import axios from 'axios';
+import { useState } from "react";
 import { ListItem } from "../../ListItem";
-import { CustomPieChart } from "../../CustomPieChart";
-import { LoadingSpinner } from '../../LoadingSpinner';
-import { CustomBarChart } from "../../CustomBarChart";
+import { MonthlySpendingChart } from "./MonthlySpendingChart";
+import { MonthlyIncomeChart } from "./MonthlyIncomeChart";
 
 const expensesIndex = 1;
 const upcomingPaymentsIndex = 2;
@@ -27,63 +25,8 @@ const upcomingPayments = [
   },
 ]
 
-const colorPallette = [
-  "#4A56E2", "#4761DD", "#436BD7", "#4076D2", "#3C81CD", "#398CC7", "#3596C2", "#32A1BC", "#2EACB7", "#2BB7B2", "#27C1AC", "#24CCA7"
-];
-
-export function HomeChart({ chartWidth }) {
+export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoading, chartWidth }) {
   const [selectedChartItem, setSelectedChartItem] = useState(1);
-  const [expenseLoading, setExpenseLoading] = useState(false);
-  const [incomeLoading, setIncomeLoading] = useState(false);
-  const [expenseData, setExpenseData] = useState([]);
-  const [incomeData, setIncomeData] = useState([]);
-  const [refreshConnectionError, setRefreshConnectionError] = useState(false);
-
-  function getExpenseData() {
-    setExpenseLoading(true);
-    setIncomeLoading(true);
-
-    const userId = sessionStorage.getItem("userId");
-    axios
-      .post(`/api/refresh-connection?userId=${userId}`)
-      .then(function (refreshResponse) {
-        if (refreshResponse.status === 200) {
-          axios
-            .post(`/api/create-expense?userId=${userId}`, { fromMonth: '2020-03', toMonth: '2020-06' })
-            .then(function (response) {
-              setExpenseData(response.data.payments.map((x, i) => {
-                return { name: x.division, value: x.percentageTotal, fill: colorPallette[parseInt(i % 12)] }
-              }));
-              setExpenseLoading(false);
-            })
-            .catch(function (error) {
-              console.warn(error);
-              setExpenseData([]);
-              setExpenseLoading(false);
-            });
-
-          axios
-            .post(`/api/create-income?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2020-12' })
-            .then(function (response) {
-              setIncomeData(response.data.regular[0].changeHistory.map((x) => {
-                return { key: new Date(x.date).toLocaleString('en-us', { month: 'short' }), value: x.amount, normalizedValue: x.amount * 1.25 }
-              }));
-              setIncomeLoading(false);
-            })
-            .catch(function (error) {
-              console.warn(error);
-              setIncomeData([]);
-              setIncomeLoading(false);
-            });
-        }
-      })
-      .catch(function (error) {
-        console.warn(error);
-        setRefreshConnectionError(true);
-        setExpenseLoading(false);
-        setIncomeLoading(false);
-      });
-  }
 
   function onItemClick(itemIndex) {
     setSelectedChartItem(itemIndex);
@@ -93,12 +36,6 @@ export function HomeChart({ chartWidth }) {
     e.preventDefault();
     setSelectedChartItem(index);
   };
-
-  useEffect(() => {
-    if (expenseData.length === 0 && !refreshConnectionError) {
-      getExpenseData();
-    }
-  }, [expenseData]);
 
   return (
     <div className="flex flex-col mt-12 sm:w-3/5 sm:mt-1 sm:mr-80">
@@ -130,23 +67,7 @@ export function HomeChart({ chartWidth }) {
                 Expenses
               </div>
             </div>
-            {
-              expenseData.length > 0 ?
-                <>
-                  <div className="sm:ml-48">
-                    <CustomPieChart data={expenseData} width={chartWidth} />
-                  </div>
-                  <div className="flex justify-center">
-                    <p className="font-semibold underline text-sm2 text-blue bg-[#FEFEFE]">See more</p>
-                  </div>
-                </>
-                :
-                <div className="flex justify-center h-80">
-                  <div className="mt-16">
-                    {expenseLoading} {expenseLoading ? <LoadingSpinner /> : "Expense data not found"}
-                  </div>
-                </div>
-            }
+            <MonthlySpendingChart expenseData={expenseData} expenseLoading={expenseLoading} chartWidth={chartWidth} />
           </div>
         }
         {
@@ -188,27 +109,11 @@ export function HomeChart({ chartWidth }) {
                 Income
               </div>
             </div>
-            {
-              incomeData.length > 0 ?
-                <>
-                  <div className="sm:ml-48">
-                    <CustomBarChart data={incomeData} width={chartWidth} />
-                  </div>
-                  <div className="flex justify-center">
-                    <p className="font-semibold underline text-sm2 text-blue bg-[#FEFEFE]">See more</p>
-                  </div>
-                </>
-                :
-                <div className="flex justify-center h-80">
-                  <div className="mt-16">
-                    {incomeLoading} {incomeLoading ? <LoadingSpinner /> : "Income data not found"}
-                  </div>
-                </div>
-            }
+            <MonthlyIncomeChart incomeData={incomeData} incomeLoading={incomeLoading} chartWidth={chartWidth} chartAspect={1.25} />
           </div>
         }
       </div>
-      <div className="hidden basis-1/2 sm:block sm:ml-16">
+      <div className="hidden basis-1/2 sm:block sm:ml-16 sm:mr-10">
         <div className="flex justify-end">
           <div className="space-x-3">
             {items.map((item) => (
