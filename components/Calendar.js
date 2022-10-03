@@ -5,13 +5,13 @@ export function Calendar({ data, open, onCalendarItemClick }) {
   function sumAmount(date, isPositive) {
     return data.map(item => {
       if (date === item[0]) {
-        const initalValue = 0;
+        const initialValue = 0;
         const sum = item[1].reduce(
           (previousValue, currentValue) =>
             isPositive
               ? previousValue + (Number(currentValue.amount) > 0 ? Number(currentValue.amount) : 0)
               : previousValue + (Number(currentValue.amount) < 0 ? Number(currentValue.amount) : 0),
-          initalValue
+              initialValue
         );
         return formatCurrency(sum.toFixed(0), true);
       }

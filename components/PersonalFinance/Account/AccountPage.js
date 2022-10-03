@@ -7,9 +7,9 @@ import { AccountItemDetail } from './AccountItemDetail';
 import { AccountType } from './AccountType';
 
 const accountTypes = [
-  { type: 'savings', title: 'Savings accounts' },
-  { type: 'mortgage', title: 'Loans' },
-  { type: 'credit-card', title: 'Credit cards' },
+  { type: "savings", title: "Savings accounts" },
+  { type: "mortgage", title: "Loans" },
+  { type: "credit-card", title: "Credit cards" },
 ];
 
 export function AccountPage() {
