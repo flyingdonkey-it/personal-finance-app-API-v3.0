@@ -12,7 +12,7 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
 
   return (
     <div className="ml-6 mr-6 sm:ml-96 sm:mr-96">
-      <div className="flex justify-between mt-24 sm:mt-12">
+      <div className="flex justify-between mt-10 sm:mt-12">
         <div>
           <img className="w-8 h-8" src="/back-button.svg" alt="Back" onClick={onBackButtonClick} />
         </div>

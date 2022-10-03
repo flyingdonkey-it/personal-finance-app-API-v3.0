@@ -21,6 +21,7 @@ export function PersonalFinanceLayout() {
   const [selectedPageIndex, setSelectedPageIndex] = useState(1);
   const [selectedMenuTitle, setSelectedMenuTitle] = useState("Home");
   const [hideHomePageItems, setHideHomePageItems] = useState(false);
+  const [hideTransactionPageItems, setHideTransactionPageItems] = useState(false);
   const [hideIncomeExpensePageItems, setHideIncomeExpensePageItems] = useState(false);
   const [expenseData, setExpenseData] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
@@ -28,6 +29,8 @@ export function PersonalFinanceLayout() {
   const [incomeMonthlyAvgData, setIncomeMonthlyAvgData] = useState(0);
   const [expenseMonthlyData, setExpenseMonthlyData] = useState([]);
   const [paymentsData, setPaymentsData] = useState([]);
+  const [expensesByDate, setExpensesByDate] = useState([]);
+  const [incomesByDate, setIncomesByDate] = useState([]);
   const [refreshConnectionError, setRefreshConnectionError] = useState(false);
   const [expenseLoading, setExpenseLoading] = useState(true);
   const [incomeLoading, setIncomeLoading] = useState(true);
@@ -47,16 +50,42 @@ export function PersonalFinanceLayout() {
               }, 0);
 
               setExpenseMonthlyAvgData(
-                parseInt(data?.bankFees?.avgMonthly || "0") +
-                parseInt(data?.cashWithdrawals?.avgMonthly || "0") +
-                parseInt(data?.loanInterests?.avgMonthly || "0") +
-                parseInt(data?.loanRepayments?.avgMonthly || "0") +
+                parseInt(data.bankFees?.avgMonthly || "0") +
+                parseInt(data.cashWithdrawals?.avgMonthly || "0") +
+                parseInt(data.loanInterests?.avgMonthly || "0") +
+                parseInt(data.loanRepayments?.avgMonthly || "0") +
                 paymentsTotal);
               setExpenseData(data.payments.map((x, i) => {
                 return { name: x.division, value: x.percentageTotal, fill: colorPallette[parseInt(i % 12)] }
               }));
-              setExpenseMonthlyData(prepareExpenseMonthlyData(data.payments));
+
               setPaymentsData(data.payments);
+
+              let paymentsChangeHistory = [];
+              data.payments.forEach(x =>
+                x.subCategory[0].changeHistory.forEach(y =>
+                  paymentsChangeHistory.push({ date: y.date, amount: y.amount, description: x.division })
+                )
+              );
+              setExpenseMonthlyData(prepareExpenseMonthly(paymentsChangeHistory));
+
+              let expenseChangeHistory = [];
+              expenseChangeHistory.push(...data.bankFees?.changeHistory.map(x => {
+                return { date: x.date, amount: x.amount, description: 'Bank fee' }
+              }));
+              expenseChangeHistory.push(...data.cashWithdrawals?.changeHistory.map(x => {
+                return { date: x.date, amount: x.amount, description: 'Cash withdrawal' }
+              }));
+              expenseChangeHistory.push(...data.loanInterests?.changeHistory.map(x => {
+                return { date: x.date, amount: x.amount, description: 'Loan interest' }
+              }));
+              expenseChangeHistory.push(...data.loanRepayments?.changeHistory.map(x => {
+                return { date: x.date, amount: x.amount, description: 'Loan repayment' }
+              }));
+              expenseChangeHistory.push(...paymentsChangeHistory);
+
+              setExpensesByDate(prepareExpenseByDate(expenseChangeHistory));
+
               setExpenseLoading(false);
             })
             .catch(function (error) {
@@ -66,6 +95,7 @@ export function PersonalFinanceLayout() {
               setExpenseMonthlyData([]);
               setPaymentsData([]);
               setExpenseLoading(false);
+              setRefreshConnectionError(true);
             });
 
           axios
@@ -77,6 +107,14 @@ export function PersonalFinanceLayout() {
               setIncomeData(data.regular[0].changeHistory.slice(0, 12).map((x) => {
                 return { key: new Date(x.date).toLocaleString('en-us', { month: 'short' }), value: x.amount, normalizedValue: x.amount * 1.25 }
               }));
+
+              let incomeChangeHistory = [];
+              incomeChangeHistory.push(...data.irregular[0].changeHistory);
+              incomeChangeHistory.push(...data.otherCredit[0].changeHistory);
+              incomeChangeHistory.push(...data.regular[0].changeHistory);
+
+              setIncomesByDate(groupChangeHistoryByDay(incomeChangeHistory));
+
               setIncomeLoading(false);
             })
             .catch(function (error) {
@@ -84,6 +122,7 @@ export function PersonalFinanceLayout() {
               setIncomeMonthlyAvgData(0);
               setIncomeData([]);
               setIncomeLoading(false);
+              setRefreshConnectionError(true);
             });
         }
       })
@@ -95,16 +134,28 @@ export function PersonalFinanceLayout() {
       });
   }
 
-  function prepareExpenseMonthlyData(payments) {
-    const flatExpenseChangeHistory = [].concat.apply([], payments.map(x => x.subCategory[0].changeHistory));
-
-    const groupedByMonthExpenses = Object.entries(flatExpenseChangeHistory.reduce(function (r, a) {
+  function groupChangeHistoryByMonth(changeHistory, absoluteValue) {
+    return Object.entries(changeHistory.reduce(function (r, a) {
       if (a.date) {
         r[a.date] = r[a.date] || [];
-        r[a.date].push(Math.abs(a.amount));
+        r[a.date].push(absoluteValue ? Math.abs(a.amount) : { amount: a.amount, description: a.description });
         return r;
       }
     }, Object.create(null)));
+  }
+
+  function groupChangeHistoryByDay(changeHistory) {
+    return Object.entries(changeHistory.reduce(function (r, a) {
+      if (a.date) {
+        r[a.date.slice(0, 10)] = r[a.date.slice(0, 10)] || [];
+        r[a.date.slice(0, 10)].push({ amount: a.amount, description: a.source });
+        return r;
+      }
+    }, Object.create(null)));
+  }
+
+  function prepareExpenseMonthly(paymentsChangeHistory) {
+    const groupedByMonthExpenses = groupChangeHistoryByMonth(paymentsChangeHistory, true);
 
     const orderedExpenseTotalByMonth = groupedByMonthExpenses.map(x => {
       return {
@@ -115,6 +166,15 @@ export function PersonalFinanceLayout() {
     }).sort((a, b) => (a.key > b.key) ? 1 : ((b.key > a.key) ? -1 : 0)).slice(0, 12);
 
     return orderedExpenseTotalByMonth.map(x => { return { ...x, key: new Date(x.key + "-01").toLocaleString('en-us', { month: 'short' }) } });
+  }
+
+  function prepareExpenseByDate(expenseChangeHistory) {
+    const groupedChangeHistory = groupChangeHistoryByMonth(expenseChangeHistory);
+
+    groupedChangeHistory.forEach(x => x[0] = x[0] + "-01");
+    groupedChangeHistory.sort((a, b) => (a[0] > b[0]) ? 1 : ((b[0] > a[0]) ? -1 : 0));
+
+    return groupedChangeHistory;
   }
 
   function manageMenus(isMainMenu) {
@@ -132,6 +192,13 @@ export function PersonalFinanceLayout() {
     setSelectedMenuTitle(selectedMenuTitle);
     setMainMenuOpen(false);
     setSelectedPageIndex(selectedPageIndex);
+    manageDetailPages(false, false, false);
+  }
+
+  function manageDetailPages(hideHomePageItems, hideTransactionPageItems, hideIncomeExpensePageItems) {
+    setHideHomePageItems(hideHomePageItems);
+    setHideTransactionPageItems(hideTransactionPageItems);
+    setHideIncomeExpensePageItems(hideIncomeExpensePageItems);
   }
 
   useEffect(() => {
@@ -157,9 +224,7 @@ export function PersonalFinanceLayout() {
                   <HomeChart expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"100%"} chartAspect={1.25} />
                 </>
               }
-              <div className="mt-12">
-                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} hideHomePageItems={setHideHomePageItems} />
-              </div>
+              <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
             </div>
           }
           {selectedPageIndex &&
@@ -171,18 +236,24 @@ export function PersonalFinanceLayout() {
           {selectedPageIndex &&
             selectedPageIndex === 3 &&
             <div className="flex flex-col">
-              {!hideIncomeExpensePageItems &&
+              {
+                !hideIncomeExpensePageItems &&
+                <IncomeExpensePage incomeLoading={incomeLoading} expenseLoading={expenseLoading} incomesByDate={incomesByDate}
+                  expensesByDate={expensesByDate} manageDetailPages={manageDetailPages} />
+              }
+              {
+                !hideHomePageItems &&
                 <>
-                  <IncomeExpensePage />
                   <IncomeExpenseChart expenseData={expenseData} incomeData={incomeData} incomeMonthlyAvg={incomeMonthlyAvgData}
                     expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading}
                     incomeLoading={incomeLoading} chartWidth={"100%"} />
                   <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
                 </>
               }
-              <div className="mt-12">
-                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} hideHomePageItems={setHideIncomeExpensePageItems} />
-              </div>
+              {
+                !hideTransactionPageItems &&
+                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+              }
             </div>
           }
           {selectedPageIndex &&
@@ -216,7 +287,7 @@ export function PersonalFinanceLayout() {
                     </div>
                   </div>
                 }
-                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} hideHomePageItems={setHideHomePageItems} />
+                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
               </>
             }
             {selectedPageIndex &&
@@ -228,9 +299,13 @@ export function PersonalFinanceLayout() {
             {selectedPageIndex &&
               selectedPageIndex === 3 &&
               <>
-                {!hideIncomeExpensePageItems &&
+                {
+                  !hideIncomeExpensePageItems &&
+                  <IncomeExpensePage incomeLoading={incomeLoading} expenseLoading={expenseLoading} incomesByDate={incomesByDate}
+                    expensesByDate={expensesByDate} manageDetailPages={manageDetailPages} />}
+                {
+                  !hideHomePageItems &&
                   <>
-                    <IncomeExpensePage />
                     <div className="flex">
                       <IncomeExpenseChart expenseData={expenseData} incomeData={incomeData} incomeMonthlyAvg={incomeMonthlyAvgData}
                         expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading}
@@ -239,9 +314,12 @@ export function PersonalFinanceLayout() {
                     </div>
                   </>
                 }
-                <div className="mt-12">
-                  <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} hideHomePageItems={setHideIncomeExpensePageItems} />
-                </div>
+                {
+                  !hideTransactionPageItems &&
+                  <div className="mt-12">
+                    <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                  </div>
+                }
               </>
             }
             {selectedPageIndex &&
@@ -252,7 +330,7 @@ export function PersonalFinanceLayout() {
             }
           </div>
         </div>
-        <PersonalFinanceFooter menuItems={DESKTOP_FOOTER_MENU_ITEMS} middleMenuItems={DESKTOP_FOOTER_MIDDLE_MENU_ITEMS} onMenuItemClick={managePages}></PersonalFinanceFooter>
+        <PersonalFinanceFooter menuItems={DESKTOP_FOOTER_MENU_ITEMS} middleMenuItems={DESKTOP_FOOTER_MIDDLE_MENU_ITEMS} onMenuItemClick={managePages} />
       </div>
     </>
   );

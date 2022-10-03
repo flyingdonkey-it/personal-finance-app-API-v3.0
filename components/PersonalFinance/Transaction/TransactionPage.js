@@ -6,7 +6,7 @@ import { Calendar } from '../../Calendar';
 import { TransactionItem } from './TransactionItem';
 import { TransactionItemDetail } from './TransactionItemDetail';
 
-export function TransactionPage({ limit, inTransactionsPage, managePages, hideHomePageItems }) {
+export function TransactionPage({ limit, inTransactionsPage, managePages, manageDetailPages }) {
   const [dateGroupedTransactions, setDateGroupedTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
@@ -40,7 +40,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
 
   function onTransactionItemClick(e) {
     if (!inTransactionsPage) {
-      hideHomePageItems(true);
+      manageDetailPages(true, false, true);
     }
 
     setShowDetail(true);
@@ -49,7 +49,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, hideHo
 
   function onCloseTransactionDetailClick() {
     if (!inTransactionsPage) {
-      hideHomePageItems(false);
+      manageDetailPages(false, false, false);
     }
 
     setSelectedTransaction({});

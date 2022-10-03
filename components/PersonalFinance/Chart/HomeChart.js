@@ -38,7 +38,7 @@ export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoadi
   };
 
   return (
-    <div className="flex flex-col mt-12 sm:w-3/5 sm:mt-1 sm:mr-80">
+    <div className="flex flex-col mt-12 mb-12 sm:w-3/5 sm:mt-1 sm:mr-80">
       <div className="flex items-center ml-12 mr-12 border-2 rounded-3xl border-[#4A56E2] sm:hidden">
         {
           items &&
