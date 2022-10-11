@@ -4,6 +4,7 @@ import { formatCurrency } from '../../../utils/formatCurrency';
 export function AccountItem({ item, institutions, onAccountItemClick, showDetail, accountsType }) {
   const [selectedAccount, setSelectedAccount] = useState([]);
 
+  //Set related institution info
   function setInstitution() {
     setSelectedAccount(institutions.filter(x => x.id === item.institution));
   };
@@ -14,6 +15,7 @@ export function AccountItem({ item, institutions, onAccountItemClick, showDetail
 
   return (
     <>
+      {/* Show if not any account selected */}
       {!showDetail &&
         <>
           {selectedAccount.map((account, index) => (

@@ -8,7 +8,8 @@ import {
 } from 'recharts';
 import { formatCurrency } from '../utils/formatCurrency';
 
-const CustomTooltip = ({ active, payload }) => {
+//Rewriting tooltip function to show custom text
+function CustomTooltip({ active, payload }) {
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">

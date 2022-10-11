@@ -5,6 +5,7 @@ import { formatCurrency } from '../../../utils/formatCurrency';
 export function Expenditures({ payments, expenseLoading }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  //Getting click to left or right action and slide category
   function handleClick(e) {
     e.preventDefault();
     if (e.currentTarget.name === 'next') {
@@ -30,8 +31,10 @@ export function Expenditures({ payments, expenseLoading }) {
         </div>
       ) : (
         <>
+          {/* DESKTOP VIEW */}
           <div className="flex-col hidden mt-5 sm:flex">
             <div className="flex w-full">
+              {/* FIRST TWO CATEGORIES ON TOP */}
               {payments.slice(0, 2).map((item, index) => {
                   return (
                     <div key={"expenditure-card-" + index} className="w-1/2 m-2">
@@ -57,6 +60,7 @@ export function Expenditures({ payments, expenseLoading }) {
               })}
             </div>
             <div className="flex w-full">
+              {/* SECOND TWO CATEGORIES ON BOTTOM */}
               {payments.slice(2, 4).map((item, index) => {
                   return (
                     <div key={"expenditure-card-" + index} className="w-1/2 m-2">
@@ -82,9 +86,11 @@ export function Expenditures({ payments, expenseLoading }) {
               })}
             </div>
           </div>
+          {/* MOBILE VIEW */}
           <div className="flex items-center w-full mt-5 sm:hidden">
             <div id="controls-carousel" className="relative w-full" data-carousel="static">
               <div>
+                {/* ALL CATEGORIES */}
                 {payments.map((item, index) => (
                   <div key={"expenditure-card-" + index}
                     className={index === currentIndex ? "duration-200 ease-in-out" : "hidden duration-700 ease-in-out"}
@@ -108,6 +114,7 @@ export function Expenditures({ payments, expenseLoading }) {
                     </div>
                   </div>
                 ))}
+                {/* PREV BUTTON */}
                 <button className="absolute top-0 left-0 flex items-center justify-center h-full px-2 cursor-pointer group focus:outline-none"
                   type="button" name={"prev"} onClick={handleClick}>
                   <span 
@@ -118,6 +125,7 @@ export function Expenditures({ payments, expenseLoading }) {
                     <span className='sr-only'>Previous</span>
                   </span>
                 </button>
+                {/* NEXT BUTTON */}
                 <button type="button" name={"next"} onClick={handleClick}
                   className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-2 cursor-pointer group focus:outline-none">
                   <span 

@@ -6,10 +6,12 @@ export function PersonalFinanceHeader({ isMenuOpen, menuIconClick, profileMenuOp
 
   const router = useRouter();
 
+  //Redirecting to account verification for adding new account
   function onAddAccountClick() {
     resetForNewAccount();
   }
 
+  //Redirecting to profile page
   function onViewProfileClick() {
     router.push('/profile');
   }
@@ -24,6 +26,7 @@ export function PersonalFinanceHeader({ isMenuOpen, menuIconClick, profileMenuOp
           <img className="w-6 h-3" src="/battery.svg" alt="Battery" />
         </div>
       </div>
+      {/* DESKTOP VIEW */}
       <div className="flex items-center justify-between hidden h-[9.5rem] sm:flex">
         <div className="flex justify-center w-1/4">
           <img
@@ -42,6 +45,8 @@ export function PersonalFinanceHeader({ isMenuOpen, menuIconClick, profileMenuOp
           </div>
         </div>
       </div>
+      {/* MOBILE VIEW */}
+      {/* If this is Home Page */}
       {showProfileLine && (
         <div className="flex justify-between h-20 ml-6 mr-6 sm:hidden">
           <div>

@@ -1,13 +1,16 @@
 export function PersonalFinanceFooter({ menuItems, middleMenuItems, onMenuItemClick }) {
+  //When any page item clicked
   function onItemClick(selectedPageIndex) {
     onMenuItemClick(selectedPageIndex);
   }
 
+  //DESKTOP VIEW ONLY
   return (
     <div className="bottom-0 left-0 right-0 flex hidden top-72 bg-footer sm:flex">
       <div className="flex justify-around w-full mt-14 mb-14">
         <div className="flex justify-center w-2/5">
           <div className="w-1/2 text-2xl2 text-header">
+            {/* MENU ITEMS ON LEFT */}
             {menuItems.map((m, i) => {
               return (
                 <div key={`menu-item-${i}`} className="flex items-center pb-8" onClick={() => onItemClick(m.pageIndex)}>
@@ -20,6 +23,7 @@ export function PersonalFinanceFooter({ menuItems, middleMenuItems, onMenuItemCl
             })}
           </div>
           <div className="text-2xl2 text-header">
+            {/* MENU ITEMS IN MIDDLE */}
             {middleMenuItems.map((m, i) => {
               return (
                 <div key={`menu-item-${i}`} className="flex items-center pb-8">

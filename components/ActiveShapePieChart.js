@@ -32,6 +32,7 @@ const renderActiveShape = (props) => {
 export function ActiveShapePieChart({ data, width }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  //When any part of chart is selected
   function onPieEnter(_, index) {
     setActiveIndex(index);
   };

@@ -11,6 +11,7 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
   const [selectedIncomes, setSelectedIncomes] = useState([]);
   const [selectedExpenses, setSelectedExpenses] = useState([]);
 
+  //When any date clicked on calendar aggregate the income & expense items on this date
   function onCalendarItemClick(date) {
     setShowDetail(true);
     manageDetailPages(true, true, false);
@@ -32,6 +33,7 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
     setSelectedExpenses(expenses);
   };
 
+  //Close income expense detail page
   function onCloseIncomeExpenseDetailClick() {
     manageDetailPages(false, false, false);
     setSelectedIncomes({});
@@ -39,6 +41,7 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
     setShowDetail(false);
   };
 
+  //Aggregate income & expense data to show in calendar
   useEffect(() => {
     if (incomesByDate.length > 0 && expensesByDate.length > 0) {
       const incomeExpenseAggregatedData = [];
@@ -50,6 +53,7 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
 
   return (
     <>
+      {/* If not any income & expense item selected */}
       {!showDetail &&
         <div className="flex justify-between ml-6 mr-6 sm:mt-12 sm:ml-52 sm:mr-80">
           <div className="flex">
@@ -63,11 +67,13 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
           <div className="flex items-center justify-center pr-4" >
             <div className="h-14">
               <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={setShowCalendar} />
+              {/* INCOME & EXPENSE CALENDAR */}
               {showCalendar &&
                 <Calendar data={incomeExpenseByDate || []} open={showCalendar} onCalendarItemClick={onCalendarItemClick} />}
             </div>
           </div>
         </div>}
+      {/* If any income & expense item selected */}
       {showDetail &&
         <IncomeExpenseItem incomeLoading={incomeLoading} expenseLoading={expenseLoading} selectedDate={selectedDate}
           incomeDetails={selectedIncomes} expenseDetails={selectedExpenses} closeIncomeExpenseDetailClick={onCloseIncomeExpenseDetailClick} />

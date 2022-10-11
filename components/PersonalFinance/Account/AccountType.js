@@ -9,6 +9,7 @@ export function AccountType({ loading, accounts, institutions, accountsType, onA
           {accountsType}
         </div>
       </div>
+      {/* Each account is represented by a row */}
       {!loading && accounts && accounts.length > 0
         ? accounts.map((item, index) => (
             <AccountItem

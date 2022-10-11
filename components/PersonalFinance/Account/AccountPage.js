@@ -21,14 +21,18 @@ export function AccountPage() {
 
   const { resetForNewAccount } = useAccountVerificationForm();
 
+  //Redirecting to account verification for adding new account
   function onAddAccountClick() {
     resetForNewAccount();
   }
 
+  //Getting accounts data of user with matching institutions
   function getData() {
     setLoading(true);
 
     const userId = sessionStorage.getItem('userId');
+
+    //Get all accounts of user
     axios
       .get(`/api/accounts`, { params: { userId } })
       .then(function (response) {
@@ -48,6 +52,7 @@ export function AccountPage() {
 
         setAccountsData(groupBy(response.data, item => item.class.type));
 
+        //Get all institutions
         axios
           .get('/api/institutions')
           .then(res => {
@@ -70,11 +75,13 @@ export function AccountPage() {
     getData();
   }, []);
 
+  //Showing account detail page
   function onAccountItemClick(e) {
     setShowDetail(true);
     setSelectedAccount({ accountDetail: e.accountDetail, accountItem: e.item, accountsType: e.accountsType });
   }
 
+  //Closing account detail page
   function onCloseAccountDetailClick() {
     setSelectedAccount({});
     setShowDetail(false);
@@ -82,6 +89,7 @@ export function AccountPage() {
 
   return (
     <>
+      {/* Show account list if not any account selected */}
       {!showDetail && (
         <>
           <div className="flex justify-between mt-20 ml-6 mr-6 sm:mt-16 sm:ml-80 sm:mr-80">
@@ -104,6 +112,7 @@ export function AccountPage() {
               </div>
             ) : (
               <>
+                {/* List all accounts of user */}
                 {accountTypes.map((accountType, i) => {
                   return (
                     <AccountType
@@ -123,6 +132,7 @@ export function AccountPage() {
           </div>
         </>
       )}
+      {/* Show account detail if any account selected */}
       {showDetail && <AccountItemDetail onClose={onCloseAccountDetailClick} selectedAccount={selectedAccount} />}
     </>
   );

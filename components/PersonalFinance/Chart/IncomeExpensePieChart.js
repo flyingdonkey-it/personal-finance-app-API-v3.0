@@ -6,6 +6,7 @@ import { LoadingSpinner } from '../../LoadingSpinner';
 export function IncomeExpensePieChart({ incomeMonthlyAvg, expenseMonthlyAvg, incomeLoading, expenseLoading }) {
   const [incomeExpenseChartData, setIncomeExpenseChartData] = useState([]);
 
+  //Using monthly averages of income & expense in pie chart
   useEffect(() => {
     if (!incomeLoading && !expenseLoading) {
       setIncomeExpenseChartData([

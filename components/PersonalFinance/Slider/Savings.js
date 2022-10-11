@@ -18,6 +18,7 @@ export function Savings({ balance }) {
                 <div className="w-3/5 sm:ml-8">
                   <img className="w-16 h-16 sm:w-24 sm:h-24" src="/slider/money-vertical.svg" alt="Money" />
                 </div>
+                {/* SAVINGS ACCOUNT BALANCE */}
                 <div className="flex flex-col items-end sm:mr-6">
                   <div className="text-xs font-medium text-blue sm:text-base2">
                     Total amount
