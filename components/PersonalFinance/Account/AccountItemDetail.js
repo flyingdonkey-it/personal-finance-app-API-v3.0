@@ -1,12 +1,14 @@
 import { formatCurrency } from '../../../utils/formatCurrency';
 
 export function AccountItemDetail({ onClose, selectedAccount }) {
+  //Close account detail page
   function onBackButtonClick() {
     onClose();
   }
 
-  function getPostDateAsFormatted(postDate) {
-    return `${postDate.slice(8, 10)}/${postDate.slice(5, 7)}/${postDate.slice(0, 4)} ${postDate.slice(11, 16)}`;
+  //Formatting date field
+  function getDateAsFormatted(updateDate) {
+    return `${updateDate.slice(8, 10)}/${updateDate.slice(5, 7)}/${updateDate.slice(0, 4)} ${updateDate.slice(11, 16)}`;
   }
 
   return (
@@ -68,7 +70,7 @@ export function AccountItemDetail({ onClose, selectedAccount }) {
                 Date and time
               </div>
               <div className="mt-1 font-semibold">
-                {getPostDateAsFormatted(selectedAccount.accountItem.lastUpdated)}
+                {getDateAsFormatted(selectedAccount.accountItem.lastUpdated)}
               </div>
             </div>
             <div className="mt-7 text-base2">

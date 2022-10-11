@@ -8,10 +8,14 @@ import { MonthlySpendingBarChart } from './MonthlySpendingBarChart';
 
 export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly, expenseLoading, chartWidth, chartAspect }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  //Savings account balance
   const [savingsBalance, setSavingsBalance] = useState(0);
+  //Loans balance
   const [loansBalance, setLoansBalance] = useState(0);
+  //Credit card balance
   const [creditCardBalance, setCreditCardBalance] = useState(0);
 
+  //Slider components to load when it is selected
   const components = [
     { index: 0, hidden: false, component: <Savings balance={savingsBalance} /> },
     { index: 1, hidden: true, component: <Loans balance={loansBalance} /> },
@@ -20,12 +24,14 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
     { index: 4, hidden: true, component: <IncomeExpense incomeMonthlyAvg={incomeMonthlyAvg} expenseMonthlyAvg={expenseMonthlyAvg} /> }
   ];
 
-  const handleClickIndicator = (e, index) => {
+  //Get clicked index when carousel indicator clicked
+  function handleClickIndicator(e, index) {
     e.preventDefault();
     setCurrentIndex(index);
   };
 
-  const fetchAccounts = () => {
+  //Get accounts of user and set related account type balance
+  function fetchAccounts() {
     const userId = sessionStorage.getItem("userId");
     axios.get('/api/accounts', { params: { userId } })
       .then((response) => {
@@ -42,6 +48,7 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
 
   return (
     <div className="sm:w-2/5 sm:flex sm:ml-64 sm:mt-12">
+      {/* DESKTOP VIEW */}
       <div className="hidden w-full sm:block">
         {components[currentIndex].component}
         <div className="hidden mt-5 sm:block">
@@ -58,11 +65,13 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
           </div>
         </div>
       </div>
+      {/* MOBILE VIEW */}
       <div className="relative mt-6 overflow-hidden rounded-2xl sm:hidden ml-9 mr-9">
         <div className="h-48 sm:h-72" key={components[currentIndex].index}>
           {components[currentIndex].component}
         </div>
       </div>
+      {/* CAROUSEL INDICATOR */}
       <div className='absolute z-30 flex space-x-3 -translate-x-1/2 left-1/2 sm:hidden'>
         {components.map((item) => (
           <button id={'carousel-indicator-' + item.index} key={item.index} type='button'

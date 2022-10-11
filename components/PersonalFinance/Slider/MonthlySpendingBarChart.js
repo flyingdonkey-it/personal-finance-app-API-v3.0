@@ -24,6 +24,7 @@ export function MonthlySpendingBarChart({ expenseMonthly, expenseLoading, showIn
                 This year
               </div>
               <div className="flex items-end">
+                {/* Show expenses monthly in a year as bar chart */}
                 {
                   expenseMonthly && expenseMonthly.length > 0 ?
                     <div className={`${showInChartSlider ? "h-64 sm:h-52 w-72 sm:w-[30rem]" : "h-36 w-72 sm:w-96"}`}>

@@ -2,6 +2,7 @@ import { DatePicker } from 'antd';
 import { formatCurrency } from '../utils/formatCurrency'
 
 export function Calendar({ data, open, onCalendarItemClick }) {
+  //Getting sum of amounts in the date
   function sumAmount(date, isPositive) {
     return data.map(item => {
       if (date === item[0]) {

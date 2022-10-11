@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ListItem } from "../../ListItem";
-import { MonthlySpendingChart } from "./MonthlySpendingChart";
-import { MonthlyIncomeChart } from "./MonthlyIncomeChart";
+import { MonthlySpendingPieChart } from "./MonthlySpendingPieChart";
+import { MonthlyIncomeBarChart } from "./MonthlyIncomeBarChart";
 
 const expensesIndex = 1;
 const upcomingPaymentsIndex = 2;
@@ -25,20 +25,23 @@ const upcomingPayments = [
   },
 ]
 
-export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoading, chartWidth, chartAspect }) {
+export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoading, chartWidth, chartAspect }) {
   const [selectedChartItem, setSelectedChartItem] = useState(1);
 
+  //Click title to show a chart
   function onItemClick(itemIndex) {
     setSelectedChartItem(itemIndex);
   }
 
-  const handleClickIndicator = (e, index) => {
+  //Slide action to show a chart
+  function handleClickIndicator(e, index) {
     e.preventDefault();
     setSelectedChartItem(index);
-  };
+  }
 
   return (
     <div className="flex flex-col mt-12 mb-12 sm:w-3/5 sm:mt-1 sm:mr-80">
+      {/* CHART TITLES */}
       <div className="flex items-center ml-12 mr-12 border-2 rounded-3xl border-[#4A56E2] sm:hidden">
         {
           items &&
@@ -54,7 +57,9 @@ export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoadi
           })
         }
       </div>
+      {/* CAROUSEL */}
       <div className="flex flex-col mt-4 sm:mt-0 h-80">
+        {/* Expenses pie chart */}
         {
           selectedChartItem &&
           selectedChartItem === expensesIndex &&
@@ -67,9 +72,10 @@ export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoadi
                 Expenses
               </div>
             </div>
-            <MonthlySpendingChart expenseData={expenseData} expenseLoading={expenseLoading} chartWidth={chartWidth} />
+            <MonthlySpendingPieChart expenseData={expenseData} expenseLoading={expenseLoading} chartWidth={chartWidth} />
           </div>
         }
+        {/* Upcoming payments list */}
         {
           selectedChartItem &&
           selectedChartItem === upcomingPaymentsIndex &&
@@ -97,6 +103,7 @@ export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoadi
             </div>
           </div>
         }
+        {/* Income bar chart */}
         {
           selectedChartItem &&
           selectedChartItem === incomeIndex &&
@@ -109,10 +116,11 @@ export function HomeChart({ expenseData, incomeData, expenseLoading, incomeLoadi
                 Income
               </div>
             </div>
-            <MonthlyIncomeChart incomeData={incomeData} incomeLoading={incomeLoading} chartWidth={chartWidth} chartAspect={chartAspect} />
+            <MonthlyIncomeBarChart incomeData={incomeData} incomeLoading={incomeLoading} chartWidth={chartWidth} chartAspect={chartAspect} />
           </div>
         }
       </div>
+      {/* CAROUSEL INDICATOR */}
       <div className="hidden basis-1/2 sm:block sm:ml-16 sm:mr-10">
         <div className="flex justify-end">
           <div className="space-x-3">

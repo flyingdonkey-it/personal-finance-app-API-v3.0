@@ -1,15 +1,16 @@
-import { ActiveShapePieChart } from "../../ActiveShapePieChart";
+import { CustomBarChart } from "../../CustomBarChart";
 import { LoadingSpinner } from '../../LoadingSpinner';
 
-export function MonthlySpendingChart({ expenseData, expenseLoading, chartWidth, hideSeeMore, showInChartSlider }) {
+export function MonthlyIncomeBarChart({ incomeData, incomeLoading, chartWidth, chartAspect, hideSeeMore }) {
   return (
     <div className="h-80">
       {
-        expenseData && expenseData.length > 0 ?
+        incomeData && incomeData.length > 0 ?
           <div className="flex flex-col justify-between h-80 sm:h-64">
-            <div className={`${showInChartSlider ? "sm:mb-2" : "sm:ml-48"}`}>
-              <ActiveShapePieChart data={expenseData} width={chartWidth} />
+            <div className="sm:ml-24">
+              <CustomBarChart data={incomeData} width={chartWidth} aspect={chartAspect} />
             </div>
+            {/* Hide this if this is Income & Expense page */}
             {
               !hideSeeMore && 
               <div className="flex justify-center">
@@ -20,7 +21,7 @@ export function MonthlySpendingChart({ expenseData, expenseLoading, chartWidth, 
           :
           <div className="flex justify-center h-80">
             <div className="mt-16">
-              {expenseLoading} {expenseLoading ? <LoadingSpinner /> : "Expense data not found"}
+              {incomeLoading} {incomeLoading ? <LoadingSpinner /> : "Income data not found"}
             </div>
           </div>
       }

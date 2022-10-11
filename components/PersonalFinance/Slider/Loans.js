@@ -18,6 +18,7 @@ export function Loans({ balance }) {
               <div className="w-3/5 sm:ml-8">
                 <img className="w-24 h-24" src="/slider/money-horizontal.svg" alt="Money" />
               </div>
+              {/* LOANS BALANCE */}
               <div className="flex flex-col items-end sm:mr-6">
                 <div className="text-xs font-medium text-blue sm:text-base2">
                   Total amount

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Menu } from '../Menu';
-import { HomeChart } from './Chart/HomeChart';
-import { IncomeExpenseChart } from './Chart/IncomeExpenseChart';
+import { Menu } from './Menu';
+import { HomeCharts } from './Chart/HomeCharts';
+import { IncomeExpenseCharts } from './Chart/IncomeExpenseCharts';
 import { PersonalFinanceFooter } from "./PersonalFinanceFooter";
 import { PersonalFinanceHeader } from './PersonalFinanceHeader';
 import { ProfileLayout } from './ProfileLayout';
@@ -10,6 +10,11 @@ import { TransactionPage } from './Transaction';
 import { HomeSlider, Expenditures } from './Slider';
 import { AccountPage } from './Account'
 import { IncomeExpensePage } from './IncomeExpense';
+
+const homePageIndex = 1;
+const accountPageIndex = 2;
+const incomeExpensePageIndex = 3;
+const transactionPageIndex = 4;
 
 const colorPallette = [
   "#4A56E2", "#4761DD", "#436BD7", "#4076D2", "#3C81CD", "#398CC7", "#3596C2", "#32A1BC", "#2EACB7", "#2BB7B2", "#27C1AC", "#24CCA7"
@@ -23,24 +28,36 @@ export function PersonalFinanceLayout() {
   const [hideHomePageItems, setHideHomePageItems] = useState(false);
   const [hideTransactionPageItems, setHideTransactionPageItems] = useState(false);
   const [hideIncomeExpensePageItems, setHideIncomeExpensePageItems] = useState(false);
+  //Payments percentage values of categories for pie chart
   const [expenseData, setExpenseData] = useState([]);
+  //Monthly income values for bar chart
   const [incomeData, setIncomeData] = useState([]);
+  //Sum of monthly average expenses
   const [expenseMonthlyAvgData, setExpenseMonthlyAvgData] = useState(0);
+  //Sum of monthly average incomes
   const [incomeMonthlyAvgData, setIncomeMonthlyAvgData] = useState(0);
+  //Monthly sum of payments in categories
   const [expenseMonthlyData, setExpenseMonthlyData] = useState([]);
+  //All payments by categories
   const [paymentsData, setPaymentsData] = useState([]);
+  //Expense values grouped by day
   const [expensesByDate, setExpensesByDate] = useState([]);
+  //Income values grouped by day
   const [incomesByDate, setIncomesByDate] = useState([]);
+  //If refresh connection returns error
   const [refreshConnectionError, setRefreshConnectionError] = useState(false);
   const [expenseLoading, setExpenseLoading] = useState(true);
   const [incomeLoading, setIncomeLoading] = useState(true);
 
   function setIncomeExpenseData() {
     const userId = sessionStorage.getItem("userId");
+
+    //Before creating income & expense summary, creating or refreshing the relevant connections is required
     axios
       .post(`/api/refresh-connection?userId=${userId}`)
       .then(function (refreshResponse) {
         if (refreshResponse.status === 200) {
+          //Creating expense summary between 2020-01 - 2021-01
           axios
             .post(`/api/create-expense?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
             .then(function (response) {
@@ -98,6 +115,7 @@ export function PersonalFinanceLayout() {
               setRefreshConnectionError(true);
             });
 
+          //Creating income summary between 2020-01 - 2021-01
           axios
             .post(`/api/create-income?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
             .then(function (response) {
@@ -134,6 +152,7 @@ export function PersonalFinanceLayout() {
       });
   }
 
+  //Grouping change history values as amount or object by month 
   function groupChangeHistoryByMonth(changeHistory, absoluteValue) {
     return Object.entries(changeHistory.reduce(function (r, a) {
       if (a.date) {
@@ -144,6 +163,7 @@ export function PersonalFinanceLayout() {
     }, Object.create(null)));
   }
 
+  //Grouping change history values as object by day 
   function groupChangeHistoryByDay(changeHistory) {
     return Object.entries(changeHistory.reduce(function (r, a) {
       if (a.date) {
@@ -154,6 +174,7 @@ export function PersonalFinanceLayout() {
     }, Object.create(null)));
   }
 
+  //Grouping, ordering and getting sum of payments change histories by day
   function prepareExpenseMonthly(paymentsChangeHistory) {
     const groupedByMonthExpenses = groupChangeHistoryByMonth(paymentsChangeHistory, true);
 
@@ -168,6 +189,7 @@ export function PersonalFinanceLayout() {
     return orderedExpenseTotalByMonth.map(x => { return { ...x, key: new Date(x.key + "-01").toLocaleString('en-us', { month: 'short' }) } });
   }
 
+  //Grouping and ordering expense change histories by day
   function prepareExpenseByDate(expenseChangeHistory) {
     const groupedChangeHistory = groupChangeHistoryByMonth(expenseChangeHistory);
 
@@ -177,6 +199,7 @@ export function PersonalFinanceLayout() {
     return groupedChangeHistory;
   }
 
+  //Manage main and profile menus on desktop
   function manageMenus(isMainMenu) {
     if (isMainMenu) {
       setProfileMenuOpen(false);
@@ -188,6 +211,7 @@ export function PersonalFinanceLayout() {
     setProfileMenuOpen(!profileMenuOpen);
   }
 
+  //When any page item is clicked to show
   function managePages(selectedPageIndex, selectedMenuTitle) {
     setSelectedMenuTitle(selectedMenuTitle);
     setMainMenuOpen(false);
@@ -195,6 +219,7 @@ export function PersonalFinanceLayout() {
     manageDetailPages(false, false, false);
   }
 
+  //Hide or show detail pages depending on context
   function manageDetailPages(hideHomePageItems, hideTransactionPageItems, hideIncomeExpensePageItems) {
     setHideHomePageItems(hideHomePageItems);
     setHideTransactionPageItems(hideTransactionPageItems);
@@ -202,6 +227,7 @@ export function PersonalFinanceLayout() {
   }
 
   useEffect(() => {
+    //Until any expense or income data is loaded or refresh connection api returns error keep sending requests
     if ((expenseData.length === 0 || incomeData.length === 0) && !refreshConnectionError) {
       setIncomeExpenseData();
     }
@@ -210,31 +236,36 @@ export function PersonalFinanceLayout() {
   return (
     <>
       <div className="flex flex-col">
+        {/* HEADER */}
         <div>
           <PersonalFinanceHeader isMenuOpen={mainMenuOpen} showProfileLine={selectedPageIndex && selectedPageIndex === 1} menuIconClick={() => manageMenus(true)} profileMenuOpenClick={() => manageMenus(false)}
             selectedPageIndex={selectedPageIndex}></PersonalFinanceHeader>
         </div>
-        <div className={`${selectedPageIndex && selectedPageIndex === 1 ? "mt-36 mb-24" : ""} ${selectedPageIndex && selectedPageIndex === 3 ? "mt-20 mb-24" : ""} sm:hidden h-full`}>
+        {/* MOBILE VIEW */}
+        <div className={`${selectedPageIndex && selectedPageIndex === homePageIndex ? "mt-36 mb-24" : ""} ${selectedPageIndex && selectedPageIndex === incomeExpensePageIndex ? "mt-20 mb-24" : ""} sm:hidden h-full`}>
+          {/* HOME PAGE */}
           {selectedPageIndex &&
-            selectedPageIndex === 1 &&
+            selectedPageIndex === homePageIndex &&
             <div className="flex flex-col">
               {!hideHomePageItems &&
                 <>
                   <HomeSlider incomeMonthlyAvg={incomeMonthlyAvgData} expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading} chartWidth={"100%"} chartAspect={3} />
-                  <HomeChart expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"100%"} chartAspect={1.25} />
+                  <HomeCharts expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"100%"} chartAspect={1.25} />
                 </>
               }
               <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
             </div>
           }
+          {/* ACCOUNT PAGE */}
           {selectedPageIndex &&
-            selectedPageIndex === 2 &&
+            selectedPageIndex === accountPageIndex &&
             <>
               <AccountPage />
             </>
           }
+          {/* INCOME & EXPENSE PAGE */}
           {selectedPageIndex &&
-            selectedPageIndex === 3 &&
+            selectedPageIndex === incomeExpensePageIndex &&
             <div className="flex flex-col">
               {
                 !hideIncomeExpensePageItems &&
@@ -244,7 +275,7 @@ export function PersonalFinanceLayout() {
               {
                 !hideHomePageItems &&
                 <>
-                  <IncomeExpenseChart expenseData={expenseData} incomeData={incomeData} incomeMonthlyAvg={incomeMonthlyAvgData}
+                  <IncomeExpenseCharts expenseData={expenseData} incomeData={incomeData} incomeMonthlyAvg={incomeMonthlyAvgData}
                     expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading}
                     incomeLoading={incomeLoading} chartWidth={"100%"} />
                   <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
@@ -256,22 +287,27 @@ export function PersonalFinanceLayout() {
               }
             </div>
           }
+          {/* TRANSACTION PAGE */}
           {selectedPageIndex &&
-            selectedPageIndex === 4 &&
+            selectedPageIndex === transactionPageIndex &&
             <div className="mt-20 mb-20">
               <TransactionPage limit={20} inTransactionsPage={true} />
             </div>
           }
         </div>
+        {/* MAIN MENU */}
         <Menu desktopMainMenuItems={DESKTOP_MENU_ITEMS} mobileMainMenuItems={MOBILE_MENU_ITEMS} open={mainMenuOpen} setMenuOpen={() => manageMenus(true)}
           onMenuItemClick={managePages} selectedMenuTitle={selectedMenuTitle}></Menu>
+        {/* PROFILE MENU */}
         <div className="hidden sm:block">
           <ProfileLayout open={profileMenuOpen} setMenuOpen={() => manageMenus(false)}></ProfileLayout>
         </div>
+        {/* DESKTOP VIEW */}
         <div className="z-0 flex-col hidden w-full mb-12 overflow-y-scroll bg-menu mt-[9.5rem] sm:flex min-h-[60rem] max-h-[60rem]">
           <div className="hidden sm:block">
+            {/* HOME PAGE */}
             {selectedPageIndex &&
-              selectedPageIndex === 1 &&
+              selectedPageIndex === homePageIndex &&
               <>
                 {!hideHomePageItems &&
                   <div className="flex flex-col">
@@ -283,21 +319,23 @@ export function PersonalFinanceLayout() {
                     </div>
                     <div className="flex w-full mt-6">
                       <HomeSlider incomeMonthlyAvg={incomeMonthlyAvgData} expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading} chartWidth={"100%"} chartAspect={3} />
-                      <HomeChart expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"65%"} chartAspect={1.5} />
+                      <HomeCharts expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"65%"} chartAspect={1.5} />
                     </div>
                   </div>
                 }
                 <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
               </>
             }
+            {/* ACCOUNT PAGE */}
             {selectedPageIndex &&
-              selectedPageIndex === 2 &&
+              selectedPageIndex === accountPageIndex &&
               <>
                 <AccountPage />
               </>
             }
+            {/* INCOME & EXPENSE PAGE */}
             {selectedPageIndex &&
-              selectedPageIndex === 3 &&
+              selectedPageIndex === incomeExpensePageIndex &&
               <>
                 {
                   !hideIncomeExpensePageItems &&
@@ -307,7 +345,7 @@ export function PersonalFinanceLayout() {
                   !hideHomePageItems &&
                   <>
                     <div className="flex">
-                      <IncomeExpenseChart expenseData={expenseData} incomeData={incomeData} incomeMonthlyAvg={incomeMonthlyAvgData}
+                      <IncomeExpenseCharts expenseData={expenseData} incomeData={incomeData} incomeMonthlyAvg={incomeMonthlyAvgData}
                         expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading}
                         incomeLoading={incomeLoading} chartWidth={"75%"} />
                       <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
@@ -322,14 +360,16 @@ export function PersonalFinanceLayout() {
                 }
               </>
             }
+            {/* TRANSACTION PAGE */}
             {selectedPageIndex &&
-              selectedPageIndex === 4 &&
+              selectedPageIndex === transactionPageIndex &&
               <>
                 <TransactionPage limit={20} inTransactionsPage={true} />
               </>
             }
           </div>
         </div>
+        {/* FOOTER */}
         <PersonalFinanceFooter menuItems={DESKTOP_FOOTER_MENU_ITEMS} middleMenuItems={DESKTOP_FOOTER_MIDDLE_MENU_ITEMS} onMenuItemClick={managePages} />
       </div>
     </>
@@ -337,24 +377,24 @@ export function PersonalFinanceLayout() {
 }
 
 export const MOBILE_MENU_ITEMS = [
-  { pageIndex: 1, title: "Home", image: "/home.svg", selectedImage: "/home-white.svg" },
-  { pageIndex: 2, title: "Work", image: "/work.svg", selectedImage: "/work-white.svg" },
-  { pageIndex: 3, title: "Chart", image: "/chart.svg", selectedImage: "/chart-white.svg" },
-  { pageIndex: 4, title: 'Upload', image: "/upload.svg", selectedImage: "/upload-white.svg" }
+  { pageIndex: homePageIndex, title: "Home", image: "/home.svg", selectedImage: "/home-white.svg" },
+  { pageIndex: accountPageIndex, title: "Work", image: "/work.svg", selectedImage: "/work-white.svg" },
+  { pageIndex: incomeExpensePageIndex, title: "Chart", image: "/chart.svg", selectedImage: "/chart-white.svg" },
+  { pageIndex: transactionPageIndex, title: 'Upload', image: "/upload.svg", selectedImage: "/upload-white.svg" }
 ];
 
 export const DESKTOP_MENU_ITEMS = [
-  { pageIndex: 1, title: "Home", image: "/home.svg" },
-  { pageIndex: 2, title: "My Accounts", image: "/wallet.svg" },
-  { pageIndex: 3, title: "Income vs Expenses", image: "/activity.svg" },
-  { pageIndex: 4, title: 'Transactions', image: "/swap.svg" }
+  { pageIndex: homePageIndex, title: "Home", image: "/home.svg" },
+  { pageIndex: accountPageIndex, title: "My Accounts", image: "/wallet.svg" },
+  { pageIndex: incomeExpensePageIndex, title: "Income vs Expenses", image: "/activity.svg" },
+  { pageIndex: transactionPageIndex, title: 'Transactions', image: "/swap.svg" }
 ];
 
 export const DESKTOP_FOOTER_MENU_ITEMS = [
-  { pageIndex: 1, title: "Home", image: "/home-white.svg" },
-  { pageIndex: 2, title: "My Accounts", image: "/wallet-white.svg" },
-  { pageIndex: 3, title: "Income vs Expenses", image: "/activity-white.svg" },
-  { pageIndex: 4, title: "Transactions", image: "/swap-white.svg" }
+  { pageIndex: homePageIndex, title: "Home", image: "/home-white.svg" },
+  { pageIndex: accountPageIndex, title: "My Accounts", image: "/wallet-white.svg" },
+  { pageIndex: incomeExpensePageIndex, title: "Income vs Expenses", image: "/activity-white.svg" },
+  { pageIndex: transactionPageIndex, title: "Transactions", image: "/swap-white.svg" }
 ];
 
 export const DESKTOP_FOOTER_MIDDLE_MENU_ITEMS = [

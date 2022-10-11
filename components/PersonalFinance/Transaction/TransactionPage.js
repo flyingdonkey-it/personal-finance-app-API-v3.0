@@ -13,6 +13,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
   const [selectedTransaction, setSelectedTransaction] = useState({});
   const [showCalendar, setShowCalendar] = useToggleState(false);
 
+  //Get all transactions of user
   function getData() {
     setLoading(true);
     const userId = sessionStorage.getItem('userId');
@@ -21,6 +22,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
       .then(function (response) {
         setLoading(false);
 
+        //Group all transactions by postDate
         const dateGroupedTransactions = response.data.reduce(function (r, a) {
           if (a.postDate) {
             r[a.postDate.slice(0, 10)] = r[a.postDate.slice(0, 10)] || [];
@@ -38,6 +40,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
       });
   };
 
+  //Open transaction detail
   function onTransactionItemClick(e) {
     if (!inTransactionsPage) {
       manageDetailPages(true, false, true);
@@ -47,6 +50,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
     setSelectedTransaction(e.transactionDetail);
   };
 
+  //Close transaction detail
   function onCloseTransactionDetailClick() {
     if (!inTransactionsPage) {
       manageDetailPages(false, false, false);
@@ -56,10 +60,12 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
     setShowDetail(false);
   };
 
+  //Redirect to transactions page
   function onSeeAllClick() {
     managePages(4, 'Upload');
   };
 
+  //When any date clicked on calendar show transaction detail
   function onCalendarItemClick(date) {
     setShowDetail(true);
     const selectedDate = dateGroupedTransactions.find(item => item[0] === date);
@@ -74,6 +80,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
 
   return (
     <>
+      {/* When any transaction is not selected */}
       {!showDetail && (
         <>
           <div className="flex justify-between ml-6 mr-6 sm:mt-12 sm:ml-52 sm:mr-80">
@@ -89,6 +96,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
               {inTransactionsPage ? (
                 <div className="h-14">
                   <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={setShowCalendar} />
+                  {/* TRANSACTIONS CALENDAR */}
                   {showCalendar && (
                     <Calendar
                       data={dateGroupedTransactions || []}
@@ -111,9 +119,11 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
                   <div key={'grouped-transaction-' + gIndex}>
                     <div className="pt-5 pb-4 font-semibold text-sm2 text-blue bg-[#FEFEFE]">
                       <div className="ml-8">
+                        {/* TRANSACTION DATE */}
                         {groupedItem[0]}
                       </div>
                     </div>
+                    {/* TRANSACTION LIST ON DATE */}
                     {
                       groupedItem[1].map((transaction, tIndex) => {
                         return (
@@ -137,6 +147,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
           </div>
         </>
       )}
+      {/* When any transaction is selected */}
       {showDetail && (
         <TransactionItemDetail
           detail={selectedTransaction}
