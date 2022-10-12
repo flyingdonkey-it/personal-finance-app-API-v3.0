@@ -23,7 +23,7 @@ export function Menu({ open, setMenuOpen, desktopMainMenuItems, mobileMainMenuIt
             </div>
             <div className="pt-8">
               <div className="flex items-center">
-                <img className="w-16 h-16" src={`${process.env.ASSET_PREFIX}/product-logo-square.svg`} alt="Logo" />
+                <img className="w-16 h-16" src='product-logo-square.svg' alt="Logo" />
                 <div className="text-sm2">
                   <p className="w-3/4 font-semibold text-center">Personal Finance Management</p>
                 </div>

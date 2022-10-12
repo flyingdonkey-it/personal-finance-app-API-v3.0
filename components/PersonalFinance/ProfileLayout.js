@@ -141,7 +141,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
                 </div>
                 <div className="pt-8">
                   <div className="flex items-center">
-                    <img className="w-16 h-16" src={`${process.env.ASSET_PREFIX}/product-logo-square.svg`} alt="Logo" />
+                    <img className="w-16 h-16" src='product-logo-square.svg' alt="Logo" />
                     <div className="text-sm2">
                       <p className="w-3/4 font-semibold text-center">Personal Finance Management</p>
                     </div>
@@ -158,7 +158,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
         <div className="sm:hidden">
           <div className="flex justify-between mt-5 ml-5 mr-5">
             <div>
-              <img className="w-12 h-12" src={`${process.env.ASSET_PREFIX}/product-logo-square.svg`} alt="Logo" />
+              <img className="w-12 h-12" src='product-logo-square.svg' alt="Logo" />
             </div>
             <div className="flex flex-col items-center">
               <div>

@@ -38,7 +38,7 @@ export function PersonalFinanceFooter({ menuItems, middleMenuItems, onMenuItemCl
         </div>
         <div className="flex flex-col mt-16">
           <div className="flex self-end w-1/4">
-            <img className="w-16 h-16" src={`${process.env.ASSET_PREFIX}/product-logo-square.svg`} alt="Logo" />
+            <img className="w-16 h-16" src='product-logo-square.svg' alt="Logo" />
           </div>
           <div className="flex self-end mt-4 font-medium text-white text-base2">Personal Finance Management</div>
           <div className="flex self-end mt-8 text-sm2 text-header">
