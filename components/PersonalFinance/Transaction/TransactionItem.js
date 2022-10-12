@@ -6,7 +6,7 @@ export function TransactionItem({ item }) {
       <div className="flex justify-between ml-6 mr-6">
         <div className="flex">
           <div>
-            <img className="w-9 h-9" src={`/merchant-${parseInt(Math.random() * 100 % 4)}.svg`} alt="Merchant" />
+            <img className="w-9 h-9" src={`merchant-${parseInt(Math.random() * 100 % 4)}.svg`} alt="Merchant" />
           </div>
           <div className="ml-2 text-sm2 sm:text-sm3">
             <div className="font-medium">

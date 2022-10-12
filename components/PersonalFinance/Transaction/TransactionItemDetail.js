@@ -18,7 +18,7 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
         </div>
         <div className="flex flex-col items-center">
           <div>
-            <img className="w-12 h-12 sm:w-16 sm:h-16" src={`/merchant-${parseInt((Math.random() * 100) % 4)}.svg`} alt="Merchant" />
+            <img className="w-12 h-12 sm:w-16 sm:h-16" src={`merchant-${parseInt((Math.random() * 100) % 4)}.svg`} alt="Merchant" />
           </div>
           <div className="flex flex-col items-center mt-4 font-semibold text-center sm:mt-8">
             <div className="text-base sm:text-2xl2 text-primary-bold">
@@ -86,11 +86,11 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
             </div>
           </div>
           <div className="hidden mt-4 sm:block">
-            <img className="h-40 w-96" src={`${process.env.ASSET_PREFIX}/location.svg`} alt="Share" />
+            <img className="h-40 w-96" src='location.svg' alt="Share" />
           </div>
         </div>
         <div className="mt-4 sm:hidden">
-          <img className="h-40 w-96" src={`${process.env.ASSET_PREFIX}/location.svg`} alt="Share" />
+          <img className="h-40 w-96" src='location.svg' alt="Share" />
         </div>
         <div className="flex flex-col mt-4 sm:mt-10 sm:hidden">
           <div>

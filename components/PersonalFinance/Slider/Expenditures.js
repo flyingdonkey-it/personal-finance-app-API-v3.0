@@ -99,7 +99,7 @@ export function Expenditures({ payments, expenseLoading }) {
                       <div className="flex flex-col items-center justify-between h-32">
                         <div className="flex mt-6 h-1/2">
                           <div>
-                            <img className="w-7 h-7" src={`/expenditure/expenditure-${parseInt(Math.random() * 100 % 4)}.svg`} alt="Expenditure" />
+                            <img className="w-7 h-7" src={`expenditure/expenditure-${parseInt(Math.random() * 100 % 4)}.svg`} alt="Expenditure" />
                           </div>
                           <h5 className="mb-2 ml-2 text-xl font-semibold tracking-tight text-[#24CCA7]">
                             {item.division?.length > 25 ? item.division?.slice(0, 22) + "..." : item.division}

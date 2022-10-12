@@ -7,7 +7,7 @@ export function ListItem({ item, imagePrefix, randomDivider }) {
         <div className="flex">
           <div>
             {/* Shuffling random icons */}
-            <img className="w-9 h-9" src={`/${imagePrefix}-${parseInt(Math.random() * 100 % randomDivider)}.svg`} alt={imagePrefix} />
+            <img className="w-9 h-9" src={`${imagePrefix}-${parseInt(Math.random() * 100 % randomDivider)}.svg`} alt={imagePrefix} />
           </div>
           <div className="ml-2 text-sm2 sm:text-sm3">
             <div className="font-medium">
