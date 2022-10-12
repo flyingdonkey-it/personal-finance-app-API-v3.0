@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useTernaryState } from '../../utils/useTernaryState';
 import { PlanetIllustrations } from '../PlanetIllustrations';
+import { assetPrefix } from "../next.config"
 import { StepLogo } from './StepLogo';
 import { AccountVerificationFormStep0SignUp } from './AccountVerificationFormStep0SignUp';
 import { AccountVerificationFormStep1PreConsent } from './AccountVerificationFormStep1PreConsent';
@@ -36,7 +37,7 @@ export function AccountVerificationForm() {
       {/* FORM STEPS COMPONENT */}
       <div className="z-10 px-8 pb-24 mx-auto text-center sm:px-64 sm:pb-16 space-y-6 sm:space-y-8 sm:bg-neutral-subtle-alternate/50 rounded-2xl backdrop-opacity-60">
         <div className={`absolute top-0 left-6 sm:w-12 sm:h-12 w-10 ${currentStep === 1 && "sm:block hidden"}`}>
-          <StepLogo src="./product-logo-square.svg" alt="Piper logo" />
+          <StepLogo src={`${assetPrefix}product-logo-square.svg`} alt="Piper logo" />
         </div>
         <Component />
       </div>
