@@ -78,7 +78,7 @@ export default function Home() {
                   </span>
                 )}
                 {/* ACTION */}
-                <Link href="/account-verification" passHref>
+                <Link href={`${process.env.BASE_PATH}/account-verification`} passHref>
                   <Button as="a" variant="bold" block>
                     {basiqConnectionInProgress || basiqConnectionSuccess ? 'Continue setup' : 'Get started'}
                   </Button>
