@@ -89,7 +89,7 @@ export function AccountVerificationFormProvider({ children }) {
     sessionStorage.clear();
 
     axios
-      .post('/api/create-user', { email: email })
+      .post(`${process.env.BASE_PATH}api/create-user`, { email: email })
       .then( async res => {
         updateAccountVerificationFormState({ user: res.data })
 
