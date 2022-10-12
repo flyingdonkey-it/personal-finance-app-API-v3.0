@@ -14,13 +14,13 @@ export function IncomeExpenseItem({ incomeLoading, expenseLoading, selectedDate,
     <div>
       <div className="flex justify-between ml-5 mr-5 sm:mt-12 sm:ml-96 sm:mr-96">
         <div>
-          <img className="w-8 h-8" src={`${process.env.ASSET_PREFIX}/back-button.svg`} alt="Back" onClick={onBackButtonClick} />
+          <img className="w-8 h-8" src='back-button.svg' alt="Back" onClick={onBackButtonClick} />
         </div>
         <div className="flex flex-col items-center">
           <div className="font-semibold text-2xl2">{dateTitle}</div>
         </div>
         <div>
-          <img className="w-8 h-8" src={`${process.env.ASSET_PREFIX}/share-button.svg`} alt="Share" />
+          <img className="w-8 h-8" src='share-button.svg' alt="Share" />
         </div>
       </div>
       {incomeLoading ? (

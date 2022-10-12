@@ -58,7 +58,7 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
         <div className="flex justify-between ml-6 mr-6 sm:mt-12 sm:ml-52 sm:mr-80">
           <div className="flex">
             <div className="hidden mr-4 sm:block">
-              <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/upload.svg`} alt="Upload" />
+              <img className="w-6 h-6" src='upload.svg' alt="Upload" />
             </div>
             <div className="font-semibold text-blue text-2xl2">
               Income and Expenses
@@ -66,7 +66,7 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
           </div>
           <div className="flex items-center justify-center pr-4" >
             <div className="h-14">
-              <img className="w-7 h-7" src={`${process.env.ASSET_PREFIX}/calendar.svg`} alt="Calendar" onClick={setShowCalendar} />
+              <img className="w-7 h-7" src='calendar.svg' alt="Calendar" onClick={setShowCalendar} />
               {/* INCOME & EXPENSE CALENDAR */}
               {showCalendar &&
                 <Calendar data={incomeExpenseByDate || []} open={showCalendar} onCalendarItemClick={onCalendarItemClick} />}

@@ -66,7 +66,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
                 <div className="flex items-center justify-between mt-5 mb-5 ml-14 mr-14" onClick={() => manageTabs(true)}>
                   <div className="flex">
                     <div>
-                      <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/setting.svg`} alt="Setting" />
+                      <img className="w-6 h-6" src='setting.svg' alt="Setting" />
                     </div>
                     <div className="ml-6">
                       Consent Management
@@ -93,7 +93,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
                 <div className="bg-[#FBFBFA]">
                   <div className="flex items-center mt-5 mb-5 ml-14 mr-14">
                     <div>
-                      <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/edit-profile.svg`} alt="Edit Profile" />
+                      <img className="w-6 h-6" src='edit-profile.svg' alt="Edit Profile" />
                     </div>
                     <div className="ml-6">
                       Edit Personal details
@@ -104,7 +104,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
                   <div className="flex items-center justify-between mt-5 mb-5 ml-14 mr-14" onClick={() => manageTabs(false)}>
                     <div className="flex">
                       <div>
-                        <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/has-notification.svg`} alt="Notifications" />
+                        <img className="w-6 h-6" src='has-notification.svg' alt="Notifications" />
                       </div>
                       <div className="ml-6">
                         Notifications
@@ -118,7 +118,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
                     <div className="font-normal text-sm2">
                       <div className="flex pt-5 pb-5 bg-[#ECF3FF]">
                         <div className="ml-16">
-                          <img className="w-6 h-5" src={`${process.env.ASSET_PREFIX}/user-activity.svg`} alt="User Activity" />
+                          <img className="w-6 h-5" src='user-activity.svg' alt="User Activity" />
                         </div>
                         <div className="ml-4 mr-16">
                           This month, your spendings are above average
@@ -126,7 +126,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
                       </div>
                       <div className="flex pt-5 pb-5 mt-1 bg-[#ECF3FF]">
                         <div className="ml-16">
-                          <img className="w-5 h-5" src={`${process.env.ASSET_PREFIX}/danger-circle.svg`} alt="Danger" />
+                          <img className="w-5 h-5" src='danger-circle.svg' alt="Danger" />
                         </div>
                         <div className="ml-4 mr-16">
                           Upcoming payment: Disney+
@@ -162,14 +162,14 @@ export function ProfileLayout({ open, setMenuOpen }) {
             </div>
             <div className="flex flex-col items-center">
               <div>
-                <img className="w-24 h-24" src={`${process.env.ASSET_PREFIX}/profile-photo.svg`} alt="Profile Photo" />
+                <img className="w-24 h-24" src='profile-photo.svg' alt="Profile Photo" />
               </div>
               <div className="mt-5 font-semibold text-2xl2 text-primary-bold">
                 Jane Doe
               </div>
             </div>
             <div>
-              <img className="w-8 h-8" src={`${process.env.ASSET_PREFIX}/close-button.svg`} alt="Close" onClick={onCloseButtonClick} />
+              <img className="w-8 h-8" src='close-button.svg' alt="Close" onClick={onCloseButtonClick} />
             </div>
           </div>
           <div className="flex flex-col mt-12 text-base2">
@@ -177,7 +177,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
               <div className="flex items-center justify-between mt-5 mb-5 ml-14 mr-14" onClick={() => manageTabs(true)}>
                 <div className="flex">
                   <div>
-                    <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/setting.svg`} alt="Setting" />
+                    <img className="w-6 h-6" src='setting.svg' alt="Setting" />
                   </div>
                   <div className="ml-6">
                     Consent Management
@@ -205,7 +205,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
             <div className="bg-[#FBFBFA]">
               <div className="flex items-center mt-5 mb-5 ml-14 mr-14">
                 <div>
-                  <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/edit-profile.svg`} alt="Edit Profile" />
+                  <img className="w-6 h-6" src='edit-profile.svg' alt="Edit Profile" />
                 </div>
                 <div className="ml-6">
                   Edit Personal details
@@ -216,7 +216,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
               <div className="flex items-center justify-between mt-5 mb-5 ml-14 mr-14" onClick={() => manageTabs(false)}>
                 <div className="flex">
                   <div>
-                    <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/has-notification.svg`} alt="Notifications" />
+                    <img className="w-6 h-6" src='has-notification.svg' alt="Notifications" />
                   </div>
                   <div className="ml-6">
                     Notifications
@@ -230,7 +230,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
                 <div className="font-normal text-sm2">
                   <div className="flex pt-5 pb-5 bg-[#ECF3FF]">
                     <div className="ml-16">
-                      <img className="w-6 h-5" src={`${process.env.ASSET_PREFIX}/user-activity.svg`} alt="User Activity" />
+                      <img className="w-6 h-5" src='user-activity.svg' alt="User Activity" />
                     </div>
                     <div className="ml-4 mr-16">
                       This month, your spendings are above average
@@ -238,7 +238,7 @@ export function ProfileLayout({ open, setMenuOpen }) {
                   </div>
                   <div className="flex pt-5 pb-5 mt-1 bg-[#ECF3FF]">
                     <div className="ml-16">
-                      <img className="w-5 h-5" src={`${process.env.ASSET_PREFIX}/danger-circle.svg`} alt="Danger" />
+                      <img className="w-5 h-5" src='danger-circle.svg' alt="Danger" />
                     </div>
                     <div className="ml-4 mr-16">
                       Upcoming payment: Disney+

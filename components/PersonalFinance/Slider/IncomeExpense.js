@@ -6,7 +6,7 @@ export function IncomeExpense({ incomeMonthlyAvg, expenseMonthlyAvg }) {
       <div className="mt-3 ml-4 mr-4 sm:mr-10 sm:ml-8 sm:mb-5 sm:mt-5">
         <div className="flex items-center">
           <div>
-            <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/activity.svg`} alt="Activity" />
+            <img className="w-6 h-6" src='activity.svg' alt="Activity" />
           </div>
           <div className="ml-2">
             <p className="text-sm font-bold sm:text-2xl2 text-blue">Income vs Expenses</p>
@@ -20,11 +20,11 @@ export function IncomeExpense({ incomeMonthlyAvg, expenseMonthlyAvg }) {
               </div>
               <div className="flex items-end ml-2 sm:justify-center sm:ml-0">
                 <div>
-                  <img src={`${process.env.ASSET_PREFIX}/slider/rectangle-1.svg`} alt="Rectangle" />
+                  <img src='slider/rectangle-1.svg' alt="Rectangle" />
                   <span className="mr-1 font-bold text-[9px] sm:text-[11px] text-[#24CCA7]">Income</span>
                 </div>
                 <div>
-                  <img src={`${process.env.ASSET_PREFIX}/slider/rectangle-2.svg`} alt="Rectangle" />
+                  <img src='slider/rectangle-2.svg' alt="Rectangle" />
                   <span className="font-bold text-[9px] sm:text-[11px] text-[#4A56E2]">Expense</span>
                 </div>
               </div>

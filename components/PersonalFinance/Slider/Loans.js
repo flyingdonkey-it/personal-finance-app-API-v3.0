@@ -6,7 +6,7 @@ export function Loans({ balance }) {
       <div className="mt-4 mb-2 ml-7 mr-9 sm:mb-5">
         <div className="flex items-center">
           <div>
-            <img className="w-7 h-7" src={`${process.env.ASSET_PREFIX}/slider/bank-of-melbourne.svg`} alt="Bank of Melbourne" />
+            <img className="w-7 h-7" src='slider/bank-of-melbourne.svg' alt="Bank of Melbourne" />
           </div>
           <div className="ml-2">
             <p className="text-sm font-bold sm:text-2xl2 text-blue">Loans account</p>
@@ -16,7 +16,7 @@ export function Loans({ balance }) {
           <div className="sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
             <div className="flex items-center w-full mb-2 sm:mt-3 sm:mb-3">
               <div className="w-3/5 sm:ml-8">
-                <img className="w-24 h-24" src={`${process.env.ASSET_PREFIX}/slider/money-horizontal.svg`} alt="Money" />
+                <img className="w-24 h-24" src='slider/money-horizontal.svg' alt="Money" />
               </div>
               {/* LOANS BALANCE */}
               <div className="flex flex-col items-end sm:mr-6">

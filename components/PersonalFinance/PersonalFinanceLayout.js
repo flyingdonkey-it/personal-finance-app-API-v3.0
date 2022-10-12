@@ -313,7 +313,7 @@ export function PersonalFinanceLayout() {
                   <div className="flex flex-col">
                     <div className="flex mt-8 ml-52">
                       <div className="mr-4">
-                        <img className="w-7 h-7" src={`${process.env.ASSET_PREFIX}/wallet.svg`} alt="Wallet" />
+                        <img className="w-7 h-7" src='wallet.svg' alt="Wallet" />
                       </div>
                       <span className="font-bold text-2xl2 text-blue">Your finances at a glance</span>
                     </div>

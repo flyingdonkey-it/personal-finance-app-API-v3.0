@@ -46,7 +46,7 @@ export function Menu({ open, setMenuOpen, desktopMainMenuItems, mobileMainMenuIt
                 <img className="fixed w-5 h-5 mt-3" onClick={e => onItemClick({ menuItemTitle: m.title, selectedPageIndex: m.pageIndex, ...e })}
                   src={`${selectedMenuTitle === m.title ? m.selectedImage : m.image}`} alt={`${m.title}`} />
                 {selectedMenuTitle === m.title &&
-                  <img className="w-12 h-12" src={`${process.env.ASSET_PREFIX}/selected-menu-item.svg`} alt="Selected" />
+                  <img className="w-12 h-12" src='selected-menu-item.svg' alt="Selected" />
                 }
               </div>
             );

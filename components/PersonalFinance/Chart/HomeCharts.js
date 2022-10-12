@@ -66,7 +66,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
           <div className="flex flex-col justify-between h-80">
             <div className="justify-center hidden mb-4 sm:flex">
               <div>
-                <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/upload.svg`} alt="Upload" />
+                <img className="w-6 h-6" src='upload.svg' alt="Upload" />
               </div>
               <div className="ml-2 font-semibold text-blue text-2xl2">
                 Expenses
@@ -82,7 +82,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
           <div className="flex flex-col justify-between h-80">
             <div className="justify-center hidden mb-4 sm:flex">
               <div>
-                <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/calendar.svg`} alt="Calendar" />
+                <img className="w-6 h-6" src='calendar.svg' alt="Calendar" />
               </div>
               <div className="ml-2 font-semibold text-blue text-2xl2">
                 Upcoming payments
@@ -110,7 +110,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
           <div className="flex flex-col justify-between ml-8 mr-8 h-80">
             <div className="justify-center hidden sm:flex">
               <div>
-                <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/download.svg`} alt="Income" />
+                <img className="w-6 h-6" src='download.svg' alt="Income" />
               </div>
               <div className="ml-2 font-semibold text-blue text-2xl2">
                 Income
