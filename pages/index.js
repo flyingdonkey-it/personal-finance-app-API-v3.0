@@ -19,7 +19,7 @@ export default function Home() {
         <div className="z-10 px-4 pb-16 mx-auto text-center sm:px-72 sm:pt-12 space-y-6 sm:space-y-8 sm:bg-neutral-subtle-alternate/50 rounded-2xl backdrop-opacity-60">
           {/* PRODUCT LOGO z-10 max-w-md px-4 pt-8 pb-16 mx-auto text-center space-y-6 sm:space-y-8 */}
           <div className="inline-block opacity-100 space-y-6 sm:space-y-8">
-            <img src="/product-logo-square.svg" alt="Piper logo" width={100} height={100} className="z-10" />
+            <img src={`${process.env.ASSET_PREFIX}/product-logo-square.svg`} alt="Piper logo" width={100} height={100} className="z-10" />
           </div>
 
           <div className="space-y-4">

@@ -13,7 +13,7 @@ export function CreditCard({ balance }) {
           <div className="sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
             <div className="flex items-center w-full mb-2 sm:mt-3 sm:mb-3">
               <div className="w-3/5 sm:ml-8">
-                <img className="w-24 h-24" src="/slider/money-horizontal.svg" alt="Money" />
+                <img className="w-24 h-24" src={`${process.env.ASSET_PREFIX}/slider/money-horizontal.svg`} alt="Money" />
               </div>
               {/* CREDIT CARD BALANCE */}
               <div className="flex flex-col items-end sm:mr-6">

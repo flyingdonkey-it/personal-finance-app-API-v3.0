@@ -22,7 +22,7 @@ export function AccountVerificationFormStep1PreConsent() {
       <div className="flex flex-col justify-center flex-grow space-y-8">
         <div className="space-y-3 sm:space-y-4">
         <div className="flex flex-row justify-center sm:hidden">
-          <img className="w-14 h-14 sm:w-24 sm:h-24" src="/product-logo-square.svg" alt="piper logo" />
+          <img className="w-14 h-14 sm:w-24 sm:h-24" src={`${process.env.ASSET_PREFIX}/product-logo-square.svg`} alt="piper logo" />
         </div>
           {/* STEP HEADING */}
           {/* A short as possible heading to help the user quickly recognise the task at hand. */}
@@ -47,7 +47,7 @@ export function AccountVerificationFormStep1PreConsent() {
           <li className="flex flex-col items-center px-4 py-3 rounded-lg sm:flex-row sm:h-20 sm:px-6 bg-gradient-to-tr from-primary-bold to-secondary-bold space-x-4">
             {/* Icon: shield-check (outline) */}
             <div className="mb-2 sm:ml-4">
-                <img src="/shield.svg" alt="shield" className="h-6 sm:h-6"/>
+                <img src={`${process.env.ASSET_PREFIX}/shield.svg`} alt="shield" className="h-6 sm:h-6"/>
               </div>
             <div className="flex flex-grow text-base font-medium leading-snug text-white sm:text-lg sm:pl-4">
               Bank grade 256-bit SSL encryption
@@ -58,7 +58,7 @@ export function AccountVerificationFormStep1PreConsent() {
           <li className="flex items-center px-4 py-3 sm:py-6 sm:px-6 space-x-4 bg-primary-subtle-accent">
               {/* Icon: key (outline) */}
               <div className="sm:ml-4">
-                <img src="/key.svg" alt="key" className="h-6 sm:h-5"/>
+                <img src={`${process.env.ASSET_PREFIX}/key.svg`} alt="key" className="h-6 sm:h-5"/>
               </div>
               <div className="flex flex-grow text-sm text-primary-bold sm:!ml-8 !ml-0">
                 We never save your bank login credentials in the app
@@ -69,7 +69,7 @@ export function AccountVerificationFormStep1PreConsent() {
           <li className="flex items-center px-4 py-3 rounded-b-lg sm:py-6 sm:px-6 space-x-4 bg-primary-subtle-accent">
             {/* Icon: credit-card (outline) */}
             <div className="sm:ml-4">
-                <img src="/wallet-opaque.svg" alt="key" className="h-6 sm:h-5"/>
+                <img src={`${process.env.ASSET_PREFIX}/wallet-opaque.svg`} alt="key" className="h-6 sm:h-5"/>
               </div>
             <div className="flex flex-grow text-sm text-primary-bold sm:!ml-8 !ml-8 !pr-8">
               We cannot make transactions on your behalf

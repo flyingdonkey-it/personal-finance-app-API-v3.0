@@ -8,7 +8,7 @@ export function MonthlySpendingBarChart({ expenseMonthly, expenseLoading, showIn
         <div className="flex items-center sm:mb-1">
           {!showInChartSlider &&
             <div>
-              <img className="w-6 h-6" src="/chart.svg" alt="Chart" />
+              <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/chart.svg`} alt="Chart" />
             </div>
           }
           <div className={`${showInChartSlider ? "ml-20" : "ml-2"}`}>

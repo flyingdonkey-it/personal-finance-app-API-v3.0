@@ -86,7 +86,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
           <div className="flex justify-between ml-6 mr-6 sm:mt-12 sm:ml-52 sm:mr-80">
             <div className="flex">
               <div className="hidden mr-4 sm:block">
-                <img className="w-6 h-6" src="/swap.svg" alt="Swap" />
+                <img className="w-6 h-6" src={`${process.env.ASSET_PREFIX}/swap.svg`} alt="Swap" />
               </div>
               <div className={`font-semibold text-blue sm:text-2xl2 ${inTransactionsPage ? 'text-2xl2' : 'text-base2'}`}>
                 Transactions
@@ -95,7 +95,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
             <div className="flex items-center justify-center pr-4">
               {inTransactionsPage ? (
                 <div className="h-14">
-                  <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={setShowCalendar} />
+                  <img className="w-7 h-7" src={`${process.env.ASSET_PREFIX}/calendar.svg`} alt="Calendar" onClick={setShowCalendar} />
                   {/* TRANSACTIONS CALENDAR */}
                   {showCalendar && (
                     <Calendar

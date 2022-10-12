@@ -15,7 +15,7 @@ export function AccountItemDetail({ onClose, selectedAccount }) {
     <div>
       <div className="flex justify-between mt-24 ml-5 mr-5 sm:mt-12 sm:ml-96 sm:mr-96">
         <div>
-          <img className="w-8 h-8" src="/back-button.svg" alt="Back" onClick={onBackButtonClick} />
+          <img className="w-8 h-8" src={`${process.env.ASSET_PREFIX}/back-button.svg`} alt="Back" onClick={onBackButtonClick} />
         </div>
         <div className="flex flex-col items-center">
           <div>
@@ -27,7 +27,7 @@ export function AccountItemDetail({ onClose, selectedAccount }) {
           </div>
         </div>
         <div>
-          <img className="w-8 h-8" src="/share-button.svg" alt="Share" />
+          <img className="w-8 h-8" src={`${process.env.ASSET_PREFIX}/share-button.svg`} alt="Share" />
         </div>
       </div>
       <div className="ml-6 mr-6 sm:ml-96 sm:mr-96">
