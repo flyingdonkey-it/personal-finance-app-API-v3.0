@@ -28,7 +28,7 @@ export function AccountVerificationFormStep0SignUp() {
     e.preventDefault();
     setSubmitting(true);
     axios
-      .post(`${process.env.BASE_PATH}/api/create-user`, formState.values)
+      .post('/api/create-user', formState.values)
       .then( async res => {
         setSubmitting(false);
         updateAccountVerificationFormState({ user: res.data })
