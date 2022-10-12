@@ -96,7 +96,7 @@ export function AccountVerificationFormProvider({ children }) {
         sessionStorage.setItem("userId", res.data.id)
         sessionStorage.setItem("email", email)
 
-        router.push(`${process.env.BASE_PATH}/account-verification`);
+        router.push('/account-verification');
       })
       .catch(error => {
         console.log("Error: ", error);
