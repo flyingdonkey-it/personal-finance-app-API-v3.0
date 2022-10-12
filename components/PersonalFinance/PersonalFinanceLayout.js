@@ -377,27 +377,27 @@ export function PersonalFinanceLayout() {
 }
 
 export const MOBILE_MENU_ITEMS = [
-  { pageIndex: homePageIndex, title: "Home", image: "/home.svg", selectedImage: "/home-white.svg" },
-  { pageIndex: accountPageIndex, title: "Work", image: "/work.svg", selectedImage: "/work-white.svg" },
-  { pageIndex: incomeExpensePageIndex, title: "Chart", image: "/chart.svg", selectedImage: "/chart-white.svg" },
-  { pageIndex: transactionPageIndex, title: 'Upload', image: "/upload.svg", selectedImage: "/upload-white.svg" }
+  { pageIndex: homePageIndex, title: "Home", image: "home.svg", selectedImage: "home-white.svg" },
+  { pageIndex: accountPageIndex, title: "Work", image: "work.svg", selectedImage: "work-white.svg" },
+  { pageIndex: incomeExpensePageIndex, title: "Chart", image: "chart.svg", selectedImage: "chart-white.svg" },
+  { pageIndex: transactionPageIndex, title: 'Upload', image: "upload.svg", selectedImage: "upload-white.svg" }
 ];
 
 export const DESKTOP_MENU_ITEMS = [
-  { pageIndex: homePageIndex, title: "Home", image: "/home.svg" },
-  { pageIndex: accountPageIndex, title: "My Accounts", image: "/wallet.svg" },
-  { pageIndex: incomeExpensePageIndex, title: "Income vs Expenses", image: "/activity.svg" },
-  { pageIndex: transactionPageIndex, title: 'Transactions', image: "/swap.svg" }
+  { pageIndex: homePageIndex, title: "Home", image: "home.svg" },
+  { pageIndex: accountPageIndex, title: "My Accounts", image: "wallet.svg" },
+  { pageIndex: incomeExpensePageIndex, title: "Income vs Expenses", image: "activity.svg" },
+  { pageIndex: transactionPageIndex, title: 'Transactions', image: "swap.svg" }
 ];
 
 export const DESKTOP_FOOTER_MENU_ITEMS = [
-  { pageIndex: homePageIndex, title: "Home", image: "/home-white.svg" },
-  { pageIndex: accountPageIndex, title: "My Accounts", image: "/wallet-white.svg" },
-  { pageIndex: incomeExpensePageIndex, title: "Income vs Expenses", image: "/activity-white.svg" },
-  { pageIndex: transactionPageIndex, title: "Transactions", image: "/swap-white.svg" }
+  { pageIndex: homePageIndex, title: "Home", image: "home-white.svg" },
+  { pageIndex: accountPageIndex, title: "My Accounts", image: "wallet-white.svg" },
+  { pageIndex: incomeExpensePageIndex, title: "Income vs Expenses", image: "activity-white.svg" },
+  { pageIndex: transactionPageIndex, title: "Transactions", image: "swap-white.svg" }
 ];
 
 export const DESKTOP_FOOTER_MIDDLE_MENU_ITEMS = [
-  { title: "Profile settings", image: "/settings-white.svg" },
-  { title: "Add account", image: "/plus-white.svg" }
+  { title: "Profile settings", image: "settings-white.svg" },
+  { title: "Add account", image: "plus-white.svg" }
 ];
