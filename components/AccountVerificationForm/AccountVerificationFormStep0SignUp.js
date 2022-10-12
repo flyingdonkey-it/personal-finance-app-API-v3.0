@@ -48,7 +48,7 @@ export function AccountVerificationFormStep0SignUp() {
       {/* To help the user keep context of what product they're using, */}
       {/* and what bank they're about to connect to. */}
       <div className="flex flex-row justify-center">
-        <StepLogo src={`${process.env.ASSET_PREFIX}/user.svg`} alt="User logo" />
+        <StepLogo src='user.svg' alt="User logo" />
       </div>
 
       <div className="flex flex-col space-y-8">
