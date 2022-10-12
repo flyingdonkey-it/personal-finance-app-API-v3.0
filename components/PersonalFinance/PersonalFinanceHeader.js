@@ -32,7 +32,7 @@ export function PersonalFinanceHeader({ isMenuOpen, menuIconClick, profileMenuOp
           <img
             className="h-12 w-15"
             onClick={menuIconClick}
-            src={`${isMenuOpen ? '/left-menu-open.svg' : '/left-menu-close.svg'}`}
+            src={`${isMenuOpen ? `${process.env.ASSET_PREFIX}/left-menu-open.svg` : `${process.env.ASSET_PREFIX}/left-menu-close.svg`}`}
             alt="Menu"
           />
         </div>
