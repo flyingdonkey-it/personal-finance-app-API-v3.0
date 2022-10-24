@@ -306,10 +306,6 @@ function useBasiqConnection({ currentStep, userId }) {
       return;
     }
     if (completed) {
-      toast.success('Please continue setup, and select an account to finish.', {
-        title: 'Bank connected',
-        appearance: 'success',
-      });
       return;
     }
   }, [jobId, asPath, completed, error]);
