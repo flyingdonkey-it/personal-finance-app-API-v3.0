@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 
-const renderActiveShape = (props) => {
+const renderActiveShape = props => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value } = props;
   const sin = Math.sin(-RADIAN * midAngle);
@@ -13,7 +13,7 @@ const renderActiveShape = (props) => {
   return (
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {`${payload.name.length > 23 ? payload.name.slice(0, 20) + '...' : payload.name }`}
+        {`${payload.name.length > 23 ? payload.name.slice(0, 20) + '...' : payload.name}`}
       </text>
       <Sector
         cx={cx}
@@ -35,10 +35,10 @@ export function ActiveShapePieChart({ data, width }) {
   //When any part of chart is selected
   function onPieEnter(_, index) {
     setActiveIndex(index);
-  };
+  }
 
   return (
-    <ResponsiveContainer width={width} aspect={1.5}>
+    <ResponsiveContainer width={width} aspect={1.5} minWidth={400}>
       <PieChart width={100} height={100}>
         <Pie
           activeIndex={activeIndex}
