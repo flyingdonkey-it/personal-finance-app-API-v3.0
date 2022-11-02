@@ -15,13 +15,13 @@ const items = [
 
 const upcomingPayments = [
   {
-    description: 'Disney+', dateDescription: '5th of every month', amount: '-20.00',index:'0'
+    description: 'Disney+', dateDescription: '5th of every month', amount: '-20.00', index: '0'
   },
   {
-    description: 'Spotify', dateDescription: '18th of every month', amount: '-11.00',index:'1'
+    description: 'Spotify', dateDescription: '18th of every month', amount: '-11.00', index: '1'
   },
   {
-    description: 'Amazon', dateDescription: '10th of May, every year', amount: '-20.00',index:'2'
+    description: 'Amazon', dateDescription: '10th of May, every year', amount: '-20.00', index: '2'
   },
 ]
 
