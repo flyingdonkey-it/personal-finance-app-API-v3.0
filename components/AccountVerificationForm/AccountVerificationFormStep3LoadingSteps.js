@@ -1,5 +1,4 @@
 import { useEffect,useState,useCallback } from 'react';
-
 import axios from 'axios';
 import { useTernaryState } from '../../utils/useTernaryState';
 import { Button } from '../Button';
@@ -73,10 +72,11 @@ export function AccountVerificationFormStep3LoadingSteps() {
 }
 function useAccountsData({ userId }) {
 
-  const { updateAccountVerificationFormState} = useAccountVerificationForm();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [error, setError] = useState();
+  
+  const { updateAccountVerificationFormState } = useAccountVerificationForm();
 
   const fetchAccounts = useCallback(() => {
     axios
