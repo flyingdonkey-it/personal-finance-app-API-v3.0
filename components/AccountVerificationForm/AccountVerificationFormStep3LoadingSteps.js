@@ -1,4 +1,5 @@
 import { useEffect,useState,useCallback } from 'react';
+
 import axios from 'axios';
 import { useTernaryState } from '../../utils/useTernaryState';
 import { Button } from '../Button';
@@ -11,7 +12,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
   // State for managing hiding/showing of the resume in background modal
   const [isResumeModalOpen, openResumeModal, closeResumeModal] = useTernaryState(false);
 
-  const { basiqConnection ,finish,updateAccountVerificationFormState} = useAccountVerificationForm();
+  const { basiqConnection, finish} = useAccountVerificationForm();
   const { error, progress, completed, stepNameInProgress, reset, setJobId } = basiqConnection;
 
   useEffect(() => {
@@ -24,17 +25,9 @@ export function AccountVerificationFormStep3LoadingSteps() {
   });
 
   const errorOrNoData = error || !data || data.length === 0;
-  async function autoSelectedAccount () {
-    data.map((i)=>{
-      if(!i.disabled){
-        updateAccountVerificationFormState({i})
-      }
-    })
-    
-  }
+  
   async function submit () {
     if(!errorOrNoData){
-      await autoSelectedAccount();
       finish()
     }
   }
@@ -79,6 +72,8 @@ export function AccountVerificationFormStep3LoadingSteps() {
   );
 }
 function useAccountsData({ userId }) {
+
+  const { updateAccountVerificationFormState} = useAccountVerificationForm();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [error, setError] = useState();
@@ -88,6 +83,11 @@ function useAccountsData({ userId }) {
       .get('/api/accounts', { params: { userId } })
       .then(res => {
         console.log(res.data);
+        res.data.map((i)=>{
+          if(!i.disabled){
+            updateAccountVerificationFormState({i})
+          }
+        })
         setData(res.data);
         setError(undefined);
         setLoading(false);

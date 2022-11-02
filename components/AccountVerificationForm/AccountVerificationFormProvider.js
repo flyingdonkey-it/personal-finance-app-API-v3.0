@@ -305,9 +305,6 @@ function useBasiqConnection({ currentStep, userId }) {
       });
       return;
     }
-    if (completed) {
-      return;
-    }
   }, [jobId, asPath, completed, error]);
 
   // Some banks can be pretty slow to connect with and often take longer than their estimated time
