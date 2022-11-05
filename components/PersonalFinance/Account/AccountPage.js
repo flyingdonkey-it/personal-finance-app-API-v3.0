@@ -7,9 +7,9 @@ import { AccountItemDetail } from './AccountItemDetail';
 import { AccountType } from './AccountType';
 
 const accountTypes = [
-  { type: "savings", title: "Savings accounts" },
-  { type: "mortgage", title: "Loans" },
-  { type: "credit-card", title: "Credit cards" },
+  { type: 'savings', title: 'Savings accounts' },
+  { type: 'mortgage', title: 'Loans' },
+  { type: 'credit-card', title: 'Credit cards' },
 ];
 
 export function AccountPage() {
@@ -88,11 +88,11 @@ export function AccountPage() {
   }
 
   return (
-    <>
+    <div className="sm:min-w-max xl:pl-80 xl:pr-80">
       {/* Show account list if not any account selected */}
       {!showDetail && (
         <>
-          <div className="flex justify-between mt-20 ml-6 mr-6 sm:mt-16 sm:ml-80 sm:mr-80">
+          <div className="flex justify-between mt-20 ml-6 mr-6 sm:mt-16">
             <div className="flex">
               <div className="hidden mr-4 sm:block">
                 <img className="hidden mr-3 w-7 h-7 sm:block" src="/wallet.svg" alt="My accounts" />
@@ -103,7 +103,7 @@ export function AccountPage() {
               <img className="w-12 h-12" src="/add-account.svg" alt="Add Account" onClick={onAddAccountClick} />
             </div>
           </div>
-          <div className="min-h-screen mt-6 sm:ml-80 sm:mr-80 bg-[#FCFCFC]">
+          <div className="min-h-screen mt-6 bg-[#FCFCFC]">
             {loading ? (
               <div className="flex justify-center">
                 <div className="mt-16">
@@ -134,6 +134,6 @@ export function AccountPage() {
       )}
       {/* Show account detail if any account selected */}
       {showDetail && <AccountItemDetail onClose={onCloseAccountDetailClick} selectedAccount={selectedAccount} />}
-    </>
+    </div>
   );
 }
