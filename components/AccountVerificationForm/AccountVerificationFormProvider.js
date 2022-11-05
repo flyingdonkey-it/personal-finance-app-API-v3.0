@@ -305,13 +305,6 @@ function useBasiqConnection({ currentStep, userId }) {
       });
       return;
     }
-    if (completed) {
-      toast.success('Please continue setup, and select an account to finish.', {
-        title: 'Bank connected',
-        appearance: 'success',
-      });
-      return;
-    }
   }, [jobId, asPath, completed, error]);
 
   // Some banks can be pretty slow to connect with and often take longer than their estimated time
