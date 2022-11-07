@@ -47,11 +47,10 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
           items &&
           items.map((item, i) => {
             return (
-              <div key={'chart-title-' + i} className={`p-2 text-xs
-                ${selectedChartItem === item.index ? 'text-white rounded-xl bg-[#4A56E2]' : 'text-black bg-white rounded-3xl'}
-                ${i === items.length - 1 ? 'pl-[0.81rem] pr-4' : 'pl-5 pr-4'}`}
+              <div key={'chart-title-' + i} className={`p-2 text-xs grow text-center
+              ${selectedChartItem === item.index ? 'text-white rounded-xl bg-[#4A56E2]' : 'text-black bg-white rounded-3xl'}`}              
                 onClick={() => onItemClick(item.index)}>
-                {item.title}
+                  {item.title}
               </div>
             );
           })
