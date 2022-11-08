@@ -9,6 +9,7 @@ export default function Home() {
   const { basiqConnection, reset, hasCompletedForm } = useAccountVerificationForm();
 
   const basiqConnectionInProgress = basiqConnection?.inProgress;
+  const x = 5;
   const basiqConnectionSuccess = basiqConnection?.completed;
   const basiqConnectionError = basiqConnection?.error;
 
