@@ -8,7 +8,6 @@ import { AccountVerificationFormResumeInBackgroundModal } from './AccountVerific
 
 export function AccountVerificationFormStep3LoadingSteps() {
 
-  // State for managing hiding/showing of the resume in background modal
   const [isResumeModalOpen, openResumeModal, closeResumeModal] = useTernaryState(false);
 
   const { basiqConnection, finish} = useAccountVerificationForm();
@@ -34,7 +33,6 @@ export function AccountVerificationFormStep3LoadingSteps() {
     <div className="flex flex-col space-y-10 sm:space-y-12">
       <div className="flex flex-col items-center text-center space-y-8">
         <CircularProgressBar value={progress} error={error && errorOrNoData} />
-    
         {error ? (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
@@ -49,7 +47,6 @@ export function AccountVerificationFormStep3LoadingSteps() {
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">Connected 🎉</h3>
-              {/* <p className="text-sm sm:text-base text-neutral-muted-darker">One last step to go...</p> */}
             </div>
             <Button block onClick={submit}>
               Continue
@@ -82,7 +79,6 @@ function useAccountsData({ userId }) {
     axios
       .get('/api/accounts', { params: { userId } })
       .then(res => {
-        console.log(res.data);
         res.data.map((i)=>{
           if(!i.disabled){
             updateAccountVerificationFormState({i})
@@ -113,4 +109,3 @@ const STEP_NAME_MAP = {
   'verify-credentials': 'Verifying credentials...',
   'retrieve-accounts': 'Retrieving accounts...',
 };
-
