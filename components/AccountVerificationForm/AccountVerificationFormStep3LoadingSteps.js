@@ -82,6 +82,7 @@ function useAccountsData({ userId }) {
         res.data.map((i)=>{
           if(!i.disabled){
             updateAccountVerificationFormState({i})
+            sessionStorage.setItem("currentAccountId", i.id);
           }
         })
         setData(res.data);
