@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Savings } from './Savings';
-import { Loans } from './Loans';
 import { CreditCard } from './CreditCard';
 import { IncomeExpense } from './IncomeExpense';
 import { MonthlySpendingBarChart } from './MonthlySpendingBarChart';
@@ -10,18 +9,15 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
   const [currentIndex, setCurrentIndex] = useState(0);
   //Savings account balance
   const [savingsBalance, setSavingsBalance] = useState(0);
-  //Loans balance
-  const [loansBalance, setLoansBalance] = useState(0);
   //Credit card balance
   const [creditCardBalance, setCreditCardBalance] = useState(0);
 
   //Slider components to load when it is selected
   const components = [
     { index: 0, hidden: false, component: <Savings balance={savingsBalance} /> },
-    { index: 1, hidden: true, component: <Loans balance={loansBalance} /> },
-    { index: 2, hidden: true, component: <CreditCard balance={creditCardBalance} /> },
-    { index: 3, hidden: true, component: <MonthlySpendingBarChart expenseMonthly={expenseMonthly} expenseLoading={expenseLoading} chartWidth={chartWidth} chartAspect={chartAspect} /> },
-    { index: 4, hidden: true, component: <IncomeExpense incomeMonthlyAvg={incomeMonthlyAvg} expenseMonthlyAvg={expenseMonthlyAvg} /> }
+    { index: 1, hidden: true, component: <CreditCard balance={creditCardBalance} /> },
+    { index: 2, hidden: true, component: <MonthlySpendingBarChart expenseMonthly={expenseMonthly} expenseLoading={expenseLoading} chartWidth={chartWidth} chartAspect={chartAspect} /> },
+    { index: 3, hidden: true, component: <IncomeExpense incomeMonthlyAvg={incomeMonthlyAvg} expenseMonthlyAvg={expenseMonthlyAvg} /> }
   ];
 
   //Get clicked index when carousel indicator clicked
@@ -36,7 +32,6 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
     axios.get('/api/accounts', { params: { userId } })
       .then((response) => {
         setSavingsBalance(response.data.find(f => f.class.type === 'savings').balance);
-        setLoansBalance(parseFloat(response.data.find(f => f.class.type === 'mortgage').balance));
         setCreditCardBalance(response.data.find(f => f.class.type === 'credit-card').balance);
       })
       .catch((error) => console.error(error));
