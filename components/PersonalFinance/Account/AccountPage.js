@@ -8,7 +8,6 @@ import { AccountType } from './AccountType';
 
 const accountTypes = [
   { type: 'savings', title: 'Savings accounts' },
-  { type: 'mortgage', title: 'Loans' },
   { type: 'credit-card', title: 'Credit cards' },
 ];
 
