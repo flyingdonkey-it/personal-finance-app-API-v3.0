@@ -34,7 +34,7 @@ export function AccountVerificationFormStep4SelectAccount() {
       window.scrollTo(0, 0);
     }
   }
-  
+
   async function retryConnection() {
     try {
       await getUserConsent(userId)
