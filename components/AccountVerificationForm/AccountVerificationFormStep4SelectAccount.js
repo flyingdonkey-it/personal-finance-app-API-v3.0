@@ -28,18 +28,13 @@ export function AccountVerificationFormStep4SelectAccount() {
     e.preventDefault();
     if (selectedAccount) {
       updateAccountVerificationFormState({ selectedAccount });
-      storeSelectedAccountIdIntoSession();
       goForward();
     } else {
       setValidationError(true);
       window.scrollTo(0, 0);
     }
   }
-
-  function storeSelectedAccountIdIntoSession() {
-    sessionStorage.setItem("currentAccountId", selectedAccount.id);
-  }
-
+  
   async function retryConnection() {
     try {
       await getUserConsent(userId)
