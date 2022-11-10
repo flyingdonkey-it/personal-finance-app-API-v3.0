@@ -77,7 +77,7 @@ export function IncomeExpenseCharts({
           />
         )}
         {/* CAROUSEL INDICATOR */}
-        <div className="hidden mt-16 mr-6 sm:block">
+        <div className="hidden mt-8 mr-6 sm:block">
           <div className="flex justify-end">
             <div className="space-x-3">
               {components.map(item => (

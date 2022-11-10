@@ -87,7 +87,7 @@ export function AccountPage() {
   }
 
   return (
-    <div className="sm:min-w-max xl:pl-80 xl:pr-80">
+    <div className={`sm:min-w-max ${!showDetail && 'xl:pl-80 xl:pr-80'}`}>
       {/* Show account list if not any account selected */}
       {!showDetail && (
         <>

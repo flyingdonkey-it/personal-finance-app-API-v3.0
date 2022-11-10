@@ -406,7 +406,7 @@ export function PersonalFinanceLayout() {
                       </div>
                       <span className="font-bold text-2xl2 text-blue">Your finances at a glance</span>
                     </div>
-                    <div className="flex w-full mt-6">
+                    <div className="flex w-full mt-6 overflow-x-auto">
                       <HomeSlider
                         incomeMonthlyAvg={incomeMonthlyAvgData}
                         expenseMonthlyAvg={expenseMonthlyAvgData}
@@ -453,7 +453,7 @@ export function PersonalFinanceLayout() {
                   />
                 )}
                 {!hideHomePageItems && (
-                  <>
+                  <div className="sm:flex sm:overflow-x-auto">
                     <div className="flex">
                       <IncomeExpenseCharts
                         expenseData={expenseData}
@@ -467,7 +467,7 @@ export function PersonalFinanceLayout() {
                       />
                       <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
                     </div>
-                  </>
+                  </div>
                 )}
                 {!hideTransactionPageItems && (
                   <div className="mt-12">
