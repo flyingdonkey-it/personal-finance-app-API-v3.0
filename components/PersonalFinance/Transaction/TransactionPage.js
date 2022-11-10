@@ -12,16 +12,17 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
   const [showDetail, setShowDetail] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState({});
   const [showCalendar, setShowCalendar] = useToggleState(false);
+  const [currentAccount, setCurrentAccount] = useState({});
 
   //Get all transactions of user
   function getData() {
     setLoading(true);
     const userId = sessionStorage.getItem('userId');
+    const currentAccountId = sessionStorage.getItem('currentAccountId');
+
     axios
       .get(`/api/transactions`, { params: { userId, limit } })
       .then(function (response) {
-        setLoading(false);
-
         //Group all transactions by postDate
         const dateGroupedTransactions = response.data.reduce(function (r, a) {
           if (a.postDate) {
@@ -30,15 +31,23 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
             return r;
           }
         }, Object.create(null));
-
         setDateGroupedTransactions(Object.entries(dateGroupedTransactions));
       })
       .catch(function (error) {
         console.warn(error);
         setDateGroupedTransactions([]);
+      });
+
+      axios.get(`/api/get-account`, { params: { userId, accountId: currentAccountId } })
+      .then(function (response) {
+        setCurrentAccount(response.data);
+      }).catch(function (error) {
+        console.warn(error);
+        setCurrentAccount({});
+      }).finally(() => {        
         setLoading(false);
       });
-  };
+  }
 
   //Open transaction detail
   function onTransactionItemClick(e) {
@@ -150,6 +159,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
       {/* When any transaction is selected */}
       {showDetail && (
         <TransactionItemDetail
+          currentAccount={currentAccount}
           detail={selectedTransaction}
           closeTransactionDetailClick={onCloseTransactionDetailClick}
         />

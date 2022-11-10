@@ -1,7 +1,8 @@
 import { Button } from '../../Button';
 import { formatCurrency } from '../../../utils/formatCurrency';
 
-export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
+export function TransactionItemDetail({ detail, closeTransactionDetailClick, currentAccount }) {
+  
   function onBackButtonClick() {
     closeTransactionDetailClick();
   }
@@ -65,7 +66,7 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
                 Account used
               </div>
               <div className="mt-1 font-semibold">
-                Lorem ipsum
+                {currentAccount.name}
               </div>
             </div>
             <div className="mt-3 text-xs">
