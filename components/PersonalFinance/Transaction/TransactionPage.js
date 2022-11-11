@@ -6,37 +6,18 @@ import { Calendar } from '../../Calendar';
 import { TransactionItem } from './TransactionItem';
 import { TransactionItemDetail } from './TransactionItemDetail';
 
-export function TransactionPage({ limit, inTransactionsPage, managePages, manageDetailPages }) {
-  const [dateGroupedTransactions, setDateGroupedTransactions] = useState([]);
+export function TransactionPage({inTransactionsPage, managePages, manageDetailPages, dateGroupedTransactions = []}) {
   const [loading, setLoading] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState({});
   const [showCalendar, setShowCalendar] = useToggleState(false);
   const [currentAccount, setCurrentAccount] = useState({});
 
-  //Get all transactions of user
+  //Get the account current account information of the user 
   function getData() {
     setLoading(true);
     const userId = sessionStorage.getItem('userId');
-    const currentAccountId = sessionStorage.getItem('currentAccountId');
-
-    axios
-      .get(`/api/transactions`, { params: { userId, limit } })
-      .then(function (response) {
-        //Group all transactions by postDate
-        const dateGroupedTransactions = response.data.reduce(function (r, a) {
-          if (a.postDate) {
-            r[a.postDate.slice(0, 10)] = r[a.postDate.slice(0, 10)] || [];
-            r[a.postDate.slice(0, 10)].push(a);
-            return r;
-          }
-        }, Object.create(null));
-        setDateGroupedTransactions(Object.entries(dateGroupedTransactions));
-      })
-      .catch(function (error) {
-        console.warn(error);
-        setDateGroupedTransactions([]);
-      });
+    const currentAccountId = sessionStorage.getItem('currentAccountId');   
 
       axios.get(`/api/get-account`, { params: { userId, accountId: currentAccountId } })
       .then(function (response) {

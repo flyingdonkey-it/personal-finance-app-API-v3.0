@@ -48,6 +48,7 @@ export function PersonalFinanceLayout() {
   const [refreshConnectionError, setRefreshConnectionError] = useState(false);
   const [expenseLoading, setExpenseLoading] = useState(true);
   const [incomeLoading, setIncomeLoading] = useState(true);
+  const [dateGroupedTransactions, setDateGroupedTransactions] = useState([]);
 
   function setIncomeExpenseData() {
     const userId = sessionStorage.getItem("userId");
@@ -57,91 +58,118 @@ export function PersonalFinanceLayout() {
       .post(`/api/refresh-connection?userId=${userId}`)
       .then(function (refreshResponse) {
         if (refreshResponse.status === 200) {
-          //Creating expense summary between 2020-01 - 2021-01
+
           axios
-            .post(`/api/create-expense?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
-            .then(function (response) {
-              const data = response.data;
-              const paymentsTotal = data.payments.reduce((sum, p) => {
-                return sum + parseInt(p.avgMonthly);
-              }, 0);
+          .get(`/api/transactions`, { params: { userId, limit: 20 } })
+          .then(function (response) {
+            //Group all transactions by postDate
+            const dateGroupedTransactions = response.data.reduce(function (r, a) {
+              if (a.postDate) {
+                r[a.postDate.slice(0, 10)] = r[a.postDate.slice(0, 10)] || [];
+                r[a.postDate.slice(0, 10)].push(a);
+                return r;
+              }
+            }, Object.create(null));
+            setDateGroupedTransactions(Object.entries(dateGroupedTransactions));
 
-              setExpenseMonthlyAvgData(
-                parseInt(data.bankFees?.avgMonthly || "0") +
-                parseInt(data.cashWithdrawals?.avgMonthly || "0") +
-                parseInt(data.loanInterests?.avgMonthly || "0") +
-                parseInt(data.loanRepayments?.avgMonthly || "0") +
-                paymentsTotal);
-              setExpenseData(data.payments.map((x, i) => {
-                return { name: x.division, value: x.percentageTotal, fill: colorPallette[parseInt(i % 12)] }
-              }));
+            if(response.data?.length) {
+              //Creating expense summary between 2020-01 - 2021-01
+             axios
+             .post(`/api/create-expense?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
+             .then(function (response) {
+               const data = response.data;
+               const paymentsTotal = data.payments.reduce((sum, p) => {
+                 return sum + parseInt(p.avgMonthly);
+               }, 0);
+ 
+               setExpenseMonthlyAvgData(
+                 parseInt(data.bankFees?.avgMonthly || "0") +
+                 parseInt(data.cashWithdrawals?.avgMonthly || "0") +
+                 parseInt(data.loanInterests?.avgMonthly || "0") +
+                 parseInt(data.loanRepayments?.avgMonthly || "0") +
+                 paymentsTotal);
+               setExpenseData(data.payments.map((x, i) => {
+                 return { name: x.division, value: x.percentageTotal, fill: colorPallette[parseInt(i % 12)] }
+               }));
+ 
+               setPaymentsData(data.payments);
+ 
+               let paymentsChangeHistory = [];
+               data.payments.forEach(x =>
+                 x.subCategory[0].changeHistory.forEach(y =>
+                   paymentsChangeHistory.push({ date: y.date, amount: y.amount, description: x.division })
+                 )
+               );
+               setExpenseMonthlyData(prepareExpenseMonthly(paymentsChangeHistory));
+ 
+               let expenseChangeHistory = [];
+               expenseChangeHistory.push(...data.bankFees?.changeHistory.map(x => {
+                 return { date: x.date, amount: x.amount, description: 'Bank fee' }
+               }));
+               expenseChangeHistory.push(...data.cashWithdrawals?.changeHistory.map(x => {
+                 return { date: x.date, amount: x.amount, description: 'Cash withdrawal' }
+               }));
+               expenseChangeHistory.push(...data.loanInterests?.changeHistory.map(x => {
+                 return { date: x.date, amount: x.amount, description: 'Loan interest' }
+               }));
+               expenseChangeHistory.push(...data.loanRepayments?.changeHistory.map(x => {
+                 return { date: x.date, amount: x.amount, description: 'Loan repayment' }
+               }));
+               expenseChangeHistory.push(...paymentsChangeHistory);
+ 
+               setExpensesByDate(prepareExpenseByDate(expenseChangeHistory));
+ 
+               setExpenseLoading(false);
+             })
+             .catch(function (error) {
+               console.warn(error);
+               setExpenseMonthlyAvgData(0);
+               setExpenseData([]);
+               setExpenseMonthlyData([]);
+               setPaymentsData([]);
+               setExpenseLoading(false);
+               setRefreshConnectionError(true);
+             });
+ 
+           //Creating income summary between 2020-01 - 2021-01
+           axios
+             .post(`/api/create-income?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
+             .then(function (response) {
+               const data = response.data;
+ 
+               setIncomeMonthlyAvgData(parseInt(data.summary.regularIncomeAvg) + parseInt(data.summary.irregularIncomeAvg));
+               setIncomeData(data.regular[0].changeHistory.slice(0, 12).map((x) => {
+                 return { key: new Date(x.date).toLocaleString('en-us', { month: 'short' }), value: x.amount, normalizedValue: x.amount * 1.25 }
+               }));
+ 
+               let incomeChangeHistory = [];
+               incomeChangeHistory.push(...data.irregular[0].changeHistory);
+               incomeChangeHistory.push(...data.otherCredit[0].changeHistory);
+               incomeChangeHistory.push(...data.regular[0].changeHistory);
+ 
+               setIncomesByDate(groupChangeHistoryByDay(incomeChangeHistory));
+ 
+               setIncomeLoading(false);
+             })
+             .catch(function (error) {
+               console.warn(error);
+               setIncomeMonthlyAvgData(0);
+               setIncomeData([]);
+               setIncomeLoading(false);
+               setRefreshConnectionError(true);
+             });
+            }
 
-              setPaymentsData(data.payments);
-
-              let paymentsChangeHistory = [];
-              data.payments.forEach(x =>
-                x.subCategory[0].changeHistory.forEach(y =>
-                  paymentsChangeHistory.push({ date: y.date, amount: y.amount, description: x.division })
-                )
-              );
-              setExpenseMonthlyData(prepareExpenseMonthly(paymentsChangeHistory));
-
-              let expenseChangeHistory = [];
-              expenseChangeHistory.push(...data.bankFees?.changeHistory.map(x => {
-                return { date: x.date, amount: x.amount, description: 'Bank fee' }
-              }));
-              expenseChangeHistory.push(...data.cashWithdrawals?.changeHistory.map(x => {
-                return { date: x.date, amount: x.amount, description: 'Cash withdrawal' }
-              }));
-              expenseChangeHistory.push(...data.loanInterests?.changeHistory.map(x => {
-                return { date: x.date, amount: x.amount, description: 'Loan interest' }
-              }));
-              expenseChangeHistory.push(...data.loanRepayments?.changeHistory.map(x => {
-                return { date: x.date, amount: x.amount, description: 'Loan repayment' }
-              }));
-              expenseChangeHistory.push(...paymentsChangeHistory);
-
-              setExpensesByDate(prepareExpenseByDate(expenseChangeHistory));
-
-              setExpenseLoading(false);
-            })
-            .catch(function (error) {
-              console.warn(error);
-              setExpenseMonthlyAvgData(0);
-              setExpenseData([]);
-              setExpenseMonthlyData([]);
-              setPaymentsData([]);
-              setExpenseLoading(false);
-              setRefreshConnectionError(true);
-            });
-
-          //Creating income summary between 2020-01 - 2021-01
-          axios
-            .post(`/api/create-income?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
-            .then(function (response) {
-              const data = response.data;
-
-              setIncomeMonthlyAvgData(parseInt(data.summary.regularIncomeAvg) + parseInt(data.summary.irregularIncomeAvg));
-              setIncomeData(data.regular[0].changeHistory.slice(0, 12).map((x) => {
-                return { key: new Date(x.date).toLocaleString('en-us', { month: 'short' }), value: x.amount, normalizedValue: x.amount * 1.25 }
-              }));
-
-              let incomeChangeHistory = [];
-              incomeChangeHistory.push(...data.irregular[0].changeHistory);
-              incomeChangeHistory.push(...data.otherCredit[0].changeHistory);
-              incomeChangeHistory.push(...data.regular[0].changeHistory);
-
-              setIncomesByDate(groupChangeHistoryByDay(incomeChangeHistory));
-
-              setIncomeLoading(false);
-            })
-            .catch(function (error) {
-              console.warn(error);
-              setIncomeMonthlyAvgData(0);
-              setIncomeData([]);
-              setIncomeLoading(false);
-              setRefreshConnectionError(true);
-            });
+          })
+          .catch(function (error) {
+            console.warn(error);
+            setDateGroupedTransactions([]);
+            setIncomeData([]);
+            setIncomeLoading(false);
+            setPaymentsData([]);
+            setExpenseLoading(false);
+            setRefreshConnectionError(true);
+          });         
         }
       })
       .catch(function (error) {
@@ -283,7 +311,7 @@ export function PersonalFinanceLayout() {
               }
               {
                 !hideTransactionPageItems &&
-                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                <TransactionPage dateGroupedTransactions={dateGroupedTransactions.slice(0,10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
               }
             </div>
           }
@@ -291,7 +319,7 @@ export function PersonalFinanceLayout() {
           {selectedPageIndex &&
             selectedPageIndex === transactionPageIndex &&
             <div className="mt-20 mb-20">
-              <TransactionPage limit={20} inTransactionsPage={true} />
+              <TransactionPage dateGroupedTransactions={dateGroupedTransactions.slice(0,20)} inTransactionsPage={true} />
             </div>
           }
         </div>
@@ -323,7 +351,7 @@ export function PersonalFinanceLayout() {
                     </div>
                   </div>
                 }
-                <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                <TransactionPage dateGroupedTransactions={dateGroupedTransactions.slice(0,10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
               </>
             }
             {/* ACCOUNT PAGE */}
@@ -355,7 +383,7 @@ export function PersonalFinanceLayout() {
                 {
                   !hideTransactionPageItems &&
                   <div className="mt-12">
-                    <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                    <TransactionPage dateGroupedTransactions={dateGroupedTransactions.slice(0,10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
                   </div>
                 }
               </>
@@ -364,7 +392,7 @@ export function PersonalFinanceLayout() {
             {selectedPageIndex &&
               selectedPageIndex === transactionPageIndex &&
               <>
-                <TransactionPage limit={20} inTransactionsPage={true} />
+                <TransactionPage dateGroupedTransactions={dateGroupedTransactions.slice(0,20)} inTransactionsPage={true} />
               </>
             }
           </div>
