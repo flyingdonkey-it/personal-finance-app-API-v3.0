@@ -23,8 +23,7 @@
     "react-redux": "^8.0.5",
     "react-use-form-state": "^0.13.2",
     "recharts": "2.1.8",
-    "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.4.2"
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",

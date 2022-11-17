@@ -13,6 +13,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
   const [isResumeModalOpen, openResumeModal, closeResumeModal] = useTernaryState(false);
   const [progressBarValue, setProgressBarValue] = useState(0);
   const [progressInterval, setProgressInterval] = useState(null);
+  const [transactionLoadingDispatched, setTransactionLoadingDispatched] = useState(false);
 
   useDispatch(userTransactionsLoading());
   const { refreshConnectionError, isCompleted } = useSelector(state => state.userTransactions);
@@ -26,6 +27,8 @@ export function AccountVerificationFormStep3LoadingSteps() {
 
   const errorOrNoData = error || !data || data.length === 0 || refreshConnectionError;
 
+  let userTransactionsRequestSuccessful = isCompleted && transactionLoadingDispatched;
+
   async function submit() {
     if (!errorOrNoData) {
       finish()
@@ -33,7 +36,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
   }
 
   function updateProgressBarValue() {
-    let value = (progress + (isCompleted ? 100 : 0)) / 2
+    let value = (progress + (userTransactionsRequestSuccessful ? 100 : 0)) / 2
     if (isNaN(value)) value = 0;
     if (value > 100) value = 100;
     if (value === 100) setProgressBarValue(value);
@@ -43,7 +46,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
   function incrementProgressBarValueGradually() {
     let interval = setInterval(() => {
       setProgressBarValue(currentValue => currentValue + Math.floor(Math.random() * 4));
-    },300);
+    },250);
     setProgressInterval(interval);
   }
 
@@ -59,6 +62,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
   }, [])
 
   useEffect(() => {
+    if(isCompleted === false) setTransactionLoadingDispatched(true); 
     updateProgressBarValue();
   }, [progress, isCompleted]);
 
@@ -76,7 +80,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
               Try again
             </Button>
           </div>
-        ) : (completed && isCompleted && !errorOrNoData) ? (
+        ) : (completed && userTransactionsRequestSuccessful && !errorOrNoData) ? (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">Connected 🎉</h3>

@@ -5,10 +5,14 @@ export function fetchUserTransactions(userId, accountId) {
   return async function (dispatch) {
     dispatch(userTransactionsLoading());
     const transactionsData = await RequestUserTransactions(userId, accountId);
-    dispatch({
-      type: UserTransactionsReducerActions.UserTransactionsLoaded,
-      payload: transactionsData
-    })
+    dispatch(userTransactionsLoaded(transactionsData));
+  }
+}
+
+export function userTransactionsLoaded(payload) {
+  return {
+    type: UserTransactionsReducerActions.UserTransactionsLoaded,
+    payload: payload
   }
 }
 

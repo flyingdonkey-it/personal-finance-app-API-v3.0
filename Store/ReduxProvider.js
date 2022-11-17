@@ -1,9 +1,8 @@
 
 import React from 'react'
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import { createWrapper } from "next-redux-wrapper";
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistStore, persistReducer, REGISTER, REHYDRATE, PERSIST, FLUSH, PAUSE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react';
 import { configureStore } from '@reduxjs/toolkit';
@@ -15,13 +14,15 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
-const middlewares = [thunk];
-
 
 let store = configureStore({
     reducer: persistedReducer,
-    middlewares: middlewares,
     devTools: process.env.NODE_ENV !== 'production', // to make sure that redux's dev tool is only available when in dev environment.
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: {
+            ignoredActions:[REGISTER, REHYDRATE, PERSIST, FLUSH, PAUSE] // to remove errors related to using redux-persist with configureStore regarding serialization.
+        }
+    })
 });
 
 let persistor = persistStore(store);
