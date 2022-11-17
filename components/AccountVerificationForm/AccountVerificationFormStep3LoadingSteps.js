@@ -1,5 +1,7 @@
-import { useEffect,useState,useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserTransactions, userTransactionsLoading } from '../../store/Actions/userTransactionsActions';
 import { useTernaryState } from '../../utils/useTernaryState';
 import { Button } from '../Button';
 import { CircularProgressBar } from '../CircularProgressBar';
@@ -9,30 +11,65 @@ import { AccountVerificationFormResumeInBackgroundModal } from './AccountVerific
 export function AccountVerificationFormStep3LoadingSteps() {
 
   const [isResumeModalOpen, openResumeModal, closeResumeModal] = useTernaryState(false);
+  const [progressBarValue, setProgressBarValue] = useState(0);
+  const [progressInterval, setProgressInterval] = useState(null);
+  const [transactionLoadingDispatched, setTransactionLoadingDispatched] = useState(false);
 
-  const { basiqConnection, finish} = useAccountVerificationForm();
+  useDispatch(userTransactionsLoading());
+  const { refreshConnectionError, isCompleted } = useSelector(state => state.userTransactions);
+  const { basiqConnection, finish } = useAccountVerificationForm();
   const { error, progress, completed, stepNameInProgress, reset, setJobId } = basiqConnection;
 
-  useEffect(() => {
-    const newJobId = new URLSearchParams(window.location.search).get("jobId");
-    setJobId(newJobId);
-  }, [])
 
   const { data } = useAccountsData({
     userId: sessionStorage.getItem("userId"),
   });
 
-  const errorOrNoData = error || !data || data.length === 0;
-  
-  async function submit () {
-    if(!errorOrNoData){
+  const errorOrNoData = error || !data || data.length === 0 || refreshConnectionError;
+
+  let userTransactionsRequestSuccessful = isCompleted && transactionLoadingDispatched;
+
+  async function submit() {
+    if (!errorOrNoData) {
       finish()
     }
   }
+
+  function updateProgressBarValue() {
+    let value = (progress + (userTransactionsRequestSuccessful ? 100 : 0)) / 2
+    if (isNaN(value)) value = 0;
+    if (value > 100) value = 100;
+    if (value === 100) setProgressBarValue(value);
+  }
+
+  //this is to provide a more reactive interface for the users
+  function incrementProgressBarValueGradually() {
+    let interval = setInterval(() => {
+      setProgressBarValue(currentValue => currentValue + Math.floor(Math.random() * 4));
+    },250);
+    setProgressInterval(interval);
+  }
+
+  useEffect(() => {
+    if (progressBarValue > 90) clearInterval(progressInterval);
+  }, [progressInterval, progressBarValue]);
+
+
+  useEffect(() => {
+    const newJobId = new URLSearchParams(window.location.search).get("jobId");
+    setJobId(newJobId);
+    incrementProgressBarValueGradually();
+  }, [])
+
+  useEffect(() => {
+    if(isCompleted === false) setTransactionLoadingDispatched(true); 
+    updateProgressBarValue();
+  }, [progress, isCompleted]);
+
   return (
     <div className="flex flex-col space-y-10 sm:space-y-12">
       <div className="flex flex-col items-center text-center space-y-8">
-        <CircularProgressBar value={progress} error={error && errorOrNoData} />
+        <CircularProgressBar value={progressBarValue} error={error && errorOrNoData} />
         {error ? (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
@@ -43,7 +80,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
               Try again
             </Button>
           </div>
-        ) : (completed && !errorOrNoData) ? (
+        ) : (completed && userTransactionsRequestSuccessful && !errorOrNoData) ? (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">Connected 🎉</h3>
@@ -55,7 +92,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
         ) : (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
-              <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">{STEP_NAME_MAP[stepNameInProgress]}</h2>
+              <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">{STEP_NAME_MAP[stepNameInProgress] ?? STEP_NAME_MAP['retrieve-transactions']}</h2>
             </div>
             <Button block variant="subtle" onClick={openResumeModal}>
               Resume in background
@@ -72,19 +109,20 @@ function useAccountsData({ userId }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [error, setError] = useState();
-  
+
   const { updateAccountVerificationFormState } = useAccountVerificationForm();
 
+  let dispatch = useDispatch();
   const fetchAccounts = useCallback(() => {
     axios
       .get('/api/accounts', { params: { userId } })
       .then(res => {
-        res.data.map((i)=>{
-          if(!i.disabled){
-            updateAccountVerificationFormState({i})
-            sessionStorage.setItem("currentAccountId", i.id);
-          }
-        })
+        let account = res.data.find(account => !account.disabled);
+        updateAccountVerificationFormState({ account })
+        sessionStorage.setItem("currentAccountId", account.id);
+
+        dispatch(fetchUserTransactions(userId, account.id));
+
         setData(res.data);
         setError(undefined);
         setLoading(false);
@@ -106,7 +144,9 @@ function useAccountsData({ userId }) {
 
   return { data, loading, error, refetch };
 }
+
 const STEP_NAME_MAP = {
   'verify-credentials': 'Verifying credentials...',
   'retrieve-accounts': 'Retrieving accounts...',
+  'retrieve-transactions': 'Retrieving transaction details...'
 };
