@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserTransactionsReducerActions } from "../reducers/userTransactionsReducers";
+import { UserTransactionsReducerActions } from "../reducers/userTransactionsReducer";
 
 export function fetchUserTransactions(userId, accountId) {
   return async function (dispatch) {
