@@ -1,6 +1,6 @@
 
 import { combineReducers } from "@reduxjs/toolkit";
-import userTransactionsReducer from "./userTransactionsReducer";
+import userTransactionsReducer from "./userTransactionsReducers";
 
 const rootReducer = combineReducers( {
     userTransactions: userTransactionsReducer
