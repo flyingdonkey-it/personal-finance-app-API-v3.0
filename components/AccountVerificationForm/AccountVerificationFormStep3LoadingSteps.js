@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserTransactions, userTransactionsLoading } from '../../store/Actions/userTransactionsActions';
+import { fetchUserTransactions, userTransactionsLoading } from '../../store/actions/userTransactionsActions';
 import { useTernaryState } from '../../utils/useTernaryState';
 import { Button } from '../Button';
 import { CircularProgressBar } from '../CircularProgressBar';

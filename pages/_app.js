@@ -1,16 +1,16 @@
 import { ToastNotification } from '../components/ToastNotification';
 import { AccountVerificationFormProvider } from '../components/AccountVerificationForm';
 import '../styles.css';
-import ReduxProvider, { wrapper } from '../store/reduxProvider';
+import StoreProvider, { wrapper } from '../store/StoreProvider';
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <ReduxProvider>
+      <StoreProvider>
       <AccountVerificationFormProvider>
           <Component {...pageProps} />
       </AccountVerificationFormProvider>
-      </ReduxProvider>
+      </StoreProvider>
 
       <ToastNotification />
     </>

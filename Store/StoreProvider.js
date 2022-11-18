@@ -28,7 +28,7 @@ let store = configureStore({
 let persistor = persistStore(store);
 
 
-export default function ReduxProvider({ children }) {
+export default function StoreProvider({ children }) {
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor}>
