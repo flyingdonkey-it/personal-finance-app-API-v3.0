@@ -16,7 +16,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
   const [transactionLoadingDispatched, setTransactionLoadingDispatched] = useState(false);
 
   useDispatch(userTransactionsLoading());
-  const { isCompleted } = useSelector(state => state.userTransactions);
+  const { isCompleted, refreshConnectionError } = useSelector(state => state.userTransactions);
   const { basiqConnection, finish } = useAccountVerificationForm();
   const { error, progress, completed, stepNameInProgress, reset, setJobId } = basiqConnection;
 
@@ -25,11 +25,13 @@ export function AccountVerificationFormStep3LoadingSteps() {
     userId: sessionStorage.getItem("userId"),
   });
 
+  let userTransactionsRequestSuccessful = isCompleted && transactionLoadingDispatched;
+
+  let userTransactionsRequestError = refreshConnectionError && transactionLoadingDispatched;
+
   const errorOrNoData = error || !data || data.length === 0;
 
-  const displayError = (error && errorOrNoData) || userTransactionsRequestSuccessful;
-
-  let userTransactionsRequestSuccessful = isCompleted && transactionLoadingDispatched;
+  const displayError = (error && errorOrNoData) || userTransactionsRequestError;
 
   async function submit() {
     if (!errorOrNoData) {
@@ -86,7 +88,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
               Try again
             </Button>
           </div>
-        ) : (completed && !displayError) ? (
+        ) : (completed && userTransactionsRequestSuccessful && !displayError) ? (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">Connected 🎉</h3>

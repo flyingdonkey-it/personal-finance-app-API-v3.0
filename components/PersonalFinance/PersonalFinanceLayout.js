@@ -141,8 +141,8 @@ export function PersonalFinanceLayout() {
   }
 
   useEffect(() => {
-      setIncomeExpenseData();
-  }, []);
+      if (dateGroupedTransactions?.length) setIncomeExpenseData();
+  }, [dateGroupedTransactions]);
 
   //Grouping change history values as amount or object by month 
   function groupChangeHistoryByMonth(changeHistory, absoluteValue) {
