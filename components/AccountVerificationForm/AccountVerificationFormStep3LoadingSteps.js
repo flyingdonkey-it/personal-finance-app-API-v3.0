@@ -135,7 +135,7 @@ function useAccountsData({ userId }) {
         updateAccountVerificationFormState({ account })
         sessionStorage.setItem("currentAccountId", account.id);
 
-        dispatch(fetchUserTransactions(userId, account.id));
+        dispatch(fetchUserTransactions(userId));
 
         setData(res.data);
         setError(undefined);

@@ -49,7 +49,7 @@ export function PersonalFinanceLayout() {
   const [expenseLoading, setExpenseLoading] = useState(true);
   const [incomeLoading, setIncomeLoading] = useState(true);
 
-  let { dateGroupedTransactions, currentAccount } = useSelector(state => state.userTransactions);
+  let { dateGroupedTransactions } = useSelector(state => state.userTransactions);
 
   function setIncomeExpenseData() {
     const userId = sessionStorage.getItem("userId");
@@ -238,7 +238,7 @@ export function PersonalFinanceLayout() {
                   <HomeCharts expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"100%"} chartAspect={1.25} />
                 </>
               }
-              <TransactionPage currentAccount={currentAccount} dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+              <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
             </div>
           }
           {/* ACCOUNT PAGE */}
@@ -268,7 +268,7 @@ export function PersonalFinanceLayout() {
               }
               {
                 !hideTransactionPageItems &&
-                <TransactionPage currentAccount={currentAccount} dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
               }
             </div>
           }
@@ -276,7 +276,7 @@ export function PersonalFinanceLayout() {
           {selectedPageIndex &&
             selectedPageIndex === transactionPageIndex &&
             <div className="mt-20 mb-20">
-              <TransactionPage currentAccount={currentAccount} dateGroupedTransactions={dateGroupedTransactions?.slice(0, 20)} inTransactionsPage={true} />
+              <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 20)} inTransactionsPage={true} />
             </div>
           }
         </div>
@@ -308,7 +308,7 @@ export function PersonalFinanceLayout() {
                     </div>
                   </div>
                 }
-                <TransactionPage currentAccount={currentAccount} dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
               </>
             }
             {/* ACCOUNT PAGE */}
@@ -340,7 +340,7 @@ export function PersonalFinanceLayout() {
                 {
                   !hideTransactionPageItems &&
                   <div className="mt-12">
-                    <TransactionPage currentAccount={currentAccount} dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                    <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
                   </div>
                 }
               </>
@@ -349,7 +349,7 @@ export function PersonalFinanceLayout() {
             {selectedPageIndex &&
               selectedPageIndex === transactionPageIndex &&
               <>
-                <TransactionPage currentAccount={currentAccount} dateGroupedTransactions={dateGroupedTransactions?.slice(0, 20)} inTransactionsPage={true} />
+                <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 20)} inTransactionsPage={true} />
               </>
             }
           </div>

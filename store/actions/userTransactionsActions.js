@@ -1,10 +1,10 @@
 import axios from "axios";
 import { UserTransactionsReducerActions } from "../reducers/userTransactionsReducer";
 
-export function fetchUserTransactions(userId, accountId) {
+export function fetchUserTransactions(userId) {
   return async function (dispatch) {
     dispatch(userTransactionsLoading());
-    const transactionsData = await RequestUserTransactions(userId, accountId);
+    const transactionsData = await RequestUserTransactions(userId);
     dispatch(userTransactionsLoaded(transactionsData));
   }
 }
@@ -22,14 +22,13 @@ export function userTransactionsLoading() {
   }
 }
 
-async function RequestUserTransactions(userId, accountId) {
+async function RequestUserTransactions(userId) {
   //Used regular variables below as setState is asynchronous and did not work well in this scenario
   //this works perfectly in this scenario as dispatch() already triggers a re-render.  
 
   //If refresh connection returns error
   let refreshConnectionError = false;
   let dateGroupedTransactions = [];
-  let currentAccount = {};
 
   //Before creating income & expense summary, creating or refreshing the relevant connections is required
   await axios
@@ -48,15 +47,7 @@ async function RequestUserTransactions(userId, accountId) {
               }
             }, Object.create(null));
 
-            dateGroupedTransactions = Object.entries(dateGroupedTransactions);
-
-            await axios.get(`/api/get-account`, { params: { userId, accountId: accountId } })
-              .then(function (response) {
-                currentAccount = response.data;
-              }).catch(function (error) {
-                console.warn(error);
-                currentAccount = {};
-              });
+            dateGroupedTransactions = Object.entries(dateGroupedTransactions);           
           })
           .catch(function (error) {
             console.warn(error);
@@ -73,7 +64,6 @@ async function RequestUserTransactions(userId, accountId) {
   return {
     refreshConnectionError,
     dateGroupedTransactions,
-    currentAccount,
     isCompleted: !refreshConnectionError
   };
 }

@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useToggleState } from '../../../utils/useToggleState';
 import { Calendar } from '../../Calendar';
 import { TransactionItem } from './TransactionItem';
 import { TransactionItemDetail } from './TransactionItemDetail';
 
-export function TransactionPage({inTransactionsPage, managePages, manageDetailPages, currentAccount, dateGroupedTransactions = []}) {
+export function TransactionPage({inTransactionsPage, managePages, manageDetailPages, dateGroupedTransactions = []}) {
 
   const [showDetail, setShowDetail] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState({});
   const [showCalendar, setShowCalendar] = useToggleState(false); 
+  const [currentAccount, setCurrentAccount] = useState({});
+
+  function getCurrentAccount() {
+    const userId = sessionStorage.getItem('userId');
+    const currentAccountId = sessionStorage.getItem('currentAccountId');
+
+    axios.get(`/api/get-account`, { params: { userId, accountId: currentAccountId } })
+    .then(function (response) {
+      setCurrentAccount(response.data);
+    }).catch(function (error) {
+      console.warn(error);
+      setCurrentAccount({});
+    });
+  }
 
   //Open transaction detail
   function onTransactionItemClick(e) {
@@ -43,6 +58,10 @@ export function TransactionPage({inTransactionsPage, managePages, manageDetailPa
       setSelectedTransaction(item[0]);
     });
   };
+
+  useEffect(() => {
+    getCurrentAccount();
+  }, []);
 
   return (
     <>
@@ -106,7 +125,7 @@ export function TransactionPage({inTransactionsPage, managePages, manageDetailPa
             ) : (
               <div className="flex justify-center">
                 <div className="mt-16">
-                   Transactions not Found
+                 Transactions not Found
                 </div>
               </div>
             )}
