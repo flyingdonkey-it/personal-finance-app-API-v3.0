@@ -3,7 +3,7 @@ function userTransactionsReducer(state = {}, action) {
         case UserTransactionsReducerActions.UserTransactionsLoaded:
             return action.payload;
         case UserTransactionsReducerActions.UserTransactionsLoading:
-            return {...state, isCompleted: false}
+            return {...state, isCompleted: false, refreshConnectionError: false}
         default: return state;
     }
 }

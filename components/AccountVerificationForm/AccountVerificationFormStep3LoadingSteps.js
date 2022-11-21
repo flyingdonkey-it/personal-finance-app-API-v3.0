@@ -16,7 +16,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
   const [transactionLoadingDispatched, setTransactionLoadingDispatched] = useState(false);
 
   useDispatch(userTransactionsLoading());
-  const { refreshConnectionError, isCompleted } = useSelector(state => state.userTransactions);
+  const { isCompleted } = useSelector(state => state.userTransactions);
   const { basiqConnection, finish } = useAccountVerificationForm();
   const { error, progress, completed, stepNameInProgress, reset, setJobId } = basiqConnection;
 
@@ -25,7 +25,9 @@ export function AccountVerificationFormStep3LoadingSteps() {
     userId: sessionStorage.getItem("userId"),
   });
 
-  const errorOrNoData = error || !data || data.length === 0 || refreshConnectionError;
+  const errorOrNoData = error || !data || data.length === 0;
+
+  const displayError = (error && errorOrNoData) || userTransactionsRequestSuccessful;
 
   let userTransactionsRequestSuccessful = isCompleted && transactionLoadingDispatched;
 
@@ -66,10 +68,14 @@ export function AccountVerificationFormStep3LoadingSteps() {
     updateProgressBarValue();
   }, [progress, isCompleted]);
 
+  useEffect(() => {
+    if (displayError) setProgressBarValue(100)
+  }, [displayError])
+
   return (
     <div className="flex flex-col space-y-10 sm:space-y-12">
       <div className="flex flex-col items-center text-center space-y-8">
-        <CircularProgressBar value={progressBarValue} error={error && errorOrNoData} />
+        <CircularProgressBar value={progressBarValue} error={displayError} />
         {error ? (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
@@ -80,7 +86,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
               Try again
             </Button>
           </div>
-        ) : (completed && userTransactionsRequestSuccessful && !errorOrNoData) ? (
+        ) : (completed && !displayError) ? (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">Connected 🎉</h3>
@@ -92,7 +98,13 @@ export function AccountVerificationFormStep3LoadingSteps() {
         ) : (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
-              <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">{STEP_NAME_MAP[stepNameInProgress] ?? STEP_NAME_MAP['retrieve-transactions']}</h2>
+              {
+                displayError ?
+                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">Something went wrong, please try again.</h2>
+                :
+                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">{STEP_NAME_MAP[stepNameInProgress] ?? STEP_NAME_MAP['retrieve-transactions']}</h2>
+
+              }
             </div>
             <Button block variant="subtle" onClick={openResumeModal}>
               Resume in background
