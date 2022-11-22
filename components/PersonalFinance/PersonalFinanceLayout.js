@@ -129,10 +129,13 @@ export function PersonalFinanceLayout() {
         data.irregular?.forEach(source => {
           regularAndIrregularIncomes.push(...source.changeHistory ?? []);
         });       
-
-        let incomeData = aggregateChangeHistoryAmountByMonth(regularAndIrregularIncomes);
-        
-        setIncomeData(incomeData.map(x => ({key: x.month, value: x.aggregatedAmount, normalizedValue: x.aggregatedAmount * 1.25 })));
+       
+        setIncomeData(aggregateChangeHistoryAmountByMonth(regularAndIrregularIncomes)
+          .map(x => ({
+            key: x.month,
+            value: x.aggregatedAmount,
+            normalizedValue: x.aggregatedAmount * 1.25
+          })));
 
         let incomeChangeHistory = [];
         incomeChangeHistory.push(...data.irregular[0].changeHistory);
@@ -156,7 +159,7 @@ export function PersonalFinanceLayout() {
   }, [dateGroupedTransactions]);
 
   function aggregateChangeHistoryAmountByMonth(changeHistory) {
-    let aggregatedChangeHistory = Object.entries(changeHistory.reduce(function (r, a) {
+    return Object.entries(changeHistory.reduce(function (r, a) {
       if (a.date) {
         let date = new Date(a.date).toLocaleString('en-us', { month: 'short' });
         r[date] = r[date] || [];
@@ -164,9 +167,7 @@ export function PersonalFinanceLayout() {
         r[date].aggregatedAmount += parseInt(a.amount);
         return r;
       }
-    }, Object.create(null)));
-
-    return aggregatedChangeHistory.map(([key, value]) => {
+    }, Object.create(null))).map(([key, value]) => {
       return { month: key, aggregatedAmount: value.aggregatedAmount}
     })
   }
