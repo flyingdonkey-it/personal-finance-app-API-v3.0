@@ -1,52 +1,28 @@
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { LoadingSpinner } from '../../LoadingSpinner';
+import React, { useEffect, useState } from 'react';
 import { useToggleState } from '../../../utils/useToggleState';
 import { Calendar } from '../../Calendar';
 import { TransactionItem } from './TransactionItem';
 import { TransactionItemDetail } from './TransactionItemDetail';
 
-export function TransactionPage({ limit, inTransactionsPage, managePages, manageDetailPages }) {
-  const [dateGroupedTransactions, setDateGroupedTransactions] = useState([]);
-  const [loading, setLoading] = useState(false);
+export function TransactionPage({inTransactionsPage, managePages, manageDetailPages, dateGroupedTransactions = []}) {
+
   const [showDetail, setShowDetail] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState({});
-  const [showCalendar, setShowCalendar] = useToggleState(false);
+  const [showCalendar, setShowCalendar] = useToggleState(false); 
   const [currentAccount, setCurrentAccount] = useState({});
 
-  //Get all transactions of user
-  function getData() {
-    setLoading(true);
+  function getCurrentAccount() {
     const userId = sessionStorage.getItem('userId');
     const currentAccountId = sessionStorage.getItem('currentAccountId');
 
-    axios
-      .get(`/api/transactions`, { params: { userId, limit } })
-      .then(function (response) {
-        //Group all transactions by postDate
-        const dateGroupedTransactions = response.data.reduce(function (r, a) {
-          if (a.postDate) {
-            r[a.postDate.slice(0, 10)] = r[a.postDate.slice(0, 10)] || [];
-            r[a.postDate.slice(0, 10)].push(a);
-            return r;
-          }
-        }, Object.create(null));
-        setDateGroupedTransactions(Object.entries(dateGroupedTransactions));
-      })
-      .catch(function (error) {
-        console.warn(error);
-        setDateGroupedTransactions([]);
-      });
-
-      axios.get(`/api/get-account`, { params: { userId, accountId: currentAccountId } })
-      .then(function (response) {
-        setCurrentAccount(response.data);
-      }).catch(function (error) {
-        console.warn(error);
-        setCurrentAccount({});
-      }).finally(() => {        
-        setLoading(false);
-      });
+    axios.get(`/api/get-account`, { params: { userId, accountId: currentAccountId } })
+    .then(function (response) {
+      setCurrentAccount(response.data);
+    }).catch(function (error) {
+      console.warn(error);
+      setCurrentAccount({});
+    });
   }
 
   //Open transaction detail
@@ -84,7 +60,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
   };
 
   useEffect(() => {
-    getData();
+    getCurrentAccount();
   }, []);
 
   return (
@@ -149,7 +125,7 @@ export function TransactionPage({ limit, inTransactionsPage, managePages, manage
             ) : (
               <div className="flex justify-center">
                 <div className="mt-16">
-                  {loading} {loading ? <LoadingSpinner /> : 'Transactions not Found'}
+                 Transactions not Found
                 </div>
               </div>
             )}
