@@ -1,7 +1,7 @@
 import { Button } from '../../Button';
 import { formatCurrency } from '../../../utils/formatCurrency';
 
-export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
+export function TransactionItemDetail({ detail, closeTransactionDetailClick, currentAccount }) {
   function onBackButtonClick() {
     closeTransactionDetailClick();
   }
@@ -55,12 +55,10 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick }) {
                 <div>Account used</div>
                 <div className="mt-1 font-semibold">Lorem ipsum</div>
               </div>
-              <div className="mt-3 text-xs">
-                <div>Phone number</div>
-                <div className="mt-1 font-semibold">
-                  {detail.enrich?.merchant?.phoneNumber.local || '(03) 94******'}
-                </div>
-              </div>
+            </div>
+            <div className="mt-3 text-xs">
+              <div>Account used</div>
+              <div className="mt-1 font-semibold">{currentAccount.name}</div>
               <div className="mt-3 text-xs">
                 <div>Location</div>
                 <div className="mt-1 font-semibold">

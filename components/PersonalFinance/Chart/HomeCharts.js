@@ -18,16 +18,19 @@ const upcomingPayments = [
     description: 'Disney+',
     dateDescription: '5th of every month',
     amount: '-20.00',
+    index: '0',
   },
   {
     description: 'Spotify',
     dateDescription: '18th of every month',
     amount: '-11.00',
+    index: '1',
   },
   {
     description: 'Amazon',
     dateDescription: '10th of May, every year',
     amount: '-20.00',
+    index: '2',
   },
 ];
 
@@ -48,19 +51,18 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
   return (
     <div className="flex flex-col mt-12 mb-12 sm:w-3/5 sm:mt-1 sm:mr-80">
       {/* CHART TITLES */}
-      <div className="flex items-center ml-12 mr-12 border-2 rounded-3xl border-[#4A56E2] sm:hidden">
+      <div className="flex items-center ml-8 mr-8 overflow-hidden border-2 rounded-3xl border-[#4A56E2] sm:hidden">
         {items &&
           items.map((item, i) => {
             return (
               <div
                 key={'chart-title-' + i}
-                className={`p-2 text-xs
-                ${
-                  selectedChartItem === item.index
-                    ? 'text-white rounded-xl bg-[#4A56E2]'
-                    : 'text-black bg-white rounded-3xl'
-                }
-                ${i === items.length - 1 ? 'pl-[0.81rem] pr-4' : 'pl-5 pr-4'}`}
+                className={`self-stretch flex items-center justify-center justify-items-center text-center p-2 text-xs grow
+              ${
+                selectedChartItem === item.index
+                  ? 'text-white rounded-xl bg-[#4A56E2]'
+                  : 'text-black bg-white rounded-3xl'
+              }`}
                 onClick={() => onItemClick(item.index)}
               >
                 {item.title}
