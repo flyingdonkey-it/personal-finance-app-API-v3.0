@@ -2,6 +2,7 @@ import { Button } from '../../Button';
 import { formatCurrency } from '../../../utils/formatCurrency';
 
 export function TransactionItemDetail({ detail, closeTransactionDetailClick, currentAccount }) {
+
   function onBackButtonClick() {
     closeTransactionDetailClick();
   }
@@ -19,17 +20,15 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick, cur
           </div>
           <div className="flex flex-col items-center">
             <div>
-              <img
-                className="w-12 h-12 sm:w-16 sm:h-16"
-                src={`/merchant-${parseInt((Math.random() * 100) % 4)}.svg`}
-                alt="Merchant"
-              />
+              <img className="w-12 h-12 sm:w-16 sm:h-16" src={`/merchant-${parseInt((Math.random() * 100) % 4)}.svg`} alt="Merchant" />
             </div>
             <div className="flex flex-col items-center mt-4 font-semibold text-center sm:mt-8">
               <div className="text-base sm:text-2xl2 text-primary-bold">
                 {detail.enrich?.merchant?.businessName || detail.description.slice(0, 28)}
               </div>
-              <div className="text-green-link">{detail.enrich?.category?.anzsic.division.title || 'Shopping'}</div>
+              <div className="text-green-link">
+                {detail.enrich?.category?.anzsic.division.title || 'Shopping'}
+              </div>
             </div>
           </div>
           <div>
@@ -38,29 +37,51 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick, cur
         </div>
         <div className="sm:ml-44 sm:mr-44">
           <div className="flex justify-between mt-8 text-base font-semibold sm:hidden text-primary-bold">
-            <div>Amount:</div>
-            <div>{formatCurrency(detail.amount)}</div>
+            <div>
+              Amount:
+            </div>
+            <div>
+              {formatCurrency(detail.amount)}
+            </div>
           </div>
           <div className="justify-between hidden p-6 mt-8 font-semibold sm:flex sm:text-2xl2 text-primary-bold bg-[#F5F7F8]">
-            <div>Amount:</div>
-            <div>{formatCurrency(detail.amount)}</div>
+            <div>
+              Amount:
+            </div>
+            <div>
+              {formatCurrency(detail.amount)}
+            </div>
           </div>
           <div className="justify-around sm:flex sm:mt-8">
             <div>
               <div className="mt-3 text-xs">
-                <div>Date and time</div>
-                <div className="mt-1 font-semibold">{getPostDateAsFormatted(detail.postDate)}</div>
+                <div>
+                  Date and time
+                </div>
+                <div className="mt-1 font-semibold">
+                  {getPostDateAsFormatted(detail.postDate)}
+                </div>
               </div>
               <div className="mt-3 text-xs">
-                <div>Account used</div>
-                <div className="mt-1 font-semibold">Lorem ipsum</div>
+                <div>
+                  Account used
+                </div>
+                <div className="mt-1 font-semibold">
+                  {currentAccount.name}
+                </div>
               </div>
-            </div>
-            <div className="mt-3 text-xs">
-              <div>Account used</div>
-              <div className="mt-1 font-semibold">{currentAccount.name}</div>
               <div className="mt-3 text-xs">
-                <div>Location</div>
+                <div>
+                  Phone number
+                </div>
+                <div className="mt-1 font-semibold">
+                  {detail.enrich?.merchant?.phoneNumber.local || '(03) 94******'}
+                </div>
+              </div>
+              <div className="mt-3 text-xs">
+                <div>
+                  Location
+                </div>
                 <div className="mt-1 font-semibold">
                   {detail.enrich?.location?.formattedAddress || '301 Spring St, VIC Australia'}
                 </div>
@@ -82,10 +103,10 @@ export function TransactionItemDetail({ detail, closeTransactionDetailClick, cur
             </div>
           </div>
           <div className="items-baseline hidden mt-10 mb-32 sm:flex">
-            <div className="sm:min-w-max">
+            <div>
               <Button>All transactions with this merchant</Button>
             </div>
-            <div className="ml-5 sm:min-w-max">
+            <div className="ml-5">
               <Button>More from this category</Button>
             </div>
           </div>
