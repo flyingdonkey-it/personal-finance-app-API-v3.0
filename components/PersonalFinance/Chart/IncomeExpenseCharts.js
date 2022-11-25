@@ -35,9 +35,9 @@ export function IncomeExpenseCharts({
   }
 
   return (
-    <div className="sm:flex h-72 sm:h-96">
+    <div className="sm:flex">
       {/* DESKTOP VIEW */}
-      <div className="hidden w-full lg:mr-32 h-72 sm:h-96 sm:block">
+      <div className="hidden w-full h-72 sm:h-96 sm:block">
         {currentIndex === incomeExpenseIndex && (
           <IncomeExpensePieChart
             incomeMonthlyAvg={incomeMonthlyAvg}
@@ -56,16 +56,14 @@ export function IncomeExpenseCharts({
           />
         )}
         {currentIndex === monthlySpendingBarIndex && (
-          <div className="md:ml-8 md:mr-8">
-            <MonthlySpendingBarChart
-              expenseMonthly={expenseMonthly}
-              expenseLoading={expenseLoading}
-              chartWidth={chartWidth}
-              showInChartSlider={true}
-              minWidth={100}
-              minHeight={200}
-            />
-          </div>
+          <MonthlySpendingBarChart
+            expenseMonthly={expenseMonthly}
+            expenseLoading={expenseLoading}
+            chartWidth={chartWidth}
+            showInChartSlider={true}
+            minWidth={100}
+            minHeight={200}
+          />
         )}
         {currentIndex === monthlyIncomeIndex && (
           <MonthlyIncomeBarChart
@@ -135,7 +133,7 @@ export function IncomeExpenseCharts({
                 incomeLoading={incomeLoading}
                 chartWidth={chartWidth}
                 hideSeeMore={true}
-                minWidth={400}
+                minWidth={200}
                 minHeight={300}
               />
             </div>

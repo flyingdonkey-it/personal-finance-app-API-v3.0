@@ -12,7 +12,7 @@ export function Savings({ balance }) {
             <p className="text-sm font-bold sm:text-2xl2 text-blue sm:min-w-max">Savings account</p>
           </div>
         </div>
-        <div className="flex flex-col m-4 sm:m-6 ">
+        <div className="flex flex-col m-4 sm:m-6">
           <div className="sm:rounded-2xl sm:border-2 sm:min-w-max lg:w-96 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
             <div className="flex items-center w-full mb-2 sm:mt-3 sm:mb-3">
               <div className="w-3/5 sm:ml-4 sm:min-w-max">

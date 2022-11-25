@@ -29,7 +29,7 @@ const renderActiveShape = props => {
   );
 };
 
-export function ActiveShapePieChart({ data, width }) {
+export function ActiveShapePieChart({ data }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   //When any part of chart is selected
@@ -38,7 +38,7 @@ export function ActiveShapePieChart({ data, width }) {
   }
 
   return (
-    <ResponsiveContainer width={width} aspect={1.5} minWidth={400}>
+    <ResponsiveContainer width={'100%'} aspect={1.5} minWidth={400}>
       <PieChart width={100} height={100}>
         <Pie
           activeIndex={activeIndex}

@@ -34,7 +34,7 @@ const upcomingPayments = [
   },
 ];
 
-export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoading, chartWidth }) {
+export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoading }) {
   const [selectedChartItem, setSelectedChartItem] = useState(1);
 
   //Click title to show a chart
@@ -49,7 +49,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
   }
 
   return (
-    <div className="flex flex-col mt-12 mb-12 sm:w-3/5 sm:mt-1">
+    <div className="flex flex-col mt-12 mb-12 sm:w-2/5 sm:mt-1">
       {/* CHART TITLES */}
       <div className="flex items-center ml-8 mr-8 overflow-hidden border-2 rounded-3xl border-[#4A56E2] sm:hidden">
         {items &&
@@ -71,7 +71,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
           })}
       </div>
       {/* CAROUSEL */}
-      <div className="flex flex-col mt-4 sm:mt-0 h-80 min-w-fit">
+      <div className="flex flex-col sm:mt-0 h-80 min-w-fit mt-4 sm:mt-0 h-80 min-w-fit">
         {/* Expenses pie chart */}
         {selectedChartItem && selectedChartItem === expensesIndex && (
           <div className="flex flex-col justify-between h-80">
@@ -84,13 +84,12 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
             <MonthlySpendingPieChart
               expenseData={expenseData}
               expenseLoading={expenseLoading}
-              chartWidth={chartWidth}
             />
           </div>
         )}
         {/* Upcoming payments list */}
         {selectedChartItem && selectedChartItem === upcomingPaymentsIndex && (
-          <div className="flex flex-col justify-between h-80 sm:ml-24 ">
+          <div className="flex flex-col justify-between h-80">
             <div className="justify-center hidden mb-4 sm:flex">
               <div>
                 <img className="w-6 h-6" src="/calendar.svg" alt="Calendar" />
@@ -117,7 +116,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
         )}
         {/* Income bar chart */}
         {selectedChartItem && selectedChartItem === incomeIndex && (
-          <div className="flex flex-col justify-between ml-24 mr-8 h-80 lg:ml-24 sm:ml-20">
+          <div className="flex flex-col justify-between ml-8 mr-8 h-80">
             <div className="justify-center hidden sm:flex">
               <div>
                 <img className="w-6 h-6" src="/download.svg" alt="Income" />
@@ -127,15 +126,14 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
             <MonthlyIncomeBarChart
               incomeData={incomeData}
               incomeLoading={incomeLoading}
-              chartWidth={chartWidth}
               minWidth={200}
-              minHeight={300}
+              minHeight={250}
             />
           </div>
         )}
       </div>
       {/* CAROUSEL INDICATOR */}
-      <div className="hidden basis-1/2 sm:block">
+      <div className="hidden mt-7 sm:block">
         <div className="flex justify-end">
           <div className="space-x-3">
             {items.map(item => (

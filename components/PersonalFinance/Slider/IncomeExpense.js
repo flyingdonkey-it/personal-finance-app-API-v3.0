@@ -13,8 +13,8 @@ export function IncomeExpense({ incomeMonthlyAvg, expenseMonthlyAvg }) {
     },
   ];
   return (
-    <div className="border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8] ">
-      <div className="mt-3 ml-4 mr-4 sm:mr-10 sm:ml-8 sm:mb-5 sm:mt-5">
+    <div className="border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8] sm:min-w-max">
+      <div className="mt-3 ml-4 mr-4 sm:mr-16 sm:ml-8 sm:mb-5 sm:mt-5">
         <div className="flex items-center">
           <div>
             <img className="w-6 h-6" src="/activity.svg" alt="Activity" />
