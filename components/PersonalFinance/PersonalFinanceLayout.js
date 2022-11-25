@@ -99,6 +99,7 @@ export function PersonalFinanceLayout() {
         setExpenseMonthlyData(prepareExpenseMonthly(paymentsChangeHistory));
 
         let expenseChangeHistory = [];
+
         expenseChangeHistory.push(
           ...(data.bankFees?.changeHistory.map(x => {
             return { date: x.date, amount: x.amount, description: 'Bank fee' };
@@ -119,6 +120,7 @@ export function PersonalFinanceLayout() {
             return { date: x.date, amount: x.amount, description: 'Loan repayment' };
           }) ?? [])
         );
+
         expenseChangeHistory.push(...paymentsChangeHistory);
 
         setExpensesByDate(prepareExpenseByDate(expenseChangeHistory));
@@ -316,8 +318,6 @@ export function PersonalFinanceLayout() {
                     expenseMonthlyAvg={expenseMonthlyAvgData}
                     expenseMonthly={expenseMonthlyData}
                     expenseLoading={expenseLoading}
-                    chartWidth={'100%'}
-                    chartAspect={3}
                   />
                   <HomeCharts
                     expenseData={expenseData}
@@ -325,7 +325,6 @@ export function PersonalFinanceLayout() {
                     expenseLoading={expenseLoading}
                     incomeLoading={incomeLoading}
                     chartWidth={'100%'}
-                    chartAspect={1.25}
                   />
                 </>
               )}
@@ -417,22 +416,18 @@ export function PersonalFinanceLayout() {
                       </div>
                       <span className="font-bold text-2xl2 text-blue">Your finances at a glance</span>
                     </div>
-                    <div className="flex justify-center sm:items-start w-full mt-6 sm:px-28 ">
+                    <div className="flex justify-around sm:items-start mt-6 ml-24 sm:px-24 w-5/6">
                       <HomeSlider
                         incomeMonthlyAvg={incomeMonthlyAvgData}
                         expenseMonthlyAvg={expenseMonthlyAvgData}
                         expenseMonthly={expenseMonthlyData}
                         expenseLoading={expenseLoading}
-                        chartWidth={'100%'}
-                        chartAspect={3}
                       />
                       <HomeCharts
                         expenseData={expenseData}
                         incomeData={incomeData}
                         expenseLoading={expenseLoading}
                         incomeLoading={incomeLoading}
-                        chartWidth={'65%'}
-                        chartAspect={1.5}
                       />
                     </div>
                   </div>
@@ -464,20 +459,18 @@ export function PersonalFinanceLayout() {
                   />
                 )}
                 {!hideHomePageItems && (
-                  <div className="sm:flex sm:overflow-x-auto">
-                    <div className="flex">
-                      <IncomeExpenseCharts
-                        expenseData={expenseData}
-                        incomeData={incomeData}
-                        incomeMonthlyAvg={incomeMonthlyAvgData}
-                        expenseMonthlyAvg={expenseMonthlyAvgData}
-                        expenseMonthly={expenseMonthlyData}
-                        expenseLoading={expenseLoading}
-                        incomeLoading={incomeLoading}
-                        chartWidth={'75%'}
-                      />
-                      <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
-                    </div>
+                  <div className="flex justify-around sm:items-start mt-6 sm:px-48">
+                    <IncomeExpenseCharts
+                      expenseData={expenseData}
+                      incomeData={incomeData}
+                      incomeMonthlyAvg={incomeMonthlyAvgData}
+                      expenseMonthlyAvg={expenseMonthlyAvgData}
+                      expenseMonthly={expenseMonthlyData}
+                      expenseLoading={expenseLoading}
+                      incomeLoading={incomeLoading}
+                      chartWidth={'100%'}
+                    />
+                    <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
                   </div>
                 )}
                 {!hideTransactionPageItems && (

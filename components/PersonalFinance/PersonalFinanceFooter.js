@@ -6,7 +6,7 @@ export function PersonalFinanceFooter({ menuItems, middleMenuItems, onMenuItemCl
 
   //DESKTOP VIEW ONLY
   return (
-    <div className="bottom-0 left-0 right-0 flex hidden top-72 bg-footer sm:flex">
+    <div className="bottom-0 left-0 right-0 hidden top-72 bg-footer sm:flex">
       <div className="flex justify-around w-full mt-14 mb-14">
         <div className="flex justify-center w-2/5 sm:min-w-max">
           <div className="w-1/2 text-2xl2 text-header">

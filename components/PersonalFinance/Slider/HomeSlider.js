@@ -5,14 +5,7 @@ import { CreditCard } from './CreditCard';
 import { IncomeExpense } from './IncomeExpense';
 import { MonthlySpendingBarChart } from './MonthlySpendingBarChart';
 
-export function HomeSlider({
-  incomeMonthlyAvg,
-  expenseMonthlyAvg,
-  expenseMonthly,
-  expenseLoading,
-  chartWidth,
-  chartAspect,
-}) {
+export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly, expenseLoading }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   //Savings account balance
   const [savingsBalance, setSavingsBalance] = useState(0);
@@ -30,8 +23,8 @@ export function HomeSlider({
         <MonthlySpendingBarChart
           expenseMonthly={expenseMonthly}
           expenseLoading={expenseLoading}
-          chartWidth={chartWidth}
-          chartAspect={chartAspect}
+          minWidth={200}
+          minHeight={100}
         />
       ),
     },
@@ -67,9 +60,9 @@ export function HomeSlider({
   return (
     <div className="sm:flex sm:mt-12">
       {/* DESKTOP VIEW */}
-      <div className="hidden w-full sm:block">
+      <div className="hidden sm:block ml-8">
         {components[currentIndex].component}
-        <div className="hidden mt-5 sm:block">
+        <div className="hidden mt-12 sm:block">
           <div className="flex justify-end">
             <div className="space-x-3">
               {components.map(item => (
