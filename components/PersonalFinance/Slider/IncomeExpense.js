@@ -23,7 +23,7 @@ export function IncomeExpense({ incomeMonthlyAvg, expenseMonthlyAvg }) {
             <p className="text-sm font-bold sm:text-2xl2 text-blue">Income vs Expenses</p>
           </div>
         </div>
-        <div className="flex flex-col m-2 md:w-96">
+        <div className="flex flex-col m-2 lg:w-96">
           <div className="flex items-center justify-center">
             {(!!incomeMonthlyAvg || !!expenseMonthlyAvg) && (
               <div className="flex flex-col w-1/2 mr-2 sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:bg-[#FEFEFE] sm:min-w-max">

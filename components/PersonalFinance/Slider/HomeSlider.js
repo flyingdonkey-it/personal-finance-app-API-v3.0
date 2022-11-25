@@ -5,14 +5,7 @@ import { CreditCard } from './CreditCard';
 import { IncomeExpense } from './IncomeExpense';
 import { MonthlySpendingBarChart } from './MonthlySpendingBarChart';
 
-export function HomeSlider({
-  incomeMonthlyAvg,
-  expenseMonthlyAvg,
-  expenseMonthly,
-  expenseLoading,
-  chartWidth,
-  chartAspect,
-}) {
+export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly, expenseLoading, chartWidth }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   //Savings account balance
   const [savingsBalance, setSavingsBalance] = useState(0);
@@ -31,7 +24,8 @@ export function HomeSlider({
           expenseMonthly={expenseMonthly}
           expenseLoading={expenseLoading}
           chartWidth={chartWidth}
-          chartAspect={chartAspect}
+          minWidth={200}
+          minHeight={100}
         />
       ),
     },

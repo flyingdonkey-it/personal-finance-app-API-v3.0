@@ -10,7 +10,7 @@ export function CreditCard({ balance }) {
           </div>
         </div>
         <div className="flex flex-col m-4 sm:m-6">
-          <div className="sm:rounded-2xl sm:border-2 sm:min-w-52 md:w-96 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
+          <div className="sm:rounded-2xl sm:border-2 sm:min-w-52 lg:w-96 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
             <div className="flex items-center w-full mb-2 sm:mt-3 sm:mb-3">
               <div className="w-3/5 md:ml-6  sm:min-w-max">
                 <img className="w-24 h-24" src="/slider/money-horizontal.svg" alt="Money" />

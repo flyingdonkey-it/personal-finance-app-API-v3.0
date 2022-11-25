@@ -21,7 +21,7 @@ export function Expenditures({ payments, expenseLoading }) {
   }
 
   return (
-    <div className="mt-24 mb-8 ml-7 mr-7 sm:mb-5 sm:mt-8 sm:w-2/5 sm:mr-80 sm:ml-0">
+    <div className="mt-24 mb-8 ml-7 mr-7  sm:ml-4 m:mb-5 sm:mt-8">
       <p className="text-base font-semibold sm:text-2xl text-blue">Categorization of Expenditures</p>
       {expenseLoading ? (
         <div className="flex justify-center">

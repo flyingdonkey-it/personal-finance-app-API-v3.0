@@ -35,9 +35,9 @@ export function IncomeExpenseCharts({
   }
 
   return (
-    <div className="sm:w-2/5 sm:flex sm:ml-52 h-72 sm:h-96">
+    <div className="sm:flex h-72 sm:h-96">
       {/* DESKTOP VIEW */}
-      <div className="hidden w-full sm:mr-32 h-72 sm:h-96 sm:block">
+      <div className="hidden w-full lg:mr-32 h-72 sm:h-96 sm:block">
         {currentIndex === incomeExpenseIndex && (
           <IncomeExpensePieChart
             incomeMonthlyAvg={incomeMonthlyAvg}
@@ -56,13 +56,14 @@ export function IncomeExpenseCharts({
           />
         )}
         {currentIndex === monthlySpendingBarIndex && (
-          <div className="ml-8 mr-8">
+          <div className="md:ml-8 md:mr-8">
             <MonthlySpendingBarChart
               expenseMonthly={expenseMonthly}
               expenseLoading={expenseLoading}
               chartWidth={chartWidth}
-              chartAspect={1.5}
               showInChartSlider={true}
+              minWidth={100}
+              minHeight={200}
             />
           </div>
         )}
@@ -71,9 +72,10 @@ export function IncomeExpenseCharts({
             incomeData={incomeData}
             incomeLoading={incomeLoading}
             chartWidth={chartWidth}
-            chartAspect={1.25}
             hideSeeMore={true}
             showInChartSlider={true}
+            minWidth={350}
+            minHeight={300}
           />
         )}
         {/* CAROUSEL INDICATOR */}
@@ -122,7 +124,6 @@ export function IncomeExpenseCharts({
                 expenseMonthly={expenseMonthly}
                 expenseLoading={expenseLoading}
                 chartWidth={chartWidth}
-                chartAspect={1.25}
                 showInChartSlider={true}
               />
             </div>
@@ -133,8 +134,9 @@ export function IncomeExpenseCharts({
                 incomeData={incomeData}
                 incomeLoading={incomeLoading}
                 chartWidth={chartWidth}
-                chartAspect={1.25}
                 hideSeeMore={true}
+                minWidth={400}
+                minHeight={300}
               />
             </div>
           )}

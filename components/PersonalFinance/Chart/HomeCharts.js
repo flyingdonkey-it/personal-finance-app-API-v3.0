@@ -34,7 +34,7 @@ const upcomingPayments = [
   },
 ];
 
-export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoading, chartWidth, chartAspect }) {
+export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoading, chartWidth }) {
   const [selectedChartItem, setSelectedChartItem] = useState(1);
 
   //Click title to show a chart
@@ -128,7 +128,8 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
               incomeData={incomeData}
               incomeLoading={incomeLoading}
               chartWidth={chartWidth}
-              chartAspect={chartAspect}
+              minWidth={200}
+              minHeight={300}
             />
           </div>
         )}

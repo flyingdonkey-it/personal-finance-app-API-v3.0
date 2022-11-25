@@ -6,14 +6,15 @@ export function MonthlySpendingBarChart({
   expenseLoading,
   showInChartSlider,
   chartWidth,
-  chartAspect,
+  minWidth,
+  minHeight,
 }) {
   return (
     <div
       className={`${
         showInChartSlider
           ? 'h-44 sm:h-80'
-          : 'border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8] '
+          : 'border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8]'
       }`}
     >
       <div className={`${showInChartSlider ? '' : 'mt-3 ml-4 mr-10 sm:ml-8 sm:mt-5'}`}>
@@ -38,15 +39,16 @@ export function MonthlySpendingBarChart({
                 {expenseMonthly && expenseMonthly.length > 0 ? (
                   <div
                     className={`${
-                      showInChartSlider ? 'h-64 sm:h-52 w-72 sm:w-[30rem]' : 'sm:h-32 h-24 w-72 md:w-96 sm:w-64'
+                      showInChartSlider
+                        ? 'h-64 sm:h-52 w-72 lg:w-[30rem] md:w-[20rem] '
+                        : 'sm:h-32 h-24 w-72 lg:w-96 sm:w-64'
                     }`}
                   >
                     <CustomBarChart
                       data={expenseMonthly}
                       width={chartWidth}
-                      aspect={chartAspect}
-                      minWidth={200}
-                      minHeight={100}
+                      minWidth={minWidth}
+                      minHeight={minHeight}
                     />
                   </div>
                 ) : (

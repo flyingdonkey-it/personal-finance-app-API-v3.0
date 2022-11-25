@@ -292,7 +292,6 @@ export function PersonalFinanceLayout() {
                     expenseMonthly={expenseMonthlyData}
                     expenseLoading={expenseLoading}
                     chartWidth={'100%'}
-                    chartAspect={3}
                   />
                   <HomeCharts
                     expenseData={expenseData}
@@ -300,7 +299,6 @@ export function PersonalFinanceLayout() {
                     expenseLoading={expenseLoading}
                     incomeLoading={incomeLoading}
                     chartWidth={'100%'}
-                    chartAspect={1.25}
                   />
                 </>
               )}
@@ -399,7 +397,6 @@ export function PersonalFinanceLayout() {
                         expenseMonthly={expenseMonthlyData}
                         expenseLoading={expenseLoading}
                         chartWidth={'100%'}
-                        chartAspect={3}
                       />
                       <HomeCharts
                         expenseData={expenseData}
@@ -407,7 +404,6 @@ export function PersonalFinanceLayout() {
                         expenseLoading={expenseLoading}
                         incomeLoading={incomeLoading}
                         chartWidth={'65%'}
-                        chartAspect={1.5}
                       />
                     </div>
                   </div>
@@ -439,8 +435,8 @@ export function PersonalFinanceLayout() {
                   />
                 )}
                 {!hideHomePageItems && (
-                  <div className="sm:flex sm:overflow-x-auto">
-                    <div className="flex">
+                  <div className="sm:flex items-start justify-center">
+                    <div className="flex items-start sm:justify-center ">
                       <IncomeExpenseCharts
                         expenseData={expenseData}
                         incomeData={incomeData}
