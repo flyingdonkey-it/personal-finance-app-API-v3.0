@@ -57,7 +57,7 @@ export function PersonalFinanceLayout() {
     //Before creating income & expense summary, creating or refreshing the relevant connections is required    
     //Creating expense summary between 2020-01 - 2021-01
     axios
-      .post(`/api/create-expense?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
+      .post(`/api/create-expense?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2020-12' })
       .then(function (response) {
         const data = response.data;
         const paymentsTotal = data.payments.reduce((sum, p) => {
@@ -87,16 +87,16 @@ export function PersonalFinanceLayout() {
         let expenseChangeHistory = [];
         expenseChangeHistory.push(...data.bankFees?.changeHistory.map(x => {
           return { date: x.date, amount: x.amount, description: 'Bank fee' }
-        }));
+        }) ?? []);
         expenseChangeHistory.push(...data.cashWithdrawals?.changeHistory.map(x => {
           return { date: x.date, amount: x.amount, description: 'Cash withdrawal' }
-        }));
+        }) ?? []);
         expenseChangeHistory.push(...data.loanInterests?.changeHistory.map(x => {
           return { date: x.date, amount: x.amount, description: 'Loan interest' }
-        }));
+        }) ?? []);
         expenseChangeHistory.push(...data.loanRepayments?.changeHistory.map(x => {
           return { date: x.date, amount: x.amount, description: 'Loan repayment' }
-        }));
+        }) ?? []);
         expenseChangeHistory.push(...paymentsChangeHistory);
 
         setExpensesByDate(prepareExpenseByDate(expenseChangeHistory));
@@ -114,14 +114,28 @@ export function PersonalFinanceLayout() {
 
     //Creating income summary between 2020-01 - 2021-01
     axios
-      .post(`/api/create-income?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
+      .post(`/api/create-income?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2020-12' })
       .then(function (response) {
         const data = response.data;
 
         setIncomeMonthlyAvgData(parseInt(data.summary.regularIncomeAvg) + parseInt(data.summary.irregularIncomeAvg));
-        setIncomeData(data.regular[0].changeHistory.slice(0, 12).map((x) => {
-          return { key: new Date(x.date).toLocaleString('en-us', { month: 'short' }), value: x.amount, normalizedValue: x.amount * 1.25 }
-        }));
+        
+        let regularAndIrregularIncomes = [];
+        
+        data.regular?.forEach(source => {
+          regularAndIrregularIncomes.push(...source.changeHistory ?? []);
+        });
+        
+        data.irregular?.forEach(source => {
+          regularAndIrregularIncomes.push(...source.changeHistory ?? []);
+        });       
+       
+        setIncomeData(aggregateChangeHistoryAmountByMonth(regularAndIrregularIncomes)
+          .map(x => ({
+            key: x.month,
+            value: x.aggregatedAmount,
+            normalizedValue: x.aggregatedAmount * 1.25
+          })));
 
         let incomeChangeHistory = [];
         incomeChangeHistory.push(...data.irregular[0].changeHistory);
@@ -143,6 +157,20 @@ export function PersonalFinanceLayout() {
   useEffect(() => {
       if (dateGroupedTransactions?.length) setIncomeExpenseData();
   }, [dateGroupedTransactions]);
+
+  function aggregateChangeHistoryAmountByMonth(changeHistory) {
+    return Object.entries(changeHistory.reduce(function (r, a) {
+      if (a.date) {
+        let date = new Date(a.date).toLocaleString('en-us', { month: 'short' });
+        r[date] = r[date] || [];
+        if (!r[date].aggregatedAmount) r[date].aggregatedAmount = 0;
+        r[date].aggregatedAmount += parseInt(a.amount);
+        return r;
+      }
+    }, Object.create(null))).map(([key, value]) => {
+      return { month: key, aggregatedAmount: value.aggregatedAmount}
+    })
+  }
 
   //Grouping change history values as amount or object by month 
   function groupChangeHistoryByMonth(changeHistory, absoluteValue) {
