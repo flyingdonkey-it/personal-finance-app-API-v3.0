@@ -13,7 +13,7 @@ export function MonthlySpendingBarChart({
       className={`${
         showInChartSlider
           ? 'h-44 sm:h-80'
-          : 'border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8] sm:min-w-max'
+          : 'border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8] '
       }`}
     >
       <div className={`${showInChartSlider ? '' : 'mt-3 ml-4 mr-10 sm:ml-8 sm:mt-5'}`}>
@@ -36,8 +36,18 @@ export function MonthlySpendingBarChart({
               <div className="flex items-end">
                 {/* Show expenses monthly in a year as bar chart */}
                 {expenseMonthly && expenseMonthly.length > 0 ? (
-                  <div className={`${showInChartSlider ? 'h-64 sm:h-52 w-72 sm:w-[30rem]' : 'h-36 w-72 sm:w-96'}`}>
-                    <CustomBarChart data={expenseMonthly} width={chartWidth} aspect={chartAspect} />
+                  <div
+                    className={`${
+                      showInChartSlider ? 'h-64 sm:h-52 w-72 sm:w-[30rem]' : 'sm:h-32 h-24 w-72 md:w-96 sm:w-64'
+                    }`}
+                  >
+                    <CustomBarChart
+                      data={expenseMonthly}
+                      width={chartWidth}
+                      aspect={chartAspect}
+                      minWidth={200}
+                      minHeight={100}
+                    />
                   </div>
                 ) : (
                   <div className="flex justify-center h-32">

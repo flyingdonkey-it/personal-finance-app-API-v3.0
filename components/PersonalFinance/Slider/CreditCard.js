@@ -2,7 +2,7 @@ import { formatCurrency } from '../../../utils/formatCurrency';
 
 export function CreditCard({ balance }) {
   return (
-    <div className="border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8] sm:min-w-max">
+    <div className="border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8] md:w-full sm:w-80">
       <div className="mt-4 mb-2 ml-7 mr-9 sm:mb-5">
         <div className="flex items-center">
           <div className="ml-2">
@@ -10,9 +10,9 @@ export function CreditCard({ balance }) {
           </div>
         </div>
         <div className="flex flex-col m-4 sm:m-6">
-          <div className="sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
+          <div className="sm:rounded-2xl sm:border-2 sm:min-w-52 md:w-96 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
             <div className="flex items-center w-full mb-2 sm:mt-3 sm:mb-3">
-              <div className="w-3/5 sm:ml-8">
+              <div className="w-3/5 md:ml-6  sm:min-w-max">
                 <img className="w-24 h-24" src="/slider/money-horizontal.svg" alt="Money" />
               </div>
               {/* CREDIT CARD BALANCE */}

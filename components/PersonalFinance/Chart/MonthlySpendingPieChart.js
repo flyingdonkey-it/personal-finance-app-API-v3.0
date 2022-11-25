@@ -3,16 +3,16 @@ import { LoadingSpinner } from '../../LoadingSpinner';
 
 export function MonthlySpendingPieChart({ expenseData, expenseLoading, chartWidth, hideSeeMore, showInChartSlider }) {
   return (
-    <div className="h-80">
+    <div className="h-80 flex items-center justify-center">
       {expenseData && expenseData.length > 0 ? (
         <div className="flex flex-col justify-between h-80 sm:h-64">
-          <div className={`${showInChartSlider ? 'sm:mb-2' : 'sm:ml-48'}`}>
+          <div className={`${showInChartSlider && 'sm:mb-2'}`}>
             <ActiveShapePieChart data={expenseData} width={chartWidth} />
           </div>
           {/* Hide this if this is Income & Expense page */}
           {!hideSeeMore && (
             <div className="flex justify-center">
-              <p className="font-semibold underline text-sm2 text-blue bg-[#FEFEFE]">See more</p>
+              <p className="font-semibold underline text-sm2 text-blue bg-[#FEFEFE] sm:mt-8">See more</p>
             </div>
           )}
         </div>

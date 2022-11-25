@@ -49,7 +49,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
   }
 
   return (
-    <div className="flex flex-col mt-12 mb-12 sm:w-3/5 sm:mt-1 sm:mr-80">
+    <div className="flex flex-col mt-12 mb-12 sm:w-3/5 sm:mt-1">
       {/* CHART TITLES */}
       <div className="flex items-center ml-8 mr-8 overflow-hidden border-2 rounded-3xl border-[#4A56E2] sm:hidden">
         {items &&
@@ -90,14 +90,14 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
         )}
         {/* Upcoming payments list */}
         {selectedChartItem && selectedChartItem === upcomingPaymentsIndex && (
-          <div className="flex flex-col justify-between h-80">
+          <div className="flex flex-col justify-between h-80 sm:ml-24 ">
             <div className="justify-center hidden mb-4 sm:flex">
               <div>
                 <img className="w-6 h-6" src="/calendar.svg" alt="Calendar" />
               </div>
               <div className="ml-2 font-semibold text-blue text-2xl2">Upcoming payments</div>
             </div>
-            <div className="ml-12 mr-12 sm:ml-36 sm:mr-36">
+            <div className="ml-12 mr-12 lg:mx-36 md:mx-0">
               {upcomingPayments &&
                 upcomingPayments.map((item, i) => {
                   return (
@@ -117,7 +117,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
         )}
         {/* Income bar chart */}
         {selectedChartItem && selectedChartItem === incomeIndex && (
-          <div className="flex flex-col justify-between ml-8 mr-8 h-80">
+          <div className="flex flex-col justify-between ml-24 mr-8 h-80 lg:ml-24 sm:ml-20">
             <div className="justify-center hidden sm:flex">
               <div>
                 <img className="w-6 h-6" src="/download.svg" alt="Income" />
@@ -134,7 +134,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
         )}
       </div>
       {/* CAROUSEL INDICATOR */}
-      <div className="hidden basis-1/2 sm:block sm:ml-16 sm:mr-10">
+      <div className="hidden basis-1/2 sm:block">
         <div className="flex justify-end">
           <div className="space-x-3">
             {items.map(item => (

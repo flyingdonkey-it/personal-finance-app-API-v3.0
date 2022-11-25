@@ -65,7 +65,7 @@ export function PersonalFinanceLayout() {
   function setIncomeExpenseData() {
     const userId = sessionStorage.getItem('userId');
 
-    //Before creating income & expense summary, creating or refreshing the relevant connections is required    
+    //Before creating income & expense summary, creating or refreshing the relevant connections is required
     //Creating expense summary between 2020-01 - 2021-01
     axios
       .post(`/api/create-expense?userId=${userId}`, { fromMonth: '2020-01', toMonth: '2021-01' })
@@ -76,14 +76,17 @@ export function PersonalFinanceLayout() {
         }, 0);
 
         setExpenseMonthlyAvgData(
-          parseInt(data.bankFees?.avgMonthly || "0") +
-          parseInt(data.cashWithdrawals?.avgMonthly || "0") +
-          parseInt(data.loanInterests?.avgMonthly || "0") +
-          parseInt(data.loanRepayments?.avgMonthly || "0") +
-          paymentsTotal);
-        setExpenseData(data.payments.map((x, i) => {
-          return { name: x.division, value: x.percentageTotal, fill: colorPallette[parseInt(i % 12)] }
-        }));
+          parseInt(data.bankFees?.avgMonthly || '0') +
+            parseInt(data.cashWithdrawals?.avgMonthly || '0') +
+            parseInt(data.loanInterests?.avgMonthly || '0') +
+            parseInt(data.loanRepayments?.avgMonthly || '0') +
+            paymentsTotal
+        );
+        setExpenseData(
+          data.payments.map((x, i) => {
+            return { name: x.division, value: x.percentageTotal, fill: colorPallette[parseInt(i % 12)] };
+          })
+        );
 
         setPaymentsData(data.payments);
 
@@ -96,18 +99,26 @@ export function PersonalFinanceLayout() {
         setExpenseMonthlyData(prepareExpenseMonthly(paymentsChangeHistory));
 
         let expenseChangeHistory = [];
-        expenseChangeHistory.push(...data.bankFees?.changeHistory.map(x => {
-          return { date: x.date, amount: x.amount, description: 'Bank fee' }
-        }));
-        expenseChangeHistory.push(...data.cashWithdrawals?.changeHistory.map(x => {
-          return { date: x.date, amount: x.amount, description: 'Cash withdrawal' }
-        }));
-        expenseChangeHistory.push(...data.loanInterests?.changeHistory.map(x => {
-          return { date: x.date, amount: x.amount, description: 'Loan interest' }
-        }));
-        expenseChangeHistory.push(...data.loanRepayments?.changeHistory.map(x => {
-          return { date: x.date, amount: x.amount, description: 'Loan repayment' }
-        }));
+        expenseChangeHistory.push(
+          ...data.bankFees?.changeHistory.map(x => {
+            return { date: x.date, amount: x.amount, description: 'Bank fee' };
+          })
+        );
+        expenseChangeHistory.push(
+          ...data.cashWithdrawals?.changeHistory.map(x => {
+            return { date: x.date, amount: x.amount, description: 'Cash withdrawal' };
+          })
+        );
+        expenseChangeHistory.push(
+          ...data.loanInterests?.changeHistory.map(x => {
+            return { date: x.date, amount: x.amount, description: 'Loan interest' };
+          })
+        );
+        expenseChangeHistory.push(
+          ...data.loanRepayments?.changeHistory.map(x => {
+            return { date: x.date, amount: x.amount, description: 'Loan repayment' };
+          })
+        );
         expenseChangeHistory.push(...paymentsChangeHistory);
 
         setExpensesByDate(prepareExpenseByDate(expenseChangeHistory));
@@ -130,9 +141,15 @@ export function PersonalFinanceLayout() {
         const data = response.data;
 
         setIncomeMonthlyAvgData(parseInt(data.summary.regularIncomeAvg) + parseInt(data.summary.irregularIncomeAvg));
-        setIncomeData(data.regular[0].changeHistory.slice(0, 12).map((x) => {
-          return { key: new Date(x.date).toLocaleString('en-us', { month: 'short' }), value: x.amount, normalizedValue: x.amount * 1.25 }
-        }));
+        setIncomeData(
+          data.regular[0].changeHistory.slice(0, 12).map(x => {
+            return {
+              key: new Date(x.date).toLocaleString('en-us', { month: 'short' }),
+              value: x.amount,
+              normalizedValue: x.amount * 1.25,
+            };
+          })
+        );
 
         let incomeChangeHistory = [];
         incomeChangeHistory.push(...data.irregular[0].changeHistory);
@@ -152,10 +169,10 @@ export function PersonalFinanceLayout() {
   }
 
   useEffect(() => {
-      if (dateGroupedTransactions?.length) setIncomeExpenseData();
+    if (dateGroupedTransactions?.length) setIncomeExpenseData();
   }, [dateGroupedTransactions]);
 
-  //Grouping change history values as amount or object by month 
+  //Grouping change history values as amount or object by month
   function groupChangeHistoryByMonth(changeHistory, absoluteValue) {
     return Object.entries(
       changeHistory.reduce(function (r, a) {
@@ -286,8 +303,13 @@ export function PersonalFinanceLayout() {
                     chartAspect={1.25}
                   />
                 </>
-              }
-              <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+              )}
+              <TransactionPage
+                dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)}
+                inTransactionsPage={false}
+                managePages={managePages}
+                manageDetailPages={manageDetailPages}
+              />
             </div>
           )}
           {/* ACCOUNT PAGE */}
@@ -322,17 +344,24 @@ export function PersonalFinanceLayout() {
                   />
                   <Expenditures payments={paymentsData} expenseLoading={expenseLoading} />
                 </>
-              }
-              {
-                !hideTransactionPageItems &&
-                <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
-              }
+              )}
+              {!hideTransactionPageItems && (
+                <TransactionPage
+                  dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)}
+                  inTransactionsPage={false}
+                  managePages={managePages}
+                  manageDetailPages={manageDetailPages}
+                />
+              )}
             </div>
           )}
           {/* TRANSACTION PAGE */}
           {selectedPageIndex && selectedPageIndex === transactionPageIndex && (
             <div className="mt-20 mb-20">
-              <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 20)} inTransactionsPage={true} />
+              <TransactionPage
+                dateGroupedTransactions={dateGroupedTransactions?.slice(0, 20)}
+                inTransactionsPage={true}
+              />
             </div>
           )}
         </div>
@@ -363,7 +392,7 @@ export function PersonalFinanceLayout() {
                       </div>
                       <span className="font-bold text-2xl2 text-blue">Your finances at a glance</span>
                     </div>
-                    <div className="flex w-full mt-6 overflow-x-auto">
+                    <div className="flex justify-center sm:items-start w-full mt-6 sm:px-28 ">
                       <HomeSlider
                         incomeMonthlyAvg={incomeMonthlyAvgData}
                         expenseMonthlyAvg={expenseMonthlyAvgData}
@@ -382,8 +411,13 @@ export function PersonalFinanceLayout() {
                       />
                     </div>
                   </div>
-                }
-                <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                )}
+                <TransactionPage
+                  dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)}
+                  inTransactionsPage={false}
+                  managePages={managePages}
+                  manageDetailPages={manageDetailPages}
+                />
               </>
             )}
             {/* ACCOUNT PAGE */}
@@ -423,7 +457,12 @@ export function PersonalFinanceLayout() {
                 )}
                 {!hideTransactionPageItems && (
                   <div className="mt-12">
-                    <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
+                    <TransactionPage
+                      dateGroupedTransactions={dateGroupedTransactions?.slice(0, 10)}
+                      inTransactionsPage={false}
+                      managePages={managePages}
+                      manageDetailPages={manageDetailPages}
+                    />
                   </div>
                 )}
               </>
@@ -431,7 +470,10 @@ export function PersonalFinanceLayout() {
             {/* TRANSACTION PAGE */}
             {selectedPageIndex && selectedPageIndex === transactionPageIndex && (
               <>
-                <TransactionPage dateGroupedTransactions={dateGroupedTransactions?.slice(0, 20)} inTransactionsPage={true} />
+                <TransactionPage
+                  dateGroupedTransactions={dateGroupedTransactions?.slice(0, 20)}
+                  inTransactionsPage={true}
+                />
               </>
             )}
           </div>

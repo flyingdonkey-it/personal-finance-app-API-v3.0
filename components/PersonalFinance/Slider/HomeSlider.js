@@ -65,7 +65,7 @@ export function HomeSlider({
   }, []);
 
   return (
-    <div className=" sm:flex sm:ml-64 sm:mt-12">
+    <div className="sm:flex sm:mt-12">
       {/* DESKTOP VIEW */}
       <div className="hidden w-full sm:block">
         {components[currentIndex].component}

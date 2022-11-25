@@ -14,12 +14,10 @@ function CustomTooltip({ active, payload }) {
   return null;
 }
 
-export function CustomBarChart({ data, width, aspect }) {
+export function CustomBarChart({ data, width, minWidth, minHeight }) {
   return (
-    <ResponsiveContainer width={width} height="100%" aspect={aspect} minWidth={400}>
+    <ResponsiveContainer width={width} minWidth={minWidth} minHeight={minHeight}>
       <ComposedChart
-        width={700}
-        height={400}
         data={data}
         margin={{
           top: 0,
