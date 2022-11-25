@@ -9,17 +9,11 @@ export function ListItem({ item, imagePrefix }) {
             <img src={`/${imagePrefix}-${item?.index}.svg`} alt={imagePrefix} />
           </div>
           <div className="ml-2 text-sm2 sm:text-sm3 truncate">
-            <div className="font-medium">
-              {item.description}
-            </div>
-            <div className="text-xs font-normal sm:text-sm2 truncate">
-              {item.dateDescription}
-            </div>
+            <div className="font-medium">{item.description}</div>
+            <div className="text-xs font-normal sm:text-sm2 truncate">{item.dateDescription}</div>
           </div>
         </div>
-        <div className="self-center font-semibold text-blue truncate">
-          {formatCurrency(item.amount)}
-        </div>
+        <div className="self-center font-semibold text-blue truncate">{formatCurrency(item.amount)}</div>
       </div>
     </div>
   );

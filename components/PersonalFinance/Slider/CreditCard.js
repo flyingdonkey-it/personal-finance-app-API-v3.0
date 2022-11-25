@@ -1,4 +1,4 @@
-import { formatCurrency } from '../../../utils/formatCurrency'
+import { formatCurrency } from '../../../utils/formatCurrency';
 
 export function CreditCard({ balance }) {
   return (
@@ -10,17 +10,15 @@ export function CreditCard({ balance }) {
           </div>
         </div>
         <div className="flex flex-col m-4 sm:m-6">
-          <div className="sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
+          <div className="sm:rounded-2xl sm:border-2 sm:min-w-max lg:w-96 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
             <div className="flex items-center w-full mb-2 sm:mt-3 sm:mb-3">
-              <div className="w-3/5 sm:ml-8">
+              <div className="w-3/5 md:ml-4 sm:min-w-max">
                 <img className="w-24 h-24" src="/slider/money-horizontal.svg" alt="Money" />
               </div>
               {/* CREDIT CARD BALANCE */}
               <div className="flex flex-col items-end sm:mr-6">
-                <div className="text-xs font-medium text-blue sm:text-base2">
-                  Total amount
-                </div>
-                <div className="mt-1 text-xl font-bold sm:mt-3 sm:text-3xl text-blue">
+                <div className="text-xs font-medium text-blue sm:text-base2">Total amount</div>
+                <div className="mt-1 text-xl font-bold sm:mt-3 2xl:text-3xl xl:text-2xl lg:text-xl sm:text-base2 text-blue">
                   {formatCurrency(balance || '')}
                 </div>
               </div>

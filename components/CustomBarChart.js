@@ -1,11 +1,4 @@
-import {
-  ComposedChart,
-  Line,
-  Bar,
-  XAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
+import { ComposedChart, Line, Bar, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { formatCurrency } from '../utils/formatCurrency';
 
 //Rewriting tooltip function to show custom text
@@ -19,14 +12,12 @@ function CustomTooltip({ active, payload }) {
   }
 
   return null;
-};
+}
 
-export function CustomBarChart({ data, width, aspect }) {
+export function CustomBarChart({ data, width, minWidth, minHeight }) {
   return (
-    <ResponsiveContainer width={width} height="100%" aspect={aspect}>
+    <ResponsiveContainer width={width} minWidth={minWidth} minHeight={minHeight}>
       <ComposedChart
-        width={700}
-        height={400}
         data={data}
         margin={{
           top: 0,

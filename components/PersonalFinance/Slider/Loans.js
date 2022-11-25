@@ -1,8 +1,8 @@
-import { formatCurrency } from '../../../utils/formatCurrency'
+import { formatCurrency } from '../../../utils/formatCurrency';
 
 export function Loans({ balance }) {
   return (
-    <div className="border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8]">
+    <div className="border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8] sm:min-w-max">
       <div className="mt-4 mb-2 ml-7 mr-9 sm:mb-5">
         <div className="flex items-center">
           <div>
@@ -20,10 +20,8 @@ export function Loans({ balance }) {
               </div>
               {/* LOANS BALANCE */}
               <div className="flex flex-col items-end sm:mr-6">
-                <div className="text-xs font-medium text-blue sm:text-base2">
-                  Total amount
-                </div>
-                <div className="mt-1 text-xl font-bold sm:mt-3 sm:text-3xl text-blue">
+                <div className="text-xs font-medium text-blue sm:text-base2">Total amount</div>
+                <div className="mt-1 text-xl font-bold sm:mt-3 2xl:text-3xl xl:text-2xl lg:text-xl sm:text-base2 text-blue">
                   {formatCurrency(balance || '')}
                 </div>
               </div>
