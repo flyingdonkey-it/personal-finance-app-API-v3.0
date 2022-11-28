@@ -12,9 +12,11 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
   //Credit card balance
   const [creditCardBalance, setCreditCardBalance] = useState(0);
 
+  const [institutionId,setInstitutionId] = useState(null);
+
   //Slider components to load when it is selected
   const components = [
-    { index: 0, hidden: false, component: <Savings balance={savingsBalance} /> },
+    { index: 0, hidden: false, component: <Savings balance={savingsBalance} institutionId={institutionId} /> },
     { index: 1, hidden: true, component: <CreditCard balance={creditCardBalance} /> },
     {
       index: 2,
@@ -43,10 +45,10 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
 
   //Get accounts of user and set related account type balance
   function fetchAccounts() {
-    const userId = sessionStorage.getItem('userId');
-    axios
-      .get('/api/accounts', { params: { userId } })
-      .then(response => {
+    const userId = sessionStorage.getItem("userId");
+    axios.get('/api/accounts', { params: { userId } })
+      .then((response) => {
+        setInstitutionId(response.data[0].institution);
         setSavingsBalance(response.data.find(f => f.class.type === 'savings').balance);
         setCreditCardBalance(response.data.find(f => f.class.type === 'credit-card').balance);
       })
