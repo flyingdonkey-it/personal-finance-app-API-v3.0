@@ -119,7 +119,7 @@ export function IncomeExpenseCharts({
                 showInChartSlider={true}
               />
             </div>
-          )}
+          }
           {currentIndex === monthlyIncomeIndex && (
             <div className="ml-8 mr-8">
               <MonthlyIncomeBarChart

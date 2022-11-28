@@ -1,4 +1,4 @@
-import { ActiveShapePieChart } from '../../ActiveShapePieChart';
+import { ActiveShapePieChart } from "../../ActiveShapePieChart";
 import { LoadingSpinner } from '../../LoadingSpinner';
 
 export function MonthlySpendingPieChart({ expenseData, expenseLoading, chartWidth, hideSeeMore, showInChartSlider, aspect }) {
@@ -18,20 +18,13 @@ export function MonthlySpendingPieChart({ expenseData, expenseLoading, chartWidt
               </div>
             }
           </div>
-          {/* Hide this if this is Income & Expense page */}
-          {!hideSeeMore && (
-            <div className="flex justify-center">
-              <p className="font-semibold underline text-sm2 text-blue bg-[#FEFEFE] sm:mt-4">See more</p>
+          :
+          <div className="flex justify-center h-80">
+            <div className="mt-16">
+              {expenseLoading} {expenseLoading ? <LoadingSpinner /> : "Expense data not found"}
             </div>
-          )}
-        </div>
-      ) : (
-        <div className="flex justify-center h-80">
-          <div className="mt-16">
-            {expenseLoading} {expenseLoading ? <LoadingSpinner /> : 'Expense data not found'}
           </div>
-        </div>
-      )}
+      }
     </div>
   );
 }

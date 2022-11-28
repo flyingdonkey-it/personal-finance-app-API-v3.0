@@ -40,6 +40,5 @@ export function Savings({ balance }) {
           </div>
         </div>
       </div>
-    </div>
   );
 }
