@@ -31,7 +31,7 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
       selectedExpenseValues[1].map(x => expenses.push(x));
     }
     setSelectedExpenses(expenses);
-  };
+  }
 
   //Close income expense detail page
   function onCloseIncomeExpenseDetailClick() {
@@ -39,7 +39,7 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
     setSelectedIncomes({});
     setSelectedExpenses({});
     setShowDetail(false);
-  };
+  }
 
   //Aggregate income & expense data to show in calendar
   useEffect(() => {
@@ -54,30 +54,40 @@ export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate
   return (
     <>
       {/* If not any income & expense item selected */}
-      {!showDetail &&
-        <div className="flex justify-between ml-6 mr-6 sm:mt-12 sm:ml-52 sm:mr-80">
-          <div className="flex">
+      {!showDetail && (
+        <div className="flex justify-between ml-6 mr-6 sm:mt-12 sm:ml-52 sm:mr-80 sm:min-w-max">
+          <div className="flex sm:min-w-max">
             <div className="hidden mr-4 sm:block">
               <img className="w-6 h-6" src="/upload.svg" alt="Upload" />
             </div>
-            <div className="font-semibold text-blue text-2xl2">
-              Income and Expenses
-            </div>
+            <div className="font-semibold text-blue text-2xl2">Income and Expenses</div>
           </div>
-          <div className="flex items-center justify-center pr-4" >
+          <div className="flex items-center justify-center pr-4">
             <div className="h-14">
               <img className="w-7 h-7" src="/calendar.svg" alt="Calendar" onClick={setShowCalendar} />
               {/* INCOME & EXPENSE CALENDAR */}
-              {showCalendar &&
-                <Calendar data={incomeExpenseByDate || []} open={showCalendar} onCalendarItemClick={onCalendarItemClick} />}
+              {showCalendar && (
+                <Calendar
+                  data={incomeExpenseByDate || []}
+                  open={showCalendar}
+                  onCalendarItemClick={onCalendarItemClick}
+                />
+              )}
             </div>
           </div>
-        </div>}
+        </div>
+      )}
       {/* If any income & expense item selected */}
-      {showDetail &&
-        <IncomeExpenseItem incomeLoading={incomeLoading} expenseLoading={expenseLoading} selectedDate={selectedDate}
-          incomeDetails={selectedIncomes} expenseDetails={selectedExpenses} closeIncomeExpenseDetailClick={onCloseIncomeExpenseDetailClick} />
-      }
+      {showDetail && (
+        <IncomeExpenseItem
+          incomeLoading={incomeLoading}
+          expenseLoading={expenseLoading}
+          selectedDate={selectedDate}
+          incomeDetails={selectedIncomes}
+          expenseDetails={selectedExpenses}
+          closeIncomeExpenseDetailClick={onCloseIncomeExpenseDetailClick}
+        />
+      )}
     </>
   );
 }

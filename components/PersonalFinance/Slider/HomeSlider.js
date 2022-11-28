@@ -5,7 +5,7 @@ import { CreditCard } from './CreditCard';
 import { IncomeExpense } from './IncomeExpense';
 import { MonthlySpendingBarChart } from './MonthlySpendingBarChart';
 
-export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly, expenseLoading, chartWidth, chartAspect }) {
+export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly, expenseLoading }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   //Savings account balance
   const [savingsBalance, setSavingsBalance] = useState(0);
@@ -16,26 +16,42 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
   const components = [
     { index: 0, hidden: false, component: <Savings balance={savingsBalance} /> },
     { index: 1, hidden: true, component: <CreditCard balance={creditCardBalance} /> },
-    { index: 2, hidden: true, component: <MonthlySpendingBarChart expenseMonthly={expenseMonthly} expenseLoading={expenseLoading} chartWidth={chartWidth} chartAspect={chartAspect} /> },
-    { index: 3, hidden: true, component: <IncomeExpense incomeMonthlyAvg={incomeMonthlyAvg} expenseMonthlyAvg={expenseMonthlyAvg} /> }
+    {
+      index: 2,
+      hidden: true,
+      component: (
+        <MonthlySpendingBarChart
+          expenseMonthly={expenseMonthly}
+          expenseLoading={expenseLoading}
+          minWidth={200}
+          minHeight={100}
+        />
+      ),
+    },
+    {
+      index: 3,
+      hidden: true,
+      component: <IncomeExpense incomeMonthlyAvg={incomeMonthlyAvg} expenseMonthlyAvg={expenseMonthlyAvg} />,
+    },
   ];
 
   //Get clicked index when carousel indicator clicked
   function handleClickIndicator(e, index) {
     e.preventDefault();
     setCurrentIndex(index);
-  };
+  }
 
   //Get accounts of user and set related account type balance
   function fetchAccounts() {
-    const userId = sessionStorage.getItem("userId");
-    axios.get('/api/accounts', { params: { userId } })
-      .then((response) => {
+    const userId = sessionStorage.getItem('userId');
+    axios
+      .get('/api/accounts', { params: { userId } })
+      .then(response => {
         setSavingsBalance(response.data.find(f => f.class.type === 'savings').balance);
         setCreditCardBalance(response.data.find(f => f.class.type === 'credit-card').balance);
       })
-      .catch((error) => console.error(error));
-  };
+      .catch(error => console.error(error));
+  }
 
   useEffect(() => {
     fetchAccounts();
@@ -49,12 +65,18 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
         <div className="hidden mt-5 sm:block">
           <div className="flex justify-center">
             <div className="space-x-3">
-              {components.map((item) => (
-                <button id={'carousel-indicator-' + item.index} key={item.index} type='button'
-                  className={'w-4 h-2 rounded ' + (item.index === currentIndex ? 'bg-[#4A56E2]' : 'bg-[rgba(74,86,226,0.3)]')}
+              {components.map(item => (
+                <button
+                  id={'carousel-indicator-' + item.index}
+                  key={item.index}
+                  type="button"
+                  className={
+                    'w-4 h-2 rounded ' + (item.index === currentIndex ? 'bg-[#4A56E2]' : 'bg-[rgba(74,86,226,0.3)]')
+                  }
                   aria-current={currentIndex === item.index}
-                  onClick={(e) => handleClickIndicator(e, item.index)}
-                  aria-label={'Slide ' + item.index}></button>
+                  onClick={e => handleClickIndicator(e, item.index)}
+                  aria-label={'Slide ' + item.index}
+                ></button>
               ))}
             </div>
           </div>
@@ -72,8 +94,9 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
           <button id={'carousel-indicator-' + item.index} key={item.index} type='button'
             className={'w-4 h-4 rounded-full ' + (item.index === currentIndex ? 'bg-[#4A56E2]' : 'bg-[rgba(74,86,226,0.3)]')}
             aria-current={currentIndex === item.index}
-            onClick={(e) => handleClickIndicator(e, item.index)}
-            aria-label={'Slide ' + item.index}></button>
+            onClick={e => handleClickIndicator(e, item.index)}
+            aria-label={'Slide ' + item.index}
+          ></button>
         ))}
       </div>
     </div>

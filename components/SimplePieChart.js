@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-const COLORS = ["#32A1BC", "#715CC2"];
+const COLORS = ['#32A1BC', '#715CC2'];
 
 const RADIAN = Math.PI / 180;
 
@@ -15,7 +15,7 @@ function renderCustomizedLabel({ cx, cy, midAngle, innerRadius, outerRadius, per
       {`${(percent * 100).toFixed(0)}%`}
     </text>
   );
-};
+}
 
 export function SimplePieChart({ data }) {
   return (
