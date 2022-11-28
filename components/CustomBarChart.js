@@ -30,9 +30,9 @@ export function CustomBarChart({ data, width, aspect }) {
         data={data}
         margin={{
           top: 0,
-          right: 10,
+          right: 20,
           bottom: 0,
-          left: 10,
+          left: 30,
         }}
       >
         <XAxis dataKey="key" scale="band" />

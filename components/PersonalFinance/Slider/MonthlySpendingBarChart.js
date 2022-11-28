@@ -17,7 +17,7 @@ export function MonthlySpendingBarChart({ expenseMonthly, expenseLoading, showIn
             </p>
           </div>
         </div>
-        <div className={`flex flex-col m-3 sm:m-0`}>
+        <div className={`flex flex-col sm:m-0`}>
           <div className={`${showInChartSlider ? "" : "sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]"}`}>
             <div className="flex flex-col items-center w-full sm:mt-3">
               <div className="flex w-full mb-1 text-xs font-medium sm:ml-4 align-left text-blue">

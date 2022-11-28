@@ -17,7 +17,7 @@ export function PersonalFinanceHeader({ isMenuOpen, menuIconClick, profileMenuOp
   }
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-30 bg-header shadow-shead">
+    <div className="fixed top-0 left-0 right-0 z-40 bg-header shadow-shead">
       <div className="flex justify-between mt-4 ml-7 h-11 sm:hidden">
         <div className="font-medium text-center w-14 text-sm3">9:41</div>
         <div className="flex mr-[1.375rem]">

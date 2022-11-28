@@ -71,7 +71,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
                 Expenses
               </div>
             </div>
-            <MonthlySpendingPieChart expenseData={expenseData} expenseLoading={expenseLoading} chartWidth={chartWidth} />
+            <MonthlySpendingPieChart expenseData={expenseData} expenseLoading={expenseLoading} showInChartSlider={false} chartWidth={chartWidth} aspect={chartAspect}  />
           </div>
         }
         {/* Upcoming payments list */}
@@ -121,7 +121,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
       </div>
       {/* CAROUSEL INDICATOR */}
       <div className="hidden basis-1/2 sm:block sm:ml-16 sm:mr-10">
-        <div className="flex justify-end">
+        <div className="flex justify-center sm:mt-16">
           <div className="space-x-3">
             {items.map((item) => (
               <button id={'carousel-indicator-' + item.index} key={item.index} type='button'

@@ -42,12 +42,12 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
   }, []);
 
   return (
-    <div className="sm:w-2/5 sm:flex sm:ml-64 sm:mt-12">
+    <div className="sm:w-2/5 sm:flex sm:ml-64 ">
       {/* DESKTOP VIEW */}
-      <div className="hidden w-full sm:block">
+      <div className="hidden w-full sm:block sm:h-full">
         {components[currentIndex].component}
         <div className="hidden mt-5 sm:block">
-          <div className="flex justify-end">
+          <div className="flex justify-center">
             <div className="space-x-3">
               {components.map((item) => (
                 <button id={'carousel-indicator-' + item.index} key={item.index} type='button'
@@ -61,13 +61,13 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
         </div>
       </div>
       {/* MOBILE VIEW */}
-      <div className="relative mt-6 overflow-hidden rounded-2xl sm:hidden ml-9 mr-9">
+      <div className="relative mt-5 overflow-hidden rounded-2xl sm:hidden ml-5 mr-5">
         <div className="h-48 sm:h-72" key={components[currentIndex].index}>
           {components[currentIndex].component}
         </div>
       </div>
       {/* CAROUSEL INDICATOR */}
-      <div className='absolute z-30 flex space-x-3 -translate-x-1/2 left-1/2 sm:hidden'>
+      <div className='absolute z-30 flex space-x-3 -translate-x-1/2 left-1/2 sm:hidden mt-2'>
         {components.map((item) => (
           <button id={'carousel-indicator-' + item.index} key={item.index} type='button'
             className={'w-4 h-4 rounded-full ' + (item.index === currentIndex ? 'bg-[#4A56E2]' : 'bg-[rgba(74,86,226,0.3)]')}

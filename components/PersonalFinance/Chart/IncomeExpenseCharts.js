@@ -73,7 +73,7 @@ export function IncomeExpenseCharts({ expenseData, incomeData, incomeMonthlyAvg,
           }
           {
             currentIndex === monthlySpendingPieIndex &&
-            <MonthlySpendingPieChart expenseData={expenseData} expenseLoading={expenseLoading} chartWidth={chartWidth} hideSeeMore={true} />
+            <MonthlySpendingPieChart expenseData={expenseData} expenseLoading={expenseLoading} chartWidth={chartWidth} aspect={1} hideSeeMore={true} />
           }
           {
             currentIndex === monthlySpendingBarIndex &&

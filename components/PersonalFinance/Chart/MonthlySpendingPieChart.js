@@ -1,14 +1,14 @@
 import { ActiveShapePieChart } from "../../ActiveShapePieChart";
 import { LoadingSpinner } from '../../LoadingSpinner';
 
-export function MonthlySpendingPieChart({ expenseData, expenseLoading, chartWidth, hideSeeMore, showInChartSlider }) {
+export function MonthlySpendingPieChart({ expenseData, expenseLoading, chartWidth, hideSeeMore, showInChartSlider, aspect }) {
   return (
     <div className="h-80">
       {
         expenseData && expenseData.length > 0 ?
-          <div className="flex flex-col justify-between h-80 sm:h-64">
-            <div className={`${showInChartSlider ? "sm:mb-2" : "sm:ml-48"}`}>
-              <ActiveShapePieChart data={expenseData} width={chartWidth} />
+          <div className="flex flex-col h-100 sm:h-90">
+            <div className={`${showInChartSlider ? "sm:mb-2" : ""}`}>
+              <ActiveShapePieChart data={expenseData} width={chartWidth} aspect={aspect} />
             </div>
             {/* Hide this if this is Income & Expense page */}
             {

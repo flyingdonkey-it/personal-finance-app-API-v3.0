@@ -29,7 +29,7 @@ export function IncomeExpense({ incomeMonthlyAvg, expenseMonthlyAvg }) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col w-1/2">
+            <div className="flex flex-col w-1/2 ml-4">
               <div className="flex flex-col items-end pt-2 pb-2 mb-1 sm:rounded-2xl sm:border-2 sm:border-[#F5F5F5] sm:bg-[#FEFEFE]">
                 <div className="mr-2">
                   <p className="text-xs font-medium text-right text-blue">Total Income:</p>

@@ -250,7 +250,7 @@ export function PersonalFinanceLayout() {
               {!hideHomePageItems &&
                 <>
                   <HomeSlider incomeMonthlyAvg={incomeMonthlyAvgData} expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading} chartWidth={"100%"} chartAspect={3} />
-                  <HomeCharts expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"100%"} chartAspect={1.25} />
+                  <HomeCharts expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"100%"} chartAspect={1} />
                 </>
               }
               <TransactionPage limit={10} inTransactionsPage={false} managePages={managePages} manageDetailPages={manageDetailPages} />
@@ -319,7 +319,7 @@ export function PersonalFinanceLayout() {
                     </div>
                     <div className="flex w-full mt-6">
                       <HomeSlider incomeMonthlyAvg={incomeMonthlyAvgData} expenseMonthlyAvg={expenseMonthlyAvgData} expenseMonthly={expenseMonthlyData} expenseLoading={expenseLoading} chartWidth={"100%"} chartAspect={3} />
-                      <HomeCharts expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"65%"} chartAspect={1.5} />
+                      <HomeCharts expenseData={expenseData} incomeData={incomeData} expenseLoading={expenseLoading} incomeLoading={incomeLoading} chartWidth={"100%"} chartAspect={2} />
                     </div>
                   </div>
                 }
