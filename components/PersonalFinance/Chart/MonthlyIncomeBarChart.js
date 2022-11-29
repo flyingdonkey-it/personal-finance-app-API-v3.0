@@ -1,5 +1,5 @@
-import { CustomBarChart } from '../../CustomBarChart';
-import { LoadingSpinner } from '../../LoadingSpinner';
+import { CustomBarChart } from '@/components/CustomBarChart';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 export function MonthlyIncomeBarChart({ incomeData, incomeLoading, chartWidth, hideSeeMore, minWidth, minHeight }) {
   return (

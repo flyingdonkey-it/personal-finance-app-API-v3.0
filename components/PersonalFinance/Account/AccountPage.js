@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { LoadingSpinner } from '../../LoadingSpinner';
-import { useAccountVerificationForm } from '../../AccountVerificationForm/AccountVerificationFormProvider';
 import { AccountItemDetail } from './AccountItemDetail';
 import { AccountType } from './AccountType';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { useAccountVerificationForm } from '@/components/AccountVerificationForm/AccountVerificationFormProvider';
 
 const accountTypes = [
   { type: 'savings', title: 'Savings accounts' },

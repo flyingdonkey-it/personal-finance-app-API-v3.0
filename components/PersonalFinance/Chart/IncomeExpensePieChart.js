@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { SimplePieChart } from '../../SimplePieChart';
-import { LoadingSpinner } from '../../LoadingSpinner';
+import { SimplePieChart } from '@/components/SimplePieChart';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 export function IncomeExpensePieChart({ incomeMonthlyAvg, expenseMonthlyAvg, incomeLoading, expenseLoading }) {

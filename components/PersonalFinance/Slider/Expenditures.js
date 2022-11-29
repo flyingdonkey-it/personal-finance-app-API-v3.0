@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LoadingSpinner } from '../../LoadingSpinner';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 export function Expenditures({ payments, expenseLoading }) {

@@ -1,4 +1,4 @@
-import { Button } from '../../Button';
+import { Button } from '@/components/Button';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 export function TransactionItemDetail({ detail, closeTransactionDetailClick, currentAccount }) {

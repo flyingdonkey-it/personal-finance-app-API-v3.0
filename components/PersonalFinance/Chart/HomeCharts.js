@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { ListItem } from '../../ListItem';
 import { MonthlySpendingPieChart } from './MonthlySpendingPieChart';
 import { MonthlyIncomeBarChart } from './MonthlyIncomeBarChart';
+import { ListItem } from '@/components/ListItem';
 
 const expensesIndex = 1;
 const upcomingPaymentsIndex = 2;
@@ -81,10 +81,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
               </div>
               <div className="ml-2 font-semibold text-blue text-2xl2">Expenses</div>
             </div>
-            <MonthlySpendingPieChart
-              expenseData={expenseData}
-              expenseLoading={expenseLoading}
-            />
+            <MonthlySpendingPieChart expenseData={expenseData} expenseLoading={expenseLoading} />
           </div>
         )}
         {/* Upcoming payments list */}

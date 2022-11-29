@@ -1,5 +1,5 @@
-import { LoadingSpinner } from '../../LoadingSpinner';
 import { IncomeExpenseItemDetail } from './IncomeAndExpensesItemDetail';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { dateConverter } from '@/utils/dateConverter';
 import { formatCurrency } from '@/utils/formatCurrency';
 

@@ -1,4 +1,4 @@
-import { SingleBarChart } from '../../SingleBarChart';
+import { SingleBarChart } from '@/components/SingleBarChart';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 export function IncomeExpense({ incomeMonthlyAvg, expenseMonthlyAvg }) {
