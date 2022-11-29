@@ -1,5 +1,5 @@
-import { formatCurrency } from '../../../utils/formatCurrency';
 import { SingleBarChart } from '../../SingleBarChart';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export function IncomeExpense({ incomeMonthlyAvg, expenseMonthlyAvg }) {
   const data = [

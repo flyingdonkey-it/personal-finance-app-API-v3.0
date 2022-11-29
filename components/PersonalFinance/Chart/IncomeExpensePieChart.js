@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SimplePieChart } from '../../SimplePieChart';
-import { formatCurrency } from '../../../utils/formatCurrency';
 import { LoadingSpinner } from '../../LoadingSpinner';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export function IncomeExpensePieChart({ incomeMonthlyAvg, expenseMonthlyAvg, incomeLoading, expenseLoading }) {
   const [incomeExpenseChartData, setIncomeExpenseChartData] = useState([]);

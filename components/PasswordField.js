@@ -1,4 +1,4 @@
-import { useToggleState } from '../utils/useToggleState';
+import { useToggleState } from '@/utils/useToggleState';
 
 export function PasswordField({ id, label, error, ...props }) {
   const [visible, toggleVisibility] = useToggleState(false);

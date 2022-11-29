@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useToggleState } from '../../../utils/useToggleState';
 import { Calendar } from '../../Calendar';
 import { IncomeExpenseItem } from './IncomeExpenseItem';
+import { useToggleState } from '@/utils/useToggleState';
 
 export function IncomeExpensePage({ incomeLoading, expenseLoading, incomesByDate, expensesByDate, manageDetailPages }) {
   const [showCalendar, setShowCalendar] = useToggleState(false);

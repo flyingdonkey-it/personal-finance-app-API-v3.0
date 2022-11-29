@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { useAccountVerificationForm } from '../components/AccountVerificationForm';
-import { Button } from '../components/Button';
-import { LoadingSpinner } from '../components/LoadingSpinner';
-import { PlanetIllustrations } from '../components/PlanetIllustrations';
-import { SEO } from '../components/SEO';
+import { useAccountVerificationForm } from '@/components/AccountVerificationForm';
+import { Button } from '@/components/Button';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { PlanetIllustrations } from '@/components/PlanetIllustrations';
+import { SEO } from '@/components/SEO';
 
 export default function Home() {
   const { basiqConnection, reset, hasCompletedForm } = useAccountVerificationForm();
@@ -34,7 +34,8 @@ export default function Home() {
                 <b>Start optimising your savings</b>
               </p>
               <p className="mt-4 leading-relaxed text-white !sm:text-lg !text-base sm:text-base text-opacity-90">
-                PFM helps you track and optimise your savings. For every dollar saved you get 10% cashback into your account.
+                PFM helps you track and optimise your savings. For every dollar saved you get 10% cashback into your
+                account.
               </p>
             </div>
           </div>

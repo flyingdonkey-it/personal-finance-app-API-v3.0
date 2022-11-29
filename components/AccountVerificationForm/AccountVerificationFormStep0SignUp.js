@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-use-form-state';
-import { axios } from '../../utils/axios';
 import { Button } from '../Button';
 import { TextField } from '../TextField';
 import { ErrorMessage } from '../ErrorMessage';
 import { useAccountVerificationForm } from './AccountVerificationFormProvider';
 import { StepLogo } from './StepLogo';
 import { StepHeading } from './StepHeading';
+import { axios } from '@/utils/axios';
 
 export function AccountVerificationFormStep0SignUp() {
   const { goToStep, updateAccountVerificationFormState, goForward } = useAccountVerificationForm();
@@ -19,32 +19,33 @@ export function AccountVerificationFormStep0SignUp() {
   useEffect(() => {
     // document.referrer will be null if directed to a page using http, so skip that check for development
     if (process.env.NODE_ENV !== 'production') {
-      sessionStorage.getItem("userId") ? goToStep(2) : null
+      sessionStorage.getItem('userId') ? goToStep(2) : null;
     } else {
-      sessionStorage.getItem("userId") && document.referrer === "https://consent.basiq.io/" ? goToStep(2) : null  }
-  }, [])
+      sessionStorage.getItem('userId') && document.referrer === 'https://consent.basiq.io/' ? goToStep(2) : null;
+    }
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     setSubmitting(true);
     axios
       .post('/api/create-user', formState.values)
-      .then( async res => {
+      .then(async res => {
         setSubmitting(false);
-        updateAccountVerificationFormState({ user: res.data })
-        sessionStorage.setItem("userId", res.data.id)
-        sessionStorage.setItem("email", formState.values.email)
-        goForward()
+        updateAccountVerificationFormState({ user: res.data });
+        sessionStorage.setItem('userId', res.data.id);
+        sessionStorage.setItem('email', formState.values.email);
+        goForward();
       })
       .catch(error => {
         setSubmitting(false);
         setError(error);
       });
   }
-  
+
   return (
     <div className="relative flex flex-col h-screen sm:w-[36rem] space-y-6 sm:h-fit sm:static">
-        {/* STEP LOGO */}
+      {/* STEP LOGO */}
       {/* To help the user keep context of what product they're using, */}
       {/* and what bank they're about to connect to. */}
       <div className="flex flex-row justify-center">
@@ -55,9 +56,7 @@ export function AccountVerificationFormStep0SignUp() {
         {/* STEP HEADING */}
         {/* A short as possible heading to help the user quickly recognise the task at hand. */}
         {/* PRODUCT-COPY: Depending on your product (if you're adding a real user account creation e.g.) */}
-        <StepHeading>
-          Sign up with your e-mail to get started
-         </StepHeading>
+        <StepHeading>Sign up with your e-mail to get started</StepHeading>
 
         {/* CREATE USER FORM */}
         {/* This form is just a fake sign up form, with the purpose of creating a user in Basiq's API 
@@ -65,30 +64,23 @@ export function AccountVerificationFormStep0SignUp() {
         or build out this form, and then use the email address from your app's user to Create User in the API.
         PS. You can also use mobile number to Create User in the API */}
         <form onSubmit={handleSubmit}>
-            {/** Error state */}
-            {error && <ErrorMessage message={error.message} />}
-              <TextField
-                {...email('email')}
-                id="email"
-                label="E-mail"
-                placeholder=" "
-                disabled={submitting}
-                required
-              />
-            
-            {/* Terms and Conditions */}
-            {/* PRODUCT-COPY: Depending on your product (if you're adding a real user account creation e.g.) */}
-            <div className="absolute bottom-16 sm:static">
-              <p className="max-w-xs mx-auto mb-8 text-xs leading-relaxed text-center sm:text-white sm:!mt-20 sm:mb-4">
-                By continuing you agree to the Terms and Conditions and our Privacy Policy.
-              </p>
+          {/** Error state */}
+          {error && <ErrorMessage message={error.message} />}
+          <TextField {...email('email')} id="email" label="E-mail" placeholder=" " disabled={submitting} required />
+
+          {/* Terms and Conditions */}
+          {/* PRODUCT-COPY: Depending on your product (if you're adding a real user account creation e.g.) */}
+          <div className="absolute bottom-16 sm:static">
+            <p className="max-w-xs mx-auto mb-8 text-xs leading-relaxed text-center sm:text-white sm:!mt-20 sm:mb-4">
+              By continuing you agree to the Terms and Conditions and our Privacy Policy.
+            </p>
 
             {/* Actions */}
-              <div className="mx-auto space-y-2 sm:w-64">
-                <Button type="submit" loading={submitting} variant="bold" block data-cy="current-step">
-                  Continue
-                </Button>
-              </div>
+            <div className="mx-auto space-y-2 sm:w-64">
+              <Button type="submit" loading={submitting} variant="bold" block data-cy="current-step">
+                Continue
+              </Button>
+            </div>
           </div>
         </form>
       </div>

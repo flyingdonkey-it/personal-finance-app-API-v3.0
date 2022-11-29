@@ -1,13 +1,13 @@
 import toast from 'react-hot-toast';
-import { Button } from '../components/Button';
-import { TextField } from '../components/TextField';
-import { PasswordField } from '../components/PasswordField';
-import { SearchInput } from '../components/SearchInput';
-import { ProgressBar } from '../components/ProgressBar';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { CircularProgressBar } from '../components/CircularProgressBar';
-import { SEO } from '../components/SEO';
-import { LoadingSpinner } from '../components/LoadingSpinner';
+import { Button } from '@/components/Button';
+import { TextField } from '@/components/TextField';
+import { PasswordField } from '@/components/PasswordField';
+import { SearchInput } from '@/components/SearchInput';
+import { ProgressBar } from '@/components/ProgressBar';
+import { ErrorMessage } from '@/components/ErrorMessage';
+import { CircularProgressBar } from '@/components/CircularProgressBar';
+import { SEO } from '@/components/SEO';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 // This file is for developer use only, to get an overview of all the components
 export default function Components() {

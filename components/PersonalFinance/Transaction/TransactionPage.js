@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useToggleState } from '../../../utils/useToggleState';
 import { Calendar } from '../../Calendar';
 import { TransactionItem } from './TransactionItem';
 import { TransactionItemDetail } from './TransactionItemDetail';
+import { useToggleState } from '@/utils/useToggleState';
 
 export function TransactionPage({ inTransactionsPage, managePages, manageDetailPages, dateGroupedTransactions = [] }) {
   const [showDetail, setShowDetail] = useState(false);
