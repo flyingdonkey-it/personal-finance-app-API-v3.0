@@ -20,13 +20,13 @@ This starter kit takes a user through the personal finance app using the Basiq A
 
 To get started, you will need click the "Use this template" button on the main page of the repo - this will generate a new repository.
 
-![template repository screenshot](docs/Group_2681.png)
+![template repository screenshot](https://user-images.githubusercontent.com/92170066/205834638-0818b86f-4ddb-4c34-8e0e-fefef5ba18fa.png)
 
 Then you will need to clone the repository you have just generated. 
 
 ```sh
-git clone git@github.com:<your_username>/account-verification.git
-cd account-verification
+git clone git@github.com:<your_username>/personal-finance-app-API-v3.0.git
+cd personal-finance-app-API-v3.0
 ```
 
 ### 2. API key setup
