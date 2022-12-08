@@ -1,7 +1,7 @@
-# Account verification v3.0 : Supporting Open Banking
+# Personal Finance App v3.0 : Supporting Open Banking
 ### Supporting Open Banking 
 
-This starter kit takes a user through the account verification process using the Basiq API. This project has been to built with three main technologies:
+This starter kit takes a user through the personal finance app using the Basiq API. This project has been to built with three main technologies:
 
 1. [Basiq API](https://api.basiq.io)
    Basiq is a Consumer Data Right accredited API platform that provides the building blocks of financial services.
@@ -20,13 +20,13 @@ This starter kit takes a user through the account verification process using the
 
 To get started, you will need click the "Use this template" button on the main page of the repo - this will generate a new repository.
 
-![template repository screenshot](docs/Group_2681.png)
+![template repository screenshot](https://user-images.githubusercontent.com/92170066/205834638-0818b86f-4ddb-4c34-8e0e-fefef5ba18fa.png)
 
 Then you will need to clone the repository you have just generated. 
 
 ```sh
-git clone git@github.com:<your_username>/account-verification.git
-cd account-verification
+git clone git@github.com:<your_username>/personal-finance-app-API-v3.0.git
+cd personal-finance-app-API-v3.0
 ```
 
 ### 2. API key setup

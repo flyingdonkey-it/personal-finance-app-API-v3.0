@@ -17,13 +17,15 @@ module.exports = {
         subtle: '#F1F0FF', // <Button variant="subtle"/> bg, and radio options e.g.
         'subtle-darker': '#E8E5FF', // <Button variant="subtle"/> :hover bg
         'subtle-darkest': '#DEDBFF', // <Button variant="subtle"/> :active bg
+        'subtle-accent': '#E0EAFF',
 
         // Bold
-        bold: '#4737FF', // <Button variant="bold"/> bg, and primary-bold -> primary-accent bg gradients e.g.
+        bold: '#4A56E2', // <Button variant="bold"/> bg, and primary-bold -> primary-accent bg gradients e.g.
         'bold-darker': '#1400FE', // Links (darker to provide more contrast)
 
         // Accent
-        accent: '#9C4EFF', // primary-bold to primary-accent bg gradient e.g.
+        accent: '#1525DE', // primary-bold to primary-accent bg gradient e.g.
+        'input-accent': 'rgba(231, 239, 255, 0.61)'
       },
 
       // Secondary brand colours
@@ -42,11 +44,21 @@ module.exports = {
       current: 'currentColor', // svgs to be able to grab the text-{color} as stroke- or fill colour
       black: '#000217', // default text colour
       white: '#FFFFFF', // default bg colour of the /account-verification flow, <Button variant="inverted"/> e.g.
+      header: '#FEFEFE', // header bg colour of the /personal-finance flow
+      footer: '#4A56E2', // footer bg colour of the /personal-finance flow
+      menu: '#FDFDFD', // menu bg colour of the /personal-finance flow
+      blue: '#4A56E2', // text colour of the /personal-finance flow
+      'border-color': 'rgba(231, 239, 255, 0.61)',
+      overlay: 'rgba(80, 80, 80, 0.2)',
+      'green-link': '#24CCA7',
+      'mobile-border-color': '#E0EAFF',
+      'list-item-color': 'rgba(231, 239, 255, 0.61)',
 
       // Neutral UI colours
       neutral: {
         subtle: '#F5F8F9', // subtle backgrounds to contrast with default white bg e.g.
         'subtle-darker': '#EBEEEF', // disabled bg colour e.g.
+        'subtle-alternate': '#FEFEFE80',
         dim: '#DEE4E7', // border, divide colour
         'dim-darker': '#BECBD0', // form input border, radio circles e.g.
         muted: '#7E888E', // muted icons, e.g. in <SearchInput />
@@ -82,9 +94,32 @@ module.exports = {
       sans: ['Inter', ...defaultTheme.fontFamily.sans],
     },
 
+    fontSize: {
+      '2xl2': ['24px', '29px'],
+      'sm2': ['14px', '17px'],
+      'sm3': ['15px', '18.15px'],
+      'base2': ['16px', '19px'],
+      'xs': ['12px', '15px'],
+      'xs2': ['10px', '12px'],
+      'xl': ['20px', '28px'],
+      '2xl': ['24px', '32px'],
+      '3xl': ['30px', '36px']
+    },
+
     extend: {
       animation: {
         'ping-slow': 'pingSlow 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+      },
+      backgroundImage: {
+        'mobile-main': 'linear-gradient(180deg, #FEFEFE 0%, #F5F5F5 100%)',
+      },
+      boxShadow: {
+        'shead': '0px 0px 20px rgba(0, 0, 0, 0.1)',
+        'smenu': '0px 4px 4px rgba(0, 0, 0, 0.1)'
+      },
+      height: {
+       '40': '10rem',
+       '80': '20rem',
       },
       keyframes: {
         pingSlow: {
@@ -94,6 +129,10 @@ module.exports = {
           },
         },
       },
+      width: {
+        '18': '4.5rem',
+        '116': '29rem'
+      }
     },
   },
   plugins: [],
