@@ -98,7 +98,7 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
         </div>
       </div>
       {/* CAROUSEL INDICATOR */}
-      <div className="absolute z-30 flex space-x-3 -translate-x-1/2 left-1/2 sm:hidden">
+      <div className="flex justify-center z-20 flex space-x-3 sm:hidden">
         {components.map(item => (
           <button
             id={'carousel-indicator-' + item.index}
