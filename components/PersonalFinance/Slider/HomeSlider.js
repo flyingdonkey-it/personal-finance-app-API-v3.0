@@ -11,10 +11,13 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
   const [savingsBalance, setSavingsBalance] = useState(0);
   //Credit card balance
   const [creditCardBalance, setCreditCardBalance] = useState(0);
+  //Savings institution code
+  const [institutionCode, setInstitutionCode] = useState(null);
+  const [accountsLoading, setAccountsLoading] = useState(false);
 
   //Slider components to load when it is selected
   const components = [
-    { index: 0, hidden: false, component: <Savings balance={savingsBalance} /> },
+    { index: 0, hidden: false, component: <Savings balance={savingsBalance} accountsLoading={accountsLoading} institutionCode={institutionCode} /> },
     { index: 1, hidden: true, component: <CreditCard balance={creditCardBalance} /> },
     {
       index: 2,
@@ -49,11 +52,17 @@ export function HomeSlider({ incomeMonthlyAvg, expenseMonthlyAvg, expenseMonthly
       .then(response => {
         setSavingsBalance(response.data.find(f => f.class.type === 'savings').balance);
         setCreditCardBalance(response.data.find(f => f.class.type === 'credit-card').balance);
+        setInstitutionCode(response.data.filter(x => x.class.type === 'savings')[0].institution);
+        setAccountsLoading(false);
       })
-      .catch(error => console.error(error));
+      .catch((error) => {
+        setAccountsLoading(false);
+        console.error(error);
+      });
   }
 
   useEffect(() => {
+    setAccountsLoading(true);
     fetchAccounts();
   }, []);
 

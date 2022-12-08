@@ -1,12 +1,13 @@
+import { LoadingSpinner } from '../../LoadingSpinner';
 import { formatCurrency } from '../../../utils/formatCurrency';
 
-export function Savings({ balance }) {
+export function Savings({ balance, accountsLoading, institutionCode }) {
   return (
     <div className="border-2 shadow-md h-44 sm:h-64 bg-[#fbfbfb] rounded-2xl border-[#e0eaff] sm:bg-[#F5F7F8]">
       <div className="mt-4 mb-2 ml-7 mr-9 sm:mb-5">
         <div className="flex items-center">
           <div className="sm:min-w-max">
-            <img className="w-7 h-7" src="/slider/bank-of-melbourne.svg" alt="Bank of Melbourne" />
+            {accountsLoading} {accountsLoading ? <LoadingSpinner /> : <img className="w-7 h-7" src={`/bank/${institutionCode}.svg`} />}
           </div>
           <div className="ml-2">
             <p className="text-sm font-bold sm:text-2xl2 text-blue sm:min-w-max">Savings account</p>
