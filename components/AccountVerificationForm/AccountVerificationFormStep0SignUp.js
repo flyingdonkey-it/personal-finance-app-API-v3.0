@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-use-form-state';
-import { axios } from '@/utils/axios';
-import { Button } from '@/components/Button';
-import { TextField } from '@/components/TextField';
-import { ErrorMessage } from '@/components/ErrorMessage';
 import { useAccountVerificationForm } from './AccountVerificationFormProvider';
 import { StepLogo } from './StepLogo';
 import { StepHeading } from './StepHeading';
+import { Button } from '@/components/Button';
+import { TextField } from '@/components/TextField';
+import { ErrorMessage } from '@/components/ErrorMessage';
+import { axios } from '@/utils/axios';
 
 export function AccountVerificationFormStep0SignUp() {
   const { goToStep, updateAccountVerificationFormState, goForward } = useAccountVerificationForm();

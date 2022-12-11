@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { RadioGroup } from '@headlessui/react';
-import { Button } from '@/components/Button';
-import { ErrorScene } from '@/components/ErrorScene';
-import { ErrorMessage } from '@/components/ErrorMessage';
 import { useAccountVerificationForm } from './AccountVerificationFormProvider';
 import { StepHeading } from './StepHeading';
 import { StepDescription } from './StepDescription';
+import { Button } from '@/components/Button';
+import { ErrorScene } from '@/components/ErrorScene';
+import { ErrorMessage } from '@/components/ErrorMessage';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { maskAccountNumber } from '@/utils/maskAccountNumber';
 

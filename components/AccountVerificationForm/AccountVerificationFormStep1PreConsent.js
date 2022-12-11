@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Button } from '@/components/Button';
 import { AccountVerificationFormLearnMoreModal } from './AccountVerificationFormLearnMoreModal';
 import { StepHeading } from './StepHeading';
 import { StepDescription } from './StepDescription';
 import { useAccountVerificationForm } from './AccountVerificationFormProvider';
+import { Button } from '@/components/Button';
 import { useTernaryState } from '@/utils/useTernaryState';
 
 export function AccountVerificationFormStep1PreConsent() {
