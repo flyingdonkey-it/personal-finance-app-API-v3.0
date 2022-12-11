@@ -71,7 +71,7 @@ export function HomeCharts({ expenseData, incomeData, expenseLoading, incomeLoad
           })}
       </div>
       {/* CAROUSEL */}
-      <div className="flex flex-col sm:mt-0 h-80 min-w-fit mt-4 sm:mt-0 h-80 min-w-fit">
+      <div className="flex flex-col sm:mt-0 h-80 min-w-fit mt-4 sm:mt-0 h-80 min-w-fit w-96">
         {/* Expenses pie chart */}
         {selectedChartItem && selectedChartItem === expensesIndex && (
           <div className="flex flex-col justify-between h-80">
