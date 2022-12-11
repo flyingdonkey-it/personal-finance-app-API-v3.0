@@ -40,7 +40,7 @@ export function MonthlySpendingBarChart({
                     className={`${
                       showInChartSlider
                         ? 'h-64 sm:h-52 w-72 lg:w-96 sm:w-64'
-                        : 'sm:h-32 h-24 w-72 lg:w-96 sm:w-64'
+                        : 'sm:h-32 h-24 w-5/6 lg:w-96 sm:w-64'
                     }`}
                   >
                     <CustomBarChart
