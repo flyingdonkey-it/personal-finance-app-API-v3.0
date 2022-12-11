@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '../Button';
-import { CircularProgressBar } from '../CircularProgressBar';
-import { useAccountVerificationForm } from './AccountVerificationFormProvider';
-import { AccountVerificationFormResumeInBackgroundModal } from './AccountVerificationFormResumeInBackgroundModal';
-import { fetchUserTransactions, userTransactionsLoading } from '@/store/actions/userTransactionsActions';
 import { useTernaryState } from '@/utils/useTernaryState';
+import { fetchUserTransactions, userTransactionsLoading } from '@/store/actions/userTransactionsActions';
+import { AccountVerificationFormResumeInBackgroundModal } from './AccountVerificationFormResumeInBackgroundModal';
+import { Button } from '@/components/Button';
+import { CircularProgressBar } from '@/components/CircularProgressBar';
+import { useAccountVerificationForm } from './AccountVerificationFormProvider';
 
 export function AccountVerificationFormStep3LoadingSteps() {
   const [isResumeModalOpen, openResumeModal, closeResumeModal] = useTernaryState(false);

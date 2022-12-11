@@ -1,30 +1,30 @@
-import axios from "axios";
-import { UserTransactionsReducerActions } from "../reducers/userTransactionsReducer";
+import axios from 'axios';
+import { UserTransactionsReducerActions } from '../reducers/userTransactionsReducer';
 
 export function fetchUserTransactions(userId) {
   return async function (dispatch) {
     dispatch(userTransactionsLoading());
     const transactionsData = await RequestUserTransactions(userId);
     dispatch(userTransactionsLoaded(transactionsData));
-  }
+  };
 }
 
 export function userTransactionsLoaded(payload) {
   return {
     type: UserTransactionsReducerActions.UserTransactionsLoaded,
-    payload: payload
-  }
+    payload: payload,
+  };
 }
 
 export function userTransactionsLoading() {
   return {
-    type: UserTransactionsReducerActions.UserTransactionsLoading
-  }
+    type: UserTransactionsReducerActions.UserTransactionsLoading,
+  };
 }
 
 async function RequestUserTransactions(userId) {
   //Used regular variables below as setState is asynchronous and did not work well in this scenario
-  //this works perfectly in this scenario as dispatch() already triggers a re-render.  
+  //this works perfectly in this scenario as dispatch() already triggers a re-render.
 
   //If refresh connection returns error
   let refreshConnectionError = false;
@@ -47,7 +47,7 @@ async function RequestUserTransactions(userId) {
               }
             }, Object.create(null));
 
-            dateGroupedTransactions = Object.entries(dateGroupedTransactions);           
+            dateGroupedTransactions = Object.entries(dateGroupedTransactions);
           })
           .catch(function (error) {
             console.warn(error);
@@ -64,6 +64,6 @@ async function RequestUserTransactions(userId) {
   return {
     refreshConnectionError,
     dateGroupedTransactions,
-    isCompleted: !refreshConnectionError
+    isCompleted: !refreshConnectionError,
   };
 }
