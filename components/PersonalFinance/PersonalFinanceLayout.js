@@ -310,7 +310,7 @@ export function PersonalFinanceLayout() {
         >
           {/* HOME PAGE */}
           {selectedPageIndex && selectedPageIndex === homePageIndex && (
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-min">
               {!hideHomePageItems && (
                 <>
                   <HomeSlider

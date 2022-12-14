@@ -32,7 +32,7 @@ export function MonthlySpendingBarChart({ expenseMonthly, expenseLoading, showIn
                 {expenseMonthly && expenseMonthly.length > 0 ? (
                   <div
                     className={`${
-                      showInChartSlider ? 'h-64 sm:h-52 w-72 lg:w-96 sm:w-64' : 'sm:h-32 h-24 w-72 lg:w-96 sm:w-64'
+                      showInChartSlider ? 'h-64 sm:h-52 w-72 lg:w-96 sm:w-64' : 'sm:h-32 h-24 w-5/6 lg:w-96 sm:w-64'
                     }`}
                   >
                     <CustomBarChart data={expenseMonthly} minWidth={minWidth} minHeight={minHeight} />

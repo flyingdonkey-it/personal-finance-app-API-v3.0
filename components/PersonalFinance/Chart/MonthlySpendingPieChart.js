@@ -12,7 +12,7 @@ export function MonthlySpendingPieChart({ expenseData, expenseLoading, hideSeeMo
           {/* Hide this if this is Income & Expense page */}
           {!hideSeeMore && (
             <div className="flex justify-center">
-              <p className="font-semibold underline text-sm2 text-blue bg-[#FEFEFE] sm:mt-4">See more</p>
+              <p className="font-semibold underline text-sm2 text-blue bg-[#FEFEFE] sm:mt-2">See more</p>
             </div>
           )}
         </div>
