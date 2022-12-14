@@ -1,5 +1,5 @@
-import { ActiveShapePieChart } from '../../ActiveShapePieChart';
-import { LoadingSpinner } from '../../LoadingSpinner';
+import { ActiveShapePieChart } from '@/components/ActiveShapePieChart';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 export function MonthlySpendingPieChart({ expenseData, expenseLoading, hideSeeMore, showInChartSlider }) {
   return (

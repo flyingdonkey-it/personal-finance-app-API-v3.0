@@ -1,8 +1,8 @@
 import { Button } from '../Button';
-import { formatCurrency } from '../../utils/formatCurrency';
 import { useAccountVerificationForm } from './AccountVerificationFormProvider';
 import { StepHeading } from './StepHeading';
 import { StepDescription } from './StepDescription';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export function AccountVerificationFormStep5Summary() {
   const { finish, accountVerificationFormState } = useAccountVerificationForm();
@@ -72,7 +72,6 @@ export function AccountVerificationFormStep5Summary() {
 
             {/* Connected bank logo */}
             <div className="relative">
-
               {/* Icon: check-circle (solid) */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"

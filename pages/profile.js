@@ -1,5 +1,5 @@
-import { ProfileLayout } from '../components/PersonalFinance';
-import { SEO } from '../components/SEO';
+import { ProfileLayout } from '@/components/PersonalFinance';
+import { SEO } from '@/components/SEO';
 
 export default function Profile() {
   return (
@@ -9,5 +9,5 @@ export default function Profile() {
         <ProfileLayout />
       </main>
     </>
-  )
+  );
 }

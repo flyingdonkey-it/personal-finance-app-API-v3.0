@@ -1,4 +1,4 @@
-import { axios } from './utils/axios';
+import { axios } from '@/utils/axios';
 
 /**
  * The Basiq API authentication process is fairly straight forward, we simply exchange our API key for a token which has an expiry of 60 minutes

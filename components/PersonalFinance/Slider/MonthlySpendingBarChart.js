@@ -1,13 +1,7 @@
-import { CustomBarChart } from '../../CustomBarChart';
-import { LoadingSpinner } from '../../LoadingSpinner';
+import { CustomBarChart } from '@/components/CustomBarChart';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
-export function MonthlySpendingBarChart({
-  expenseMonthly,
-  expenseLoading,
-  showInChartSlider,
-  minWidth,
-  minHeight,
-}) {
+export function MonthlySpendingBarChart({ expenseMonthly, expenseLoading, showInChartSlider, minWidth, minHeight }) {
   return (
     <div
       className={`${
@@ -38,16 +32,10 @@ export function MonthlySpendingBarChart({
                 {expenseMonthly && expenseMonthly.length > 0 ? (
                   <div
                     className={`${
-                      showInChartSlider
-                        ? 'h-64 sm:h-52 w-72 lg:w-96 sm:w-64'
-                        : 'sm:h-32 h-24 w-5/6 lg:w-96 sm:w-64'
+                      showInChartSlider ? 'h-64 sm:h-52 w-72 lg:w-96 sm:w-64' : 'sm:h-32 h-24 w-5/6 lg:w-96 sm:w-64'
                     }`}
                   >
-                    <CustomBarChart
-                      data={expenseMonthly}
-                      minWidth={minWidth}
-                      minHeight={minHeight}
-                    />
+                    <CustomBarChart data={expenseMonthly} minWidth={minWidth} minHeight={minHeight} />
                   </div>
                 ) : (
                   <div className="flex justify-center h-32">

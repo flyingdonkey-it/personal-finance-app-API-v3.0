@@ -1,5 +1,5 @@
 import { LoadingSpinner } from '../../LoadingSpinner';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export function Savings({ balance, accountsLoading, institutionCode }) {
   return (
@@ -7,7 +7,8 @@ export function Savings({ balance, accountsLoading, institutionCode }) {
       <div className="mt-4 mb-2 ml-7 mr-9 sm:mb-5">
         <div className="flex items-center">
           <div className="sm:min-w-max">
-            {accountsLoading} {accountsLoading ? <LoadingSpinner /> : <img className="w-7 h-7" src={`/bank/${institutionCode}.svg`} />}
+            {accountsLoading}{' '}
+            {accountsLoading ? <LoadingSpinner /> : <img className="w-7 h-7" src={`/bank/${institutionCode}.svg`} />}
           </div>
           <div className="ml-2">
             <p className="text-sm font-bold sm:text-2xl2 text-blue sm:min-w-max">Savings account</p>

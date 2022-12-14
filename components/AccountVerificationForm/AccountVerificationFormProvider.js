@@ -2,8 +2,8 @@ import toast from 'react-hot-toast';
 import { useEffect, useState, createContext, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { getClientToken } from '../../clientAuthentication';
-import { axios } from '../../utils/axios';
 import { FORM_COMPONENTS } from './AccountVerificationForm';
+import { axios } from '@/utils/axios';
 
 const AccountVerificationFormContext = createContext({
   // The current step number of the form the user on
@@ -34,7 +34,7 @@ const AccountVerificationFormContext = createContext({
   hasCompletedForm: undefined,
   // Function to redirect user to Basiq Consent UI
   goToConsent: undefined,
-  createBasiqConnection: undefined
+  createBasiqConnection: undefined,
 });
 
 // This custom hook gives components access the `AccountVerificationFormContext` form context
@@ -74,11 +74,11 @@ export function AccountVerificationFormProvider({ children }) {
     setCurrentStep(0);
     setCancelling(false);
     setHasCompletedForm(false);
-    sessionStorage.clear()
+    sessionStorage.clear();
   }
 
   async function resetStateForNewAccount() {
-    const email = sessionStorage.getItem("email");
+    const email = sessionStorage.getItem('email');
 
     await deleteBasiqConnection();
 
@@ -90,17 +90,17 @@ export function AccountVerificationFormProvider({ children }) {
 
     axios
       .post('/api/create-user', { email: email })
-      .then( async res => {
-        updateAccountVerificationFormState({ user: res.data })
+      .then(async res => {
+        updateAccountVerificationFormState({ user: res.data });
 
-        sessionStorage.setItem("userId", res.data.id)
-        sessionStorage.setItem("email", email)
+        sessionStorage.setItem('userId', res.data.id);
+        sessionStorage.setItem('email', email);
 
         router.push('/account-verification');
       })
       .catch(error => {
-        console.log("Error: ", error);
-    });
+        console.log('Error: ', error);
+      });
   }
 
   // State for managing cancelling the account verification form
@@ -115,7 +115,7 @@ export function AccountVerificationFormProvider({ children }) {
     try {
       await deleteBasiqConnection();
       router.push('/');
-      sessionStorage.clear()
+      sessionStorage.clear();
       resetState();
     } catch {
       // If something went wrong while deleting the basiq connection, we send the user to the home page via a full page refresh so all state is reset
@@ -127,7 +127,7 @@ export function AccountVerificationFormProvider({ children }) {
   async function finish() {
     try {
       // Delete user at end of process when not in prod to clean up test data
-      // You can also enable this for production if you do not wish to maintain the user bucket or connection e.g. for a once off check 
+      // You can also enable this for production if you do not wish to maintain the user bucket or connection e.g. for a once off check
       // TODO: kerimcem - This will be opened when personal finance app is completed fully
       // if (process.env.NODE_ENV !== 'production') {
       //   await deleteUser()
@@ -143,9 +143,9 @@ export function AccountVerificationFormProvider({ children }) {
 
   // Redirect to the external Basiq Consent UI
   async function goToConsent(action = null) {
-    let userId = sessionStorage.getItem("userId")
+    let userId = sessionStorage.getItem('userId');
     const token = await getClientToken(userId);
-    window.location = (`https://consent.basiq.io/home?userId=${userId}&token=${token}&action=${action}`);
+    window.location = `https://consent.basiq.io/home?userId=${userId}&token=${token}&action=${action}`;
   }
 
   const contextValue = {
@@ -208,7 +208,7 @@ function useBasiqConnection({ currentStep, userId }) {
   }
 
   async function createBasiqConnection() {
-    let newJobId = new URLSearchParams(window.location.search).get("jobId");
+    let newJobId = new URLSearchParams(window.location.search).get('jobId');
     setInProgress(true);
     // Optimisic UI. We know the first job basiq will process will always be "verify-credentials"
     setStepNameInProgress('verify-credentials');
@@ -329,7 +329,7 @@ function useBasiqConnection({ currentStep, userId }) {
     },
     getUserConsent,
     deleteBasiqConnection,
-    createBasiqConnection
+    createBasiqConnection,
   };
 }
 

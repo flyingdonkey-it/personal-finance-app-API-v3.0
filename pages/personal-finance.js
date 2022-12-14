@@ -1,5 +1,5 @@
-import { PersonalFinanceLayout } from '../components/PersonalFinance';
-import { SEO } from '../components/SEO';
+import { PersonalFinanceLayout } from '@/components/PersonalFinance';
+import { SEO } from '@/components/SEO';
 
 export default function PersonalFinance() {
   return (
@@ -9,5 +9,5 @@ export default function PersonalFinance() {
         <PersonalFinanceLayout />
       </main>
     </>
-  )
+  );
 }

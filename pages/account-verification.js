@@ -1,5 +1,5 @@
-import { AccountVerificationForm } from '../components/AccountVerificationForm';
-import { SEO } from '../components/SEO';
+import { AccountVerificationForm } from '@/components/AccountVerificationForm';
+import { SEO } from '@/components/SEO';
 
 export default function AccountVerification() {
   return (

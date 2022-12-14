@@ -1,15 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserTransactions, userTransactionsLoading } from '../../store/actions/userTransactionsActions';
-import { useTernaryState } from '../../utils/useTernaryState';
-import { Button } from '../Button';
-import { CircularProgressBar } from '../CircularProgressBar';
-import { useAccountVerificationForm } from './AccountVerificationFormProvider';
 import { AccountVerificationFormResumeInBackgroundModal } from './AccountVerificationFormResumeInBackgroundModal';
+import { useAccountVerificationForm } from './AccountVerificationFormProvider';
+import { useTernaryState } from '@/utils/useTernaryState';
+import { fetchUserTransactions, userTransactionsLoading } from '@/store/actions/userTransactionsActions';
+import { Button } from '@/components/Button';
+import { CircularProgressBar } from '@/components/CircularProgressBar';
 
 export function AccountVerificationFormStep3LoadingSteps() {
-
   const [isResumeModalOpen, openResumeModal, closeResumeModal] = useTernaryState(false);
   const [progressBarValue, setProgressBarValue] = useState(0);
   const [progressInterval, setProgressInterval] = useState(null);
@@ -20,9 +19,8 @@ export function AccountVerificationFormStep3LoadingSteps() {
   const { basiqConnection, finish } = useAccountVerificationForm();
   const { error, progress, completed, stepNameInProgress, reset, setJobId } = basiqConnection;
 
-
   const { data } = useAccountsData({
-    userId: sessionStorage.getItem("userId"),
+    userId: sessionStorage.getItem('userId'),
   });
 
   let userTransactionsRequestSuccessful = isCompleted && transactionLoadingDispatched;
@@ -35,12 +33,12 @@ export function AccountVerificationFormStep3LoadingSteps() {
 
   async function submit() {
     if (!errorOrNoData) {
-      finish()
+      finish();
     }
   }
 
   function updateProgressBarValue() {
-    let value = (progress + (userTransactionsRequestSuccessful ? 100 : 0)) / 2
+    let value = (progress + (userTransactionsRequestSuccessful ? 100 : 0)) / 2;
     if (isNaN(value)) value = 0;
     if (value > 100) value = 100;
     if (value === 100) setProgressBarValue(value);
@@ -50,7 +48,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
   function incrementProgressBarValueGradually() {
     let interval = setInterval(() => {
       setProgressBarValue(currentValue => currentValue + Math.floor(Math.random() * 4));
-    },250);
+    }, 250);
     setProgressInterval(interval);
   }
 
@@ -58,21 +56,20 @@ export function AccountVerificationFormStep3LoadingSteps() {
     if (progressBarValue > 90) clearInterval(progressInterval);
   }, [progressInterval, progressBarValue]);
 
-
   useEffect(() => {
-    const newJobId = new URLSearchParams(window.location.search).get("jobId");
+    const newJobId = new URLSearchParams(window.location.search).get('jobId');
     setJobId(newJobId);
     incrementProgressBarValueGradually();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if(isCompleted === false) setTransactionLoadingDispatched(true); 
+    if (isCompleted === false) setTransactionLoadingDispatched(true);
     updateProgressBarValue();
   }, [progress, isCompleted]);
 
   useEffect(() => {
-    if (displayError) setProgressBarValue(100)
-  }, [displayError])
+    if (displayError) setProgressBarValue(100);
+  }, [displayError]);
 
   return (
     <div className="flex flex-col space-y-10 sm:space-y-12">
@@ -88,7 +85,7 @@ export function AccountVerificationFormStep3LoadingSteps() {
               Try again
             </Button>
           </div>
-        ) : (completed && userTransactionsRequestSuccessful && !displayError) ? (
+        ) : completed && userTransactionsRequestSuccessful && !displayError ? (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">Connected 🎉</h3>
@@ -100,13 +97,15 @@ export function AccountVerificationFormStep3LoadingSteps() {
         ) : (
           <div className="w-full space-y-8">
             <div className="space-y-3 sm:space-y-4">
-              {
-                displayError ?
-                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">Something went wrong, please try again.</h2>
-                :
-                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">{STEP_NAME_MAP[stepNameInProgress] ?? STEP_NAME_MAP['retrieve-transactions']}</h2>
-
-              }
+              {displayError ? (
+                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                  Something went wrong, please try again.
+                </h2>
+              ) : (
+                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                  {STEP_NAME_MAP[stepNameInProgress] ?? STEP_NAME_MAP['retrieve-transactions']}
+                </h2>
+              )}
             </div>
             <Button block variant="subtle" onClick={openResumeModal}>
               Resume in background
@@ -119,7 +118,6 @@ export function AccountVerificationFormStep3LoadingSteps() {
   );
 }
 function useAccountsData({ userId }) {
-
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [error, setError] = useState();
@@ -132,8 +130,8 @@ function useAccountsData({ userId }) {
       .get('/api/accounts', { params: { userId } })
       .then(res => {
         let account = res.data.find(account => !account.disabled);
-        updateAccountVerificationFormState({ account })
-        sessionStorage.setItem("currentAccountId", account.id);
+        updateAccountVerificationFormState({ account });
+        sessionStorage.setItem('currentAccountId', account.id);
 
         dispatch(fetchUserTransactions(userId));
 
@@ -162,5 +160,5 @@ function useAccountsData({ userId }) {
 const STEP_NAME_MAP = {
   'verify-credentials': 'Verifying credentials...',
   'retrieve-accounts': 'Retrieving accounts...',
-  'retrieve-transactions': 'Retrieving transaction details...'
+  'retrieve-transactions': 'Retrieving transaction details...',
 };

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useTernaryState } from '../../utils/useTernaryState';
 import { PlanetIllustrations } from '../PlanetIllustrations';
 import { StepLogo } from './StepLogo';
 import { AccountVerificationFormStep0SignUp } from './AccountVerificationFormStep0SignUp';
@@ -9,6 +8,7 @@ import { AccountVerificationFormStep5Summary } from './AccountVerificationFormSt
 import { useAccountVerificationForm } from './AccountVerificationFormProvider';
 import { AccountVerificationFormCancellationModal } from './AccountVerificationFormCancellationModal';
 import { AccountVerificationFormStep3LoadingSteps } from './AccountVerificationFormStep3LoadingSteps';
+import { useTernaryState } from '@/utils/useTernaryState';
 
 export const FORM_COMPONENTS = [
   AccountVerificationFormStep0SignUp,
@@ -32,10 +32,9 @@ export function AccountVerificationForm() {
 
   return (
     <div className="flex flex-col justify-center min-h-screen sm:bg-gradient-to-tr from-primary-bold to-primary-accent">
-
       {/* FORM STEPS COMPONENT */}
       <div className="z-10 px-8 pb-24 mx-auto text-center sm:px-64 sm:pb-16 space-y-6 sm:space-y-8 sm:bg-neutral-subtle-alternate/50 rounded-2xl backdrop-opacity-60">
-        <div className={`absolute top-0 left-6 sm:w-12 sm:h-12 w-10 ${currentStep === 1 && "sm:block hidden"}`}>
+        <div className={`absolute top-0 left-6 sm:w-12 sm:h-12 w-10 ${currentStep === 1 && 'sm:block hidden'}`}>
           <StepLogo src="/product-logo-square.svg" alt="Piper logo" />
         </div>
         <Component />

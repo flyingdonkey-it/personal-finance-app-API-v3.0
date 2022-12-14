@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { LoadingSpinner } from '../../LoadingSpinner';
-import { formatCurrency } from '../../../utils/formatCurrency';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export function Expenditures({ payments, expenseLoading }) {
   const [currentIndex, setCurrentIndex] = useState(0);

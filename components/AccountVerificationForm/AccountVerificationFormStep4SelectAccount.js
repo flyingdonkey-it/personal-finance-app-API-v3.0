@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { RadioGroup } from '@headlessui/react';
-import { formatCurrency } from '../../utils/formatCurrency';
-import { maskAccountNumber } from '../../utils/maskAccountNumber';
-import { Button } from '../Button';
-import { ErrorScene } from '../ErrorScene';
-import { ErrorMessage } from '../ErrorMessage';
 import { useAccountVerificationForm } from './AccountVerificationFormProvider';
 import { StepHeading } from './StepHeading';
 import { StepDescription } from './StepDescription';
+import { Button } from '@/components/Button';
+import { ErrorScene } from '@/components/ErrorScene';
+import { ErrorMessage } from '@/components/ErrorMessage';
+import { formatCurrency } from '@/utils/formatCurrency';
+import { maskAccountNumber } from '@/utils/maskAccountNumber';
 
 export function AccountVerificationFormStep4SelectAccount() {
   const { goForward, updateAccountVerificationFormState, goToConsent, getUserConsent } = useAccountVerificationForm();
 
-  const userId = sessionStorage.getItem("userId");
+  const userId = sessionStorage.getItem('userId');
 
   const [selectedAccount, setSelectedAccount] = useState();
   const [validationError, setValidationError] = useState(false);
@@ -37,14 +37,14 @@ export function AccountVerificationFormStep4SelectAccount() {
 
   async function retryConnection() {
     try {
-      await getUserConsent(userId)
-      goToConsent("connect")
+      await getUserConsent(userId);
+      goToConsent('connect');
     } catch {
-      goToConsent()
+      goToConsent();
     }
   }
 
-  if (!userId ) return null;
+  if (!userId) return null;
 
   return (
     <div className="flex flex-col flex-grow space-y-8 sm:space-y-12">
@@ -78,7 +78,7 @@ export function AccountVerificationFormStep4SelectAccount() {
           <ErrorScene
             title="Failed to load accounts"
             message="There was an error fetching your accounts, please retry the connection."
-            actionOnClick={(() => retryConnection())}
+            actionOnClick={() => retryConnection()}
           />
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
@@ -165,7 +165,7 @@ export function AccountVerificationFormStep4SelectAccount() {
               <Button type="submit" block>
                 Finish
               </Button>
-              <Button type="button" variant="subtle" block onClick={(() => goToConsent("connect"))}>
+              <Button type="button" variant="subtle" block onClick={() => goToConsent('connect')}>
                 Connect a different account
               </Button>
             </div>

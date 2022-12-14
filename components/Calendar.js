@@ -1,5 +1,5 @@
 import { DatePicker } from 'antd';
-import { formatCurrency } from '../utils/formatCurrency';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export function Calendar({ data, open, onCalendarItemClick }) {
   //Getting sum of amounts in the date

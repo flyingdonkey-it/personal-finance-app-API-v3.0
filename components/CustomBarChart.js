@@ -1,5 +1,5 @@
 import { ComposedChart, Line, Bar, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { formatCurrency } from '../utils/formatCurrency';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 //Rewriting tooltip function to show custom text
 function CustomTooltip({ active, payload }) {
