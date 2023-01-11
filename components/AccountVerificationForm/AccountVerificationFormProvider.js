@@ -234,7 +234,8 @@ function useBasiqConnection({ currentStep, userId }) {
         // A job contains multiple steps which can either be "pending" | "in-progress" | "success" | "failed"
         // In this demo, we only care about the "verify-credentials" and "retrieve-accounts" steps
         const filteredSteps = response.data.steps.filter(
-          ({ title }) => title === 'verify-credentials' || title === 'retrieve-accounts'
+          ({ title }) =>
+            title === 'verify-credentials' || title === 'retrieve-accounts' || title === 'retrieve-transactions'
         );
 
         // Check which step is in progress or if any steps have failed
@@ -335,7 +336,7 @@ function useBasiqConnection({ currentStep, userId }) {
 
 // The reason for attatching these properties to the error object is because we will use
 // thes e properties to display information about the error in `AccountVerificationFormStep3LoadingSteps`
-function newStepError({ detail, title }) {
+export function newStepError({ detail, title }) {
   const error = new Error();
   error.message = detail;
   error.name = title;
@@ -366,7 +367,7 @@ async function deleteUser({ userId }) {
 
 // Retrieves the details of the connection
 // https://api.basiq.io/reference/retrieve-a-job
-async function checkConnectionStatus({ jobId }) {
+export async function checkConnectionStatus({ jobId }) {
   const response = await axios.get(`https://au-api.basiq.io/jobs/${jobId}`);
   return response;
 }
